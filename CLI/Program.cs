@@ -14,21 +14,30 @@ namespace CLI
         {
             var sharepointSiteUrl = GetSharePointSiteUrl();
             var credentials = GetCredentials();
+            Console.WriteLine();
             //var output = new Output("c:\\pims.csv", Output.CSV);
-            //var exporter = new Exporter(sharepointSite, credentials, output);
+            //var exporter = new Exporter(sharepointSiteUrl, credentials, output);
 
             //exporter.ExportAll();
 
-            Console.WriteLine($"\nUser: {credentials.UserName}\nPass: {credentials.Password}\n");
+            Console.WriteLine($"Url: {sharepointSiteUrl}");
+            Console.WriteLine($"User: {credentials.UserName}");
+            Console.WriteLine($"Pass: {credentials.Password}");
 
-            Console.WriteLine("Finished.\n");
+            Console.WriteLine("\nFinished.\n");
             Console.ReadLine();
+        }
+
+        private static object GetSharePointSiteUrl()
+        {
+            Console.Write("Sharepoint site url: ");
+            return Console.ReadLine();
         }
 
         private static NetworkCredential GetCredentials()
         {
             Console.Write("Username: ");
-            var userName = GetUserName();
+            var userName = Console.ReadLine();
             Console.Write("Password: ");
             var password = GetPassword();
             return new NetworkCredential(userName, password);
@@ -57,11 +66,6 @@ namespace CLI
                 }
             }
             return pwd;
-        }
-
-        private static string GetUserName()
-        {
-            return Console.ReadLine();
         }
     }
 }
