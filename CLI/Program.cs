@@ -31,7 +31,7 @@ namespace CLI
 
         private static string GetOutputPath()
         {
-            Console.WriteLine("Output dir path: ");
+            Console.Write("Output dir path: ");
             return Console.ReadLine();
         }
 
@@ -48,6 +48,7 @@ namespace CLI
             var userName = Console.ReadLine();
             Console.Write("Password: ");
             var password = GetPassword();
+            Console.WriteLine();
             return new NetworkCredential(userName, password);
         }
 

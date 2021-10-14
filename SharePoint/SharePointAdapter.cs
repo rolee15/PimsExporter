@@ -62,20 +62,20 @@ namespace SharePoint
 
         private AllVersion MapToEntity(ListItem item)
         {
-            return new AllVersion()
+            return new AllVersion
             {
-                PortfolioUnit = item[Fields.PORTFOLIOUNIT].ToString(),
-                OmItemName = item[Fields.PRODUCT_NAME].ToString(),
-                OmItemId = item[Fields.PRODUCT_ID].ToString(),
-                PimsId = item[Fields.PIMSIDALLVERSION].ToString(),
-                VersionName = item[Fields.VERSION_NAME].ToString(),
-                FullVersionId = item[Fields.FULL_VERSION_ID].ToString(),
-                VersionOfferingType = item[Fields.CLASSIFICATION].ToString(),
-                CurrentOlmPhase = item[Fields.OLM_PHASE_VERSION].ToString(),
-                PuReleaseAssignment = item[Fields.DD_RELEASE_ASSIGNMENT].ToString(),
-                BssReleaseAssignment = item[Fields.BSS_RELEASE_ASSIGNMENT].ToString(),
-                OssReleaseAssignment = item[Fields.OSS_RELEASE_ASSIGNMENT].ToString(),
-                Comment = item[Fields.OMITEMVERSION_COMMENT].ToString(),
+                PortfolioUnit = Convert.ToString(item[Fields.PORTFOLIOUNIT]),
+                OmItemName = Convert.ToString(item[Fields.PRODUCT_NAME]),
+                OmItemId = Convert.ToString(item[Fields.PRODUCT_ID]),
+                PimsId = Convert.ToString(item[Fields.PIMSIDALLVERSION]),
+                VersionName = Convert.ToString(item[Fields.VERSION_NAME]),
+                FullVersionId = Convert.ToString(item[Fields.FULL_VERSION_ID]),
+                VersionOfferingType = Convert.ToString(item[Fields.CLASSIFICATION]),
+                CurrentOlmPhase = Convert.ToString(item[Fields.OLM_PHASE_VERSION]),
+                PuReleaseAssignment = Convert.ToString(item[Fields.DD_RELEASE_ASSIGNMENT]),
+                BssReleaseAssignment = Convert.ToString(item[Fields.BSS_RELEASE_ASSIGNMENT]),
+                OssReleaseAssignment = Convert.ToString(item[Fields.OSS_RELEASE_ASSIGNMENT]),
+                Comment = Convert.ToString(item[Fields.OMITEMVERSION_COMMENT]),
                 OmItemNumber = Convert.ToInt32(item[Fields.PRODUCTNUMBER]),
                 VersionNumber = Convert.ToInt32(item[Fields.VERSIONNUMBER])
             };
