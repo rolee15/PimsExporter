@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PimsExporter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,11 +15,11 @@ namespace CLI
         {
             var sharepointSiteUrl = GetSharePointSiteUrl();
             var credentials = GetCredentials();
+            var outDirPath = GetOutputPath();
             Console.WriteLine();
-            //var output = new Output("c:\\pims.csv", Output.CSV);
-            //var exporter = new Exporter(sharepointSiteUrl, credentials, output);
+            var exporter = new Exporter(sharepointSiteUrl, credentials, outDirPath);
 
-            //exporter.ExportAll();
+            exporter.ExportAll();
 
             Console.WriteLine($"Url: {sharepointSiteUrl}");
             Console.WriteLine($"User: {credentials.UserName}");
@@ -28,10 +29,17 @@ namespace CLI
             Console.ReadLine();
         }
 
-        private static object GetSharePointSiteUrl()
+        private static string GetOutputPath()
+        {
+            Console.WriteLine("Output dir path: ");
+            return Console.ReadLine();
+        }
+
+        private static Uri GetSharePointSiteUrl()
         {
             Console.Write("Sharepoint site url: ");
-            return Console.ReadLine();
+            var url = Console.ReadLine();
+            return new Uri(url);
         }
 
         private static NetworkCredential GetCredentials()
