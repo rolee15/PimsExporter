@@ -14,7 +14,7 @@
         public string BssReleaseAssignment { get; set; }
         public string OssReleaseAssignment { get; set; }
         public string Comment { get; set; }
-        public int OmItemNumber { get; private set; }
-        public int VersionNumber { get; private set; }
+        public int OmItemNumber { get; set; }
+        public int VersionNumber { get; set; }
     }
 }

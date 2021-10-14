@@ -32,7 +32,7 @@ namespace PimsExporter
 
         private void ExportRoot()
         {
-            var rootRepository = new RootSiteRepository(new SharePointAdapter(SharepointSiteUrl));
+            var rootRepository = new RootSiteRepository(new SharePointAdapter(SharepointSiteUrl, Credentials));
             var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
             var allVersions = rootRepository.GetAllVersions();
         }

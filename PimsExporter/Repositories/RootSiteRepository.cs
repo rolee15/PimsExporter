@@ -16,7 +16,7 @@ namespace PimsExporter.Repositories
 
         internal List<AllVersion> GetAllVersions()
         {
-            return sp.AllVersions;
+            return sp.AllVersions();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace PimsExporter.UnitTest.Repositories
 
             };
             var spMock = new Mock<ISharePointAdapter>();
-            spMock.Setup(sp => sp.AllVersions).Returns(list);
+            spMock.Setup(sp => sp.AllVersions()).Returns(list);
             var repository = new RootSiteRepository(spMock.Object);
 
             // ACT
