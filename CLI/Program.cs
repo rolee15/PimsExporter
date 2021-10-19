@@ -23,7 +23,7 @@ namespace CLI
 
             Console.WriteLine($"Url: {sharepointSiteUrl}");
             Console.WriteLine($"User: {credentials.UserName}");
-            Console.WriteLine($"Pass: {credentials.Password}");
+            Console.WriteLine($"Output: {outDirPath}");
 
             Console.WriteLine("\nFinished.\n");
             Console.ReadLine();

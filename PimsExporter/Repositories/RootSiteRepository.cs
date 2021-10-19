@@ -1,4 +1,5 @@
-﻿using PimsExporter.Entities;
+﻿using Domain.Entities;
+using PimsExporter.Entities;
 using SharePoint;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,11 @@ namespace PimsExporter.Repositories
         internal List<AllVersion> GetAllVersions()
         {
             return sp.AllVersions();
+        }
+
+        internal List<AllOmItem> GetAllOmItems()
+        {
+            return sp.AllOmItems();
         }
     }
 }

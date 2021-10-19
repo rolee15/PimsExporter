@@ -12,6 +12,12 @@
 
             public static class Lists
             {
+                public static class AllProducts
+                {
+                    public static readonly string TITLE = "All Products";
+                    public static readonly string ROOT_FOLDER = "AllProducts";
+                }
+                
                 public static class AllVersions
                 {
                     public static readonly string TITLE = "All Versions";
@@ -67,8 +73,28 @@
                 public static readonly string LASTIDXUPDATE = "LastIdxUpdate";
                 public static readonly string PIMSIDALLVERSION = "PIMSIDAllVersion";
                 public static readonly string PORTFOLIOUNIT = "Product_x0020_Unit";
+                public static readonly string OFFERING_TYPE = "OMItemOfferingType";
                 public static readonly string OFFERING_NAME = "Offering_x0020_Name";
                 public static readonly string OFFERING_MODULE = "Offering_x0020_Module";
+                public static readonly string OFFERING_MODULE_ID = "Offering_x0020_Module_x0020_ID";
+                public static readonly string PRODUCT_MANAGER = "Product_x0020_Manager";
+                public static readonly string PRODUCT_ALIAS = "Product_x0020_Alias";
+                public static readonly string OMITEMID = "Product_x0020_ID";
+                public static readonly string PLM_PHASE = "PLM_x0020_Phase";
+                public static readonly string PLM_DATE = "PLM_x0020_Date";
+                public static readonly string PLM_PHASE_PLANNED = "PLM_x0020_phase_x0020_planned_x0";
+            }
+        }
+    
+        public static class Product
+        {
+            public static class Lists
+            {
+                public static class ProductRecord
+                {
+                    public static readonly string TITLE = "Product Record";
+                    public static readonly string ROOT_FOLDER_NAME = "ProductRecord";
+                }
             }
         }
     }
