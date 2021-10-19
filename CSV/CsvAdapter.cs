@@ -18,10 +18,10 @@ namespace CSV
 
         public string OutDirPath { get; }
 
-        public void SaveVersions(List<AllVersion> versions)
+        public void SaveAllVersions(List<AllVersion> versions)
         {
             string fileName = "versions.csv";
-            string path = Path.Combine(OutDirPath, fileName);
+            string path = Path.Combine(OutDirPath, "root", fileName);
             using (StreamWriter sw = new StreamWriter(path))
             {
                 foreach (var version in versions)
@@ -29,10 +29,10 @@ namespace CSV
             }
         }
 
-        public void SaveOmItems(List<AllOmItem> omItems)
+        public void SaveAllOmItems(List<AllOmItem> omItems)
         {
             string fileName = "omitems.csv";
-            string path = Path.Combine(OutDirPath, fileName);
+            string path = Path.Combine(OutDirPath, "root", fileName);
             using (StreamWriter sw = new StreamWriter(path))
             {
                 foreach (var omItem in omItems)
@@ -82,6 +82,7 @@ namespace CSV
 
     public interface IOutputAdapter
     {
-        void SaveVersions(List<AllVersion> versions);
+        void SaveAllOmItems(List<AllOmItem> omItems);
+        void SaveAllVersions(List<AllVersion> versions);
     }
 }

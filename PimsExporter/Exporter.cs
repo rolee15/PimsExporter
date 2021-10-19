@@ -27,7 +27,7 @@ namespace PimsExporter
         public void ExportAll()
         {
             ExportRoot();
-            // ExportOmItems(0, 100);
+            //ExportOmItems(0, 100);
             // ExportVersions();
         }
 

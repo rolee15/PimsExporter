@@ -152,7 +152,7 @@ namespace SharePoint
         public List<AllOmItem> GetAllOmItems(ClientContext ctx, List list)
         {
             var omItems = new List<AllOmItem>();
-            CamlQuery query = new CamlQuery
+            var query = new CamlQuery
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
@@ -180,7 +180,7 @@ namespace SharePoint
 
         public List<AllOmItem> AllOmItems()
         {
-            using (ClientContext context = new ClientContext(SharepointSiteUrl))
+            using (var context = new ClientContext(SharepointSiteUrl))
             {
                 context.Credentials = Credentials;
                 var list = GetList(context, Constants.Root.Lists.AllProducts.TITLE);

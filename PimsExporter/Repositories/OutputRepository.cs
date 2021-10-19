@@ -8,21 +8,21 @@ namespace PimsExporter.Repositories
 {
     internal class OutputRepository : IOutputRepository
     {
-        private readonly CsvAdapter csvAdapter;
+        private readonly IOutputAdapter outputAdapter;
 
-        public OutputRepository(CsvAdapter csvAdapter)
+        public OutputRepository(IOutputAdapter outputAdapter)
         {
-            this.csvAdapter = csvAdapter;
+            this.outputAdapter = outputAdapter;
         }
 
         public void SaveAllVersions(List<AllVersion> versions)
         {
-            csvAdapter.SaveVersions(versions);
+            outputAdapter.SaveAllVersions(versions);
         }
 
         public void SaveAllOmItems(List<AllOmItem> omItems)
         {
-            csvAdapter.SaveOmItems(omItems);
+            outputAdapter.SaveAllOmItems(omItems);
         }
 
         internal void AppendHeader(OmItemHeader header)
@@ -38,6 +38,7 @@ namespace PimsExporter.Repositories
 
     internal interface IOutputRepository
     {
+        void SaveAllOmItems(List<AllOmItem> omItems);
         void SaveAllVersions(List<AllVersion> versions);
     }
 }
