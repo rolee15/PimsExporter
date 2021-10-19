@@ -77,6 +77,7 @@
                 public static readonly string OFFERING_NAME = "Offering_x0020_Name";
                 public static readonly string OFFERING_MODULE = "Offering_x0020_Module";
                 public static readonly string OFFERING_MODULE_ID = "Offering_x0020_Module_x0020_ID";
+                public static readonly string PIMSIDOMITEM = "PIMSIDOMItem";
                 public static readonly string PRODUCT_MANAGER = "Product_x0020_Manager";
                 public static readonly string PRODUCT_ALIAS = "Product_x0020_Alias";
                 public static readonly string OMITEMID = "Product_x0020_ID";
@@ -95,6 +96,38 @@
                     public static readonly string TITLE = "Product Record";
                     public static readonly string ROOT_FOLDER_NAME = "ProductRecord";
                 }
+            }
+
+            public static class Fields
+            {
+                public static readonly string ACTIVE_STATUS = "Active_x0020_Status";
+                public static readonly string CONFIDENTIALITY_CLASS = "Confidentiality_x0020_Class";
+                public static readonly string CREATED = "Created";
+                public static readonly string LONG_DESCRIPTION = "Long_x0020_Description";
+                public static readonly string MODIFIED = "Modified";
+                public static readonly string OFFERING_MODULE = "Offering_x0020_Module";
+                public static readonly string OFFERING_MODULE_ID = "Offering_x0020_Module_x0020_ID";
+                public static readonly string OFFERING_TYPE = "Classification";
+                public static readonly string OFFERING_NAME = "Offering_x0020_Name";
+                public static readonly string PLM_DATE = "PLM_x0020_Date";
+                public static readonly string PLM_PHASE = "PLM_x0020_Phase";
+                public static readonly string PLM_PHASE_PLANNED = "PLM_x0020_phase_x0020_planned_x0";
+                public static readonly string PRODUCT_ALIAS = "Product_x0020_Alias";
+                public static readonly string PRODUCT_ID = "Product_x0020_ID";
+                public static readonly string PRODUCT_MANAGER = "Product_x0020_Manager";
+                public static readonly string PRODUCT_NAME = "Product_x0020_Name";
+                public static readonly string PRODUCT_UNIT = "Product_x0020_Unit";
+                public static readonly string SHORT_DESCRIPTION = "Short_x0020_Description";
+                public static readonly string CREATED_BY = "Author";
+                public static readonly string MODIFIED_BY = "Editor";
+                public static readonly string REPORTING_MONTH = "Reporting_x0020_Month";
+                public static readonly string DELTA_CAPEX_YTD = "Delta_x0020_CAPEX_x0020_YTD";
+                public static readonly string DELTA_OPEX_YTD = "Delta_x0020_OPEX_x0020_YTD";
+                public static readonly string DELTA_REVENUE_YTD = "Delta_x0020_Revenue_x0020_YTD";
+                public static readonly string TEAMMEMBERS = "TeamMembers";
+                public static readonly string PRODUCT_NUMBER = "ProductNumber";
+                public static readonly string PIMSIDOMITEM = "PIMSIDOMItem";
+                public static readonly string OFFERING_CLUSTER = "Offering_x0020_Cluster";
             }
         }
     }

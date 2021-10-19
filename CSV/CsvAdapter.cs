@@ -14,9 +14,11 @@ namespace CSV
         public CsvAdapter(string outDirPath)
         {
             OutDirPath = outDirPath;
+            Headers = new List<OmItemHeader>();
         }
 
         public string OutDirPath { get; }
+        private List<OmItemHeader> Headers { get; }
 
         public void SaveAllVersions(List<AllVersion> versions)
         {
@@ -78,11 +80,53 @@ namespace CSV
 
             return sb.ToString();
         }
+
+        private string ToCsv(OmItemHeader header)
+        {
+            var sb = new StringBuilder();
+            sb.Append(header.OmItemName + ";");
+            sb.Append(header.OmItemAlias + ";");
+            sb.Append(header.OmItemId + ";");
+            sb.Append(header.OfferingManager + ";");
+            sb.Append(header.PortfolioUnit + ";");
+            sb.Append(header.PimsId + ";");
+            sb.Append(header.OfferingName + ";");
+            sb.Append(header.OfferingModule + ";");
+            sb.Append(header.ActiveStatus + ";");
+            sb.Append(header.OlmCurrentPhase + ";");
+            sb.Append(header.ConfidentialityClass + ";");
+            sb.Append(header.OfferingType + ";");
+            sb.Append(header.CurrentStart + ";");
+            sb.Append(header.CurrentEnd + ";");
+            sb.Append(header.OfferingCluster + ";");
+            sb.Append(header.ShortDescription + ";");
+            sb.Append(header.LongDescription);
+
+            return sb.ToString();
+        }
+
+        public void AppendHeader(OmItemHeader header)
+        {
+            Headers.Add(header);
+        }
+
+        public void SaveOmItemHeaders()
+        {
+            string fileName = "omitemheaders.csv";
+            string path = Path.Combine(OutDirPath, "product", fileName);
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                foreach (OmItemHeader header in Headers)
+                    sw.WriteLine(ToCsv(header));
+            }
+        }
     }
 
     public interface IOutputAdapter
     {
+        void AppendHeader(OmItemHeader header);
         void SaveAllOmItems(List<AllOmItem> omItems);
         void SaveAllVersions(List<AllVersion> versions);
+        void SaveOmItemHeaders();
     }
 }

@@ -27,7 +27,7 @@ namespace PimsExporter
         public void ExportAll()
         {
             ExportRoot();
-            //ExportOmItems(0, 100);
+            ExportOmItems(0, 10);
             // ExportVersions();
         }
 
@@ -36,11 +36,19 @@ namespace PimsExporter
             var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
             for (int i = from; i < to; i++)
             {
-                var url = Path.Combine(SharepointSiteUrl.ToString(), "products/{i}");
-                var spAdapter = new SharePointAdapter(SharepointSiteUrl, Credentials);
-                var siteRepository = new OmItemSiteRepository(spAdapter);                
-                var header = siteRepository.GetHeader();
-                outputRepository.AppendHeader(header);
+                try
+                {
+                    var url = Path.Combine(SharepointSiteUrl.ToString(), $"products/{i}");
+                    var spAdapter = new SharePointAdapter(new Uri(url), Credentials);
+                    var siteRepository = new OmItemSiteRepository(spAdapter);
+                    var header = siteRepository.GetHeader();
+                    header.OmItemNumber = i;
+                    outputRepository.AppendHeader(header);
+                }
+                catch (Exception ex)
+                {
+                    continue;
+                }
             }
             outputRepository.SaveOmItemHeaders();
         }

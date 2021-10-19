@@ -27,12 +27,12 @@ namespace PimsExporter.Repositories
 
         internal void AppendHeader(OmItemHeader header)
         {
-            throw new NotImplementedException();
+            outputAdapter.AppendHeader(header);
         }
 
         internal void SaveOmItemHeaders()
         {
-            throw new NotImplementedException();
+            outputAdapter.SaveOmItemHeaders();
         }
     }
 

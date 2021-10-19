@@ -6,9 +6,9 @@ namespace PimsExporter.Repositories
 {
     internal class OmItemSiteRepository
     {
-        private SharePointAdapter spAdapter;
+        private ISharePointAdapter spAdapter;
 
-        public OmItemSiteRepository(SharePointAdapter spAdapter)
+        public OmItemSiteRepository(ISharePointAdapter spAdapter)
         {
             this.spAdapter = spAdapter;
         }

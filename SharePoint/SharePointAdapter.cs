@@ -7,7 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 
-using Fields = Domain.Constants.Root.Fields;
+using RootFields = Domain.Constants.Root.Fields;
+using ProductFields = Domain.Constants.Product.Fields;
 
 namespace SharePoint
 {
@@ -92,50 +93,66 @@ namespace SharePoint
         {
             return new AllVersion
             {
-                PortfolioUnit = Convert.ToString(item[Fields.PORTFOLIOUNIT]),
-                OmItemName = Convert.ToString(item[Fields.PRODUCT_NAME]),
-                OmItemId = Convert.ToString(item[Fields.PRODUCT_ID]),
-                PimsId = Convert.ToString(item[Fields.PIMSIDALLVERSION]),
-                VersionName = Convert.ToString(item[Fields.VERSION_NAME]),
-                FullVersionId = Convert.ToString(item[Fields.FULL_VERSION_ID]),
-                VersionOfferingType = Convert.ToString(item[Fields.CLASSIFICATION]),
-                CurrentOlmPhase = Convert.ToString(item[Fields.OLM_PHASE_VERSION]),
-                PuReleaseAssignment = Convert.ToString(item[Fields.DD_RELEASE_ASSIGNMENT]),
-                BssReleaseAssignment = Convert.ToString(item[Fields.BSS_RELEASE_ASSIGNMENT]),
-                OssReleaseAssignment = Convert.ToString(item[Fields.OSS_RELEASE_ASSIGNMENT]),
-                Comment = Convert.ToString(item[Fields.OMITEMVERSION_COMMENT]),
-                OmItemNumber = Convert.ToInt32(item[Fields.PRODUCTNUMBER]),
-                VersionNumber = Convert.ToInt32(item[Fields.VERSIONNUMBER])
+                PortfolioUnit = Convert.ToString(item[RootFields.PORTFOLIOUNIT]),
+                OmItemName = Convert.ToString(item[RootFields.PRODUCT_NAME]),
+                OmItemId = Convert.ToString(item[RootFields.PRODUCT_ID]),
+                PimsId = Convert.ToString(item[RootFields.PIMSIDALLVERSION]),
+                VersionName = Convert.ToString(item[RootFields.VERSION_NAME]),
+                FullVersionId = Convert.ToString(item[RootFields.FULL_VERSION_ID]),
+                VersionOfferingType = Convert.ToString(item[RootFields.CLASSIFICATION]),
+                CurrentOlmPhase = Convert.ToString(item[RootFields.OLM_PHASE_VERSION]),
+                PuReleaseAssignment = Convert.ToString(item[RootFields.DD_RELEASE_ASSIGNMENT]),
+                BssReleaseAssignment = Convert.ToString(item[RootFields.BSS_RELEASE_ASSIGNMENT]),
+                OssReleaseAssignment = Convert.ToString(item[RootFields.OSS_RELEASE_ASSIGNMENT]),
+                Comment = Convert.ToString(item[RootFields.OMITEMVERSION_COMMENT]),
+                OmItemNumber = Convert.ToInt32(item[RootFields.PRODUCTNUMBER]),
+                VersionNumber = Convert.ToInt32(item[RootFields.VERSIONNUMBER])
             };
         }
 
         private AllOmItem MapAllOmItemToEntity(ListItem item)
         {
-            var omItem = new AllOmItem();
-
-
-            omItem.PortfolioUnit = Convert.ToString(item[Fields.PORTFOLIOUNIT]);
-            omItem.OfferingName = Convert.ToString(item[Fields.OFFERING_NAME]);
-            omItem.OfferingModule = Convert.ToString(item[Fields.OFFERING_MODULE]);
-            omItem.OfferingModuleId = Convert.ToString(item[Fields.OFFERING_MODULE_ID]);
-            //omItem.PimsId = Convert.ToString(item[Fields.PIMSIDALLOMITEM]);
-            omItem.OmItemName = Convert.ToString(item[Fields.PRODUCT_NAME]);
-            omItem.OfferingType = Convert.ToString(item[Fields.OFFERING_TYPE]);
-            omItem.OfferingManager = Convert.ToString(item[Fields.PRODUCT_MANAGER]);
-            omItem.OmItemAlias = Convert.ToString(item[Fields.PRODUCT_ALIAS]);
-            omItem.OmItemId = Convert.ToString(item[Fields.OMITEMID]);
-            omItem.OlmCurrentPhase = Convert.ToString(item[Fields.PLM_PHASE]);
-            omItem.OlmPhaseStart = Convert.ToString(item[Fields.PLM_DATE]);
-            omItem.OlmPhaseEnd = Convert.ToString(item[Fields.PLM_PHASE_PLANNED]);
-            omItem.OmItemNumber = Convert.ToInt32(item[Fields.PRODUCTNUMBER]);
-            
-
-            return omItem;
+            return new AllOmItem
+            {
+                PortfolioUnit = Convert.ToString(item[RootFields.PORTFOLIOUNIT]),
+                OfferingName = Convert.ToString(item[RootFields.OFFERING_NAME]),
+                OfferingModule = Convert.ToString(item[RootFields.OFFERING_MODULE]),
+                OfferingModuleId = Convert.ToString(item[RootFields.OFFERING_MODULE_ID]),
+                PimsId = Convert.ToString(item[RootFields.PIMSIDOMITEM]),
+                OmItemName = Convert.ToString(item[RootFields.PRODUCT_NAME]),
+                OfferingType = Convert.ToString(item[RootFields.OFFERING_TYPE]),
+                OfferingManager = Convert.ToString(item[RootFields.PRODUCT_MANAGER]),
+                OmItemAlias = Convert.ToString(item[RootFields.PRODUCT_ALIAS]),
+                OmItemId = Convert.ToString(item[RootFields.OMITEMID]),
+                OlmCurrentPhase = Convert.ToString(item[RootFields.PLM_PHASE]),
+                OlmPhaseStart = Convert.ToString(item[RootFields.PLM_DATE]),
+                OlmPhaseEnd = Convert.ToString(item[RootFields.PLM_PHASE_PLANNED]),
+                OmItemNumber = Convert.ToInt32(item[RootFields.PRODUCTNUMBER])
+            };
         }
 
         private OmItemHeader MapProductRecordToEntity(ListItem item)
         {
-            var header = new OmItemHeader();
+            var header = new OmItemHeader
+            {
+                OmItemName = Convert.ToString(item[ProductFields.PRODUCT_NAME]),
+                OmItemAlias = Convert.ToString(item[ProductFields.PRODUCT_ALIAS]),
+                OmItemId = Convert.ToString(item[ProductFields.PRODUCT_ID]),
+                OfferingManager = Convert.ToString(item[ProductFields.PRODUCT_MANAGER]),
+                PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]),
+                PimsId = Convert.ToString(item[ProductFields.PIMSIDOMITEM]),
+                OfferingName = Convert.ToString(item[ProductFields.OFFERING_NAME]),
+                OfferingModule = Convert.ToString(item[ProductFields.OFFERING_MODULE]),
+                ActiveStatus = Convert.ToString(item[ProductFields.ACTIVE_STATUS]),
+                OlmCurrentPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
+                ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
+                OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]),
+                CurrentStart = Convert.ToString(item[ProductFields.PLM_DATE]),
+                CurrentEnd = Convert.ToString(item[ProductFields.PLM_PHASE_PLANNED]),
+                //header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
+                ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
+                LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION])
+            };
 
             return header;
         }
@@ -193,5 +210,6 @@ namespace SharePoint
     {
         List<AllOmItem> AllOmItems();
         List<AllVersion> AllVersions();
+        OmItemHeader ProductRecord();
     }
 }
