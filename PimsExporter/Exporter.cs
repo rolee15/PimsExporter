@@ -47,6 +47,7 @@ namespace PimsExporter
                     var olmPhase = siteRepository.GetOlmPhase();
                     header.OmItemNumber = i;
                     omItemHeaders.Add(header);
+                    outputRepository.AppendOlmPhase(olmPhase[0]);
                 }
                 catch (Exception ex)
                 {

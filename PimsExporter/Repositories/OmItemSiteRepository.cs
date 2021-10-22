@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using SharePoint;
 using System;
+using System.Collections.Generic;
 
 namespace PimsExporter.Repositories
 {
@@ -18,7 +19,7 @@ namespace PimsExporter.Repositories
             return spAdapter.ProductRecord();
         }
 
-        public OlmPhase GetOlmPhase()
+        public List<OlmPhase> GetOlmPhase()
         {
             return spAdapter.OlmPhase();
         }

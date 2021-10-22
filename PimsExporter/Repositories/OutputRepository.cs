@@ -35,6 +35,11 @@ namespace PimsExporter.Repositories
         {
             outputAdapter.SaveOlmPhases();
         }
+
+        internal void AppendOlmPhase(OlmPhase olmPhase)
+        {
+            outputAdapter.AppendOlmPhase(olmPhase);
+        }
     }
 
     internal interface IOutputRepository

@@ -64,7 +64,25 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+        private string ToCsv(OlmPhase olmPhase)
+        {
+            var sb = new StringBuilder();
+            sb.Append(olmPhase.OlmPhaseName + ";");
+            sb.Append(olmPhase.CurrentPhase + ";");
+            sb.Append(olmPhase.PhaseStartApprovalDate + ";");
+            sb.Append(olmPhase.PhaseStartDate + ";");
+            sb.Append(olmPhase.PhasePlannedEndDate + ";");
+            sb.Append(olmPhase.PhaseDuration + ";");
+            sb.Append(olmPhase.ShortDescription + ";");
+            sb.Append(olmPhase.LongDescription + ";");
 
+            return sb.ToString();
+        }
+
+        public void AppendOlmPhase(OlmPhase olmPhase)
+        {
+            OlmPhases.Add(olmPhase);
+        }
         public void SaveOlmPhases()
         {
             string fileName = "olmphases.csv";
@@ -79,6 +97,7 @@ namespace CSV
 
     public interface IOutputAdapter
     {
+        void AppendOlmPhase(OlmPhase olmPhase);
         void SaveAllOmItems(List<AllOmItem> omItems);
         void SaveAllVersions(List<AllVersion> versions);
         void SaveOlmPhases();

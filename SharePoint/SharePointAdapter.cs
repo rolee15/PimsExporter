@@ -6,10 +6,9 @@ using PimsExporter.Entities;
 using System;
 using System.Collections.Generic;
 using System.Net;
-
-using RootFields = Domain.Constants.Root.Fields;
-using ProductFields = Domain.Constants.Product.Fields;
 using OlmPhaseFields = Domain.Constants.OlmPhase.Fields;
+using ProductFields = Domain.Constants.Product.Fields;
+using RootFields = Domain.Constants.Root.Fields;
 using User = Domain.Entities.User;
 
 namespace SharePoint
@@ -25,7 +24,7 @@ namespace SharePoint
         public Uri SharepointSiteUrl { get; }
         public NetworkCredential Credentials { get; }
 
-        public OlmPhase OlmPhase()
+        public List<OlmPhase> OlmPhase()
         {
             using (ClientContext context = new ClientContext(SharepointSiteUrl))
             {
@@ -35,8 +34,10 @@ namespace SharePoint
             }
         }
 
-        private OlmPhase GetOlmPhase(ClientContext ctx, List list)
+        private List<OlmPhase> GetOlmPhase(ClientContext ctx, List list)
         {
+            var olmPhases = new List<OlmPhase>();
+
             CamlQuery query = new CamlQuery
             {
                 ViewXml = CAML.ViewQuery(
@@ -44,12 +45,23 @@ namespace SharePoint
                     rowLimit: 1)
             };
 
-            ListItemCollection items = list.GetItems(query);
-            ctx.Load(items);
-            ctx.ExecuteQuery();
-            var item = items[0];
+            ListItemCollectionPosition position = null;
+            do
+            {
+                query.ListItemCollectionPosition = position;
+                ListItemCollection items = list.GetItems(query);
+                ctx.Load(items);
+                ctx.ExecuteQuery();
 
-            return MapOlmPhasesToEntity(item);
+
+                foreach (var item in items)
+                    olmPhases.Add(MapOlmPhasesToEntity(item));
+
+                position = items.ListItemCollectionPosition;
+
+            } while (position != null);
+
+            return olmPhases;
         }
 
         public OmItemHeader ProductRecord()
@@ -95,7 +107,7 @@ namespace SharePoint
             CamlQuery query = new CamlQuery
             {
                 ViewXml = CAML.ViewQuery(
-                    ViewScope.DefaultValue, 
+                    ViewScope.DefaultValue,
                     rowLimit: Constants.SharePoint.DEFAULT_QUERY_ROW_LIMIT)
             };
 
@@ -196,15 +208,16 @@ namespace SharePoint
 
         private OlmPhase MapOlmPhasesToEntity(ListItem item)
         {
-            var olmPhase = new OlmPhase
-            {
-                OlmPhasee = Convert.ToString(item[OlmPhaseFields.OLM_PHASE]),
-                CurrentPhase = Convert.ToString(item[OlmPhaseFields.CURRENT_PHASE]),
-                PhaseStartApprovalDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_APPROVAL_DATE]),
-                PhaseStartDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_DATE]),
-                PhasePlannedEndDate = Convert.ToString(item[OlmPhaseFields.PHASE_PLANNED_END_DATE]),
-                PhaseDuration = Convert.ToString(item[OlmPhaseFields.PHASE_DURATION])
-            };
+            var olmPhase = new OlmPhase();
+
+            olmPhase.OlmPhaseName = Convert.ToString(item[OlmPhaseFields.OLM_PHASE]);
+            olmPhase.CurrentPhase = Convert.ToString(item[OlmPhaseFields.CURRENT_PHASE]);
+            olmPhase.PhaseStartApprovalDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_APPROVAL_DATE]);
+            olmPhase.PhaseStartDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_DATE]);
+            olmPhase.PhasePlannedEndDate = Convert.ToString(item[OlmPhaseFields.PHASE_PLANNED_END_DATE]);
+            olmPhase.PhaseDuration = Convert.ToString(item[OlmPhaseFields.PHASE_DURATION]);
+            olmPhase.ShortDescription = Convert.ToString(item[OlmPhaseFields.SHORT_DESCRIPTION]);
+            olmPhase.LongDescription = Convert.ToString(item[OlmPhaseFields.LONG_DESCRIPTION]);
 
             return olmPhase;
         }
@@ -263,6 +276,6 @@ namespace SharePoint
         List<AllOmItem> AllOmItems();
         List<AllVersion> AllVersions();
         OmItemHeader ProductRecord();
-        OlmPhase OlmPhase();
+        List<OlmPhase> OlmPhase();
     }
 }

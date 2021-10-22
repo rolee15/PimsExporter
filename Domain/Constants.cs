@@ -144,12 +144,14 @@
 
             public static class Fields
             {
-                public static readonly string OLM_PHASE = "OLM Phase";
-                public static readonly string CURRENT_PHASE = "Current Phase";
-                public static readonly string PHASE_START_APPROVAL_DATE = "Phase Start Approval Date";
-                public static readonly string PHASE_START_DATE = "Phase Start Date";
-                public static readonly string PHASE_PLANNED_END_DATE = "Phase Planned End Date";
-                public static readonly string PHASE_DURATION = "Phase Duration";
+                public static readonly string OLM_PHASE = "PLM_x0020_Phase";
+                public static readonly string CURRENT_PHASE = "Current_x0020_Phase";
+                public static readonly string PHASE_START_APPROVAL_DATE = "Phase_x0020_Start_x0020_Approval";
+                public static readonly string PHASE_START_DATE = "Phase_x0020_Start_x0020_Date";
+                public static readonly string PHASE_PLANNED_END_DATE = "Phase_x0020_Planned_x0020_End_x0";
+                public static readonly string PHASE_DURATION = "Phase_x0020_Duration";
+                public static readonly string SHORT_DESCRIPTION = "Short_x0020_Description";
+                public static readonly string LONG_DESCRIPTION = "Long_x0020_Description";
             }
         }
     }
