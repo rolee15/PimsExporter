@@ -1,29 +1,33 @@
 ﻿using Domain.Entities;
 using PimsExporter.Entities;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CSV
 {
     public class CsvAdapter : IOutputAdapter
     {
+        private const string OmItemHeadersFileName = "omitemheaders.csv";
+        private const string AllVersionsFileName = "versions.csv";
+        private const string OmItemsFileName = "omitems.csv";
+
+        private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
+        private readonly AllOmItemCsvFormatter _allOmItemFormatter;
+        
         public CsvAdapter(string outDirPath)
         {
             OutDirPath = outDirPath;
-            Headers = new List<OmItemHeader>();
+            _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
+            _allOmItemFormatter = new AllOmItemCsvFormatter();
         }
 
         public string OutDirPath { get; }
-        private List<OmItemHeader> Headers { get; }
 
         public void SaveAllVersions(List<AllVersion> versions)
         {
-            string fileName = "versions.csv";
-            string path = Path.Combine(OutDirPath, "root", fileName);
+            var path = Path.Combine(OutDirPath, "root", AllVersionsFileName);
+            Directory.CreateDirectory(path);
             using (StreamWriter sw = new StreamWriter(path))
             {
                 foreach (var version in versions)
@@ -33,12 +37,13 @@ namespace CSV
 
         public void SaveAllOmItems(List<AllOmItem> omItems)
         {
-            string fileName = "omitems.csv";
-            string path = Path.Combine(OutDirPath, "root", fileName);
-            using (StreamWriter sw = new StreamWriter(path))
+            string path = Path.Combine(OutDirPath, "root", OmItemsFileName);
+            Directory.CreateDirectory(path);
+            
+            var resultStream = _allOmItemFormatter.FormatAsync(omItems);
+            using (var fileStream = File.Create(path))
             {
-                foreach (var omItem in omItems)
-                    sw.WriteLine(ToCsv(omItem));
+                resultStream.CopyTo(fileStream);
             }
         }
 
@@ -104,29 +109,24 @@ namespace CSV
 
             return sb.ToString();
         }
-
-        public void AppendHeader(OmItemHeader header)
+        
+        public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
-            Headers.Add(header);
-        }
-
-        public void SaveOmItemHeaders()
-        {
-            string fileName = "omitemheaders.csv";
-            string path = Path.Combine(OutDirPath, "product", fileName);
-            using (StreamWriter sw = new StreamWriter(path))
+            var path = Path.Combine(OutDirPath, "product", OmItemHeadersFileName);
+            Directory.CreateDirectory(path);
+            
+            var resultStream = _omItemHeaderFormatter.FormatAsync(omItemHeaders);
+            using (var fileStream = File.Create(path))
             {
-                foreach (OmItemHeader header in Headers)
-                    sw.WriteLine(ToCsv(header));
+                resultStream.CopyTo(fileStream);
             }
         }
     }
 
     public interface IOutputAdapter
     {
-        void AppendHeader(OmItemHeader header);
         void SaveAllOmItems(List<AllOmItem> omItems);
         void SaveAllVersions(List<AllVersion> versions);
-        void SaveOmItemHeaders();
+        void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
     }
 }
