@@ -14,31 +14,34 @@ namespace CSV
 
         private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
+        private readonly AllVersionCsvFormatter _allVersionFormatter;
+        
+        private readonly string _outDirPath;
         
         public CsvAdapter(string outDirPath)
         {
-            OutDirPath = outDirPath;
+            _outDirPath = outDirPath;
             _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
             _allOmItemFormatter = new AllOmItemCsvFormatter();
+            _allVersionFormatter = new AllVersionCsvFormatter();
         }
-
-        public string OutDirPath { get; }
-
+        
         public void SaveAllVersions(List<AllVersion> versions)
         {
-            var path = Path.Combine(OutDirPath, "root", AllVersionsFileName);
-            Directory.CreateDirectory(path);
-            using (StreamWriter sw = new StreamWriter(path))
+            var path = Path.Combine(_outDirPath, "root", AllVersionsFileName);
+            Directory.CreateDirectory(_outDirPath);
+            
+            var resultStream = _allVersionFormatter.FormatAsync(versions);
+            using (var fileStream = File.Create(path))
             {
-                foreach (var version in versions)
-                    sw.WriteLine(ToCsv(version));
+                resultStream.CopyTo(fileStream);
             }
         }
 
         public void SaveAllOmItems(List<AllOmItem> omItems)
         {
-            string path = Path.Combine(OutDirPath, "root", OmItemsFileName);
-            Directory.CreateDirectory(path);
+            string path = Path.Combine(_outDirPath, "root", OmItemsFileName);
+            Directory.CreateDirectory(_outDirPath);
             
             var resultStream = _allOmItemFormatter.FormatAsync(omItems);
             using (var fileStream = File.Create(path))
@@ -47,73 +50,10 @@ namespace CSV
             }
         }
 
-        private string ToCsv(AllOmItem omItem)
-        {
-            var sb = new StringBuilder();
-            sb.Append(omItem.PortfolioUnit + ";");
-            sb.Append(omItem.OfferingName + ";");
-            sb.Append(omItem.OfferingModule + ";");
-            sb.Append(omItem.OfferingModuleId + ";");
-            sb.Append(omItem.PimsId + ";");
-            sb.Append(omItem.OmItemName + ";");
-            sb.Append(omItem.OfferingType + ";");
-            sb.Append(omItem.OfferingManager + ";");
-            sb.Append(omItem.OmItemAlias + ";");
-            sb.Append(omItem.OmItemId + ";");
-            sb.Append(omItem.OlmCurrentPhase + ";");
-            sb.Append(omItem.OlmPhaseStart + ";");
-            sb.Append(omItem.OlmPhaseEnd + ";");
-
-            return sb.ToString();
-        }
-
-        private string ToCsv(AllVersion version)
-        {
-            var sb = new StringBuilder();
-            sb.Append(version.PortfolioUnit + ";");
-            sb.Append(version.OmItemName + ";");
-            sb.Append(version.OmItemId + ";");
-            sb.Append(version.PimsId + ";");
-            sb.Append(version.VersionName + ";");
-            sb.Append(version.FullVersionId + ";");
-            sb.Append(version.VersionOfferingType + ";");
-            sb.Append(version.CurrentOlmPhase + ";");
-            sb.Append(version.PuReleaseAssignment + ";");
-            sb.Append(version.BssReleaseAssignment + ";");
-            sb.Append(version.OssReleaseAssignment + ";");
-            sb.Append(version.Comment);
-
-            return sb.ToString();
-        }
-
-        private string ToCsv(OmItemHeader header)
-        {
-            var sb = new StringBuilder();
-            sb.Append(header.OmItemName + ";");
-            sb.Append(header.OmItemAlias + ";");
-            sb.Append(header.OmItemId + ";");
-            sb.Append(header.OfferingManager + ";");
-            sb.Append(header.PortfolioUnit + ";");
-            sb.Append(header.PimsId + ";");
-            sb.Append(header.OfferingName + ";");
-            sb.Append(header.OfferingModule + ";");
-            sb.Append(header.ActiveStatus + ";");
-            sb.Append(header.OlmCurrentPhase + ";");
-            sb.Append(header.ConfidentialityClass + ";");
-            sb.Append(header.OfferingType + ";");
-            sb.Append(header.CurrentStart + ";");
-            sb.Append(header.CurrentEnd + ";");
-            sb.Append(header.OfferingCluster + ";");
-            sb.Append(header.ShortDescription + ";");
-            sb.Append(header.LongDescription);
-
-            return sb.ToString();
-        }
-        
         public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
-            var path = Path.Combine(OutDirPath, "product", OmItemHeadersFileName);
-            Directory.CreateDirectory(path);
+            var path = Path.Combine(_outDirPath, "product", OmItemHeadersFileName);
+            Directory.CreateDirectory(_outDirPath);
             
             var resultStream = _omItemHeaderFormatter.FormatAsync(omItemHeaders);
             using (var fileStream = File.Create(path))
