@@ -4,7 +4,7 @@ namespace CSV
 {
     public class OmItemHeaderCsvFormatter : DocumentFormatterBase<OmItemHeader>
     {
-        public OmItemHeaderCsvFormatter() : base(",")
+        public OmItemHeaderCsvFormatter() : base(";")
         {
             Columns = new[]
             {

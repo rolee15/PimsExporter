@@ -4,7 +4,7 @@ namespace CSV
 {
     public class AllVersionCsvFormatter : DocumentFormatterBase<AllVersion>
     {
-        public AllVersionCsvFormatter() : base(",")
+        public AllVersionCsvFormatter() : base(";")
         {
             //TODO could do this in the base class with reflection
             Columns = new[]
