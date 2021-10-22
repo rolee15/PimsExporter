@@ -44,6 +44,7 @@ namespace PimsExporter
                     var spAdapter = new SharePointAdapter(new Uri(url), Credentials);
                     var siteRepository = new OmItemSiteRepository(spAdapter);
                     var header = siteRepository.GetHeader();
+                    var olmPhase = siteRepository.GetOlmPhase();
                     header.OmItemNumber = i;
                     omItemHeaders.Add(header);
                 }
@@ -53,6 +54,7 @@ namespace PimsExporter
                 }
             }
             outputRepository.SaveOmItemHeaders(omItemHeaders);
+            outputRepository.SaveOlmPhases();
         }
 
         private void ExportRoot()

@@ -64,12 +64,24 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        public void SaveOlmPhases()
+        {
+            string fileName = "olmphases.csv";
+            string path = Path.Combine(OutDirPath, "olmphase", fileName);
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                foreach (OlmPhase olm in OlmPhases)
+                    sw.WriteLine(ToCsv(olm));
+            }
+        }
     }
 
     public interface IOutputAdapter
     {
         void SaveAllOmItems(List<AllOmItem> omItems);
         void SaveAllVersions(List<AllVersion> versions);
+        void SaveOlmPhases();
         void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
     }
 }

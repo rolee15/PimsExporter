@@ -17,5 +17,10 @@ namespace PimsExporter.Repositories
         {
             return spAdapter.ProductRecord();
         }
+
+        public OlmPhase GetOlmPhase()
+        {
+            return spAdapter.OlmPhase();
+        }
     }
 }

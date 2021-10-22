@@ -130,6 +130,28 @@
                 public static readonly string OFFERING_CLUSTER = "Offering_x0020_Cluster";
             }
         }
+
+        public static class OlmPhase
+        {
+            public static class Lists
+            {
+                public static class AllOlmPhases
+                {
+                    public static readonly string TITLE = "PLM Phase";
+                    public static readonly string ROOT_FOLDER_NAME = "PLMPhase";
+                }
+            }
+
+            public static class Fields
+            {
+                public static readonly string OLM_PHASE = "OLM Phase";
+                public static readonly string CURRENT_PHASE = "Current Phase";
+                public static readonly string PHASE_START_APPROVAL_DATE = "Phase Start Approval Date";
+                public static readonly string PHASE_START_DATE = "Phase Start Date";
+                public static readonly string PHASE_PLANNED_END_DATE = "Phase Planned End Date";
+                public static readonly string PHASE_DURATION = "Phase Duration";
+            }
+        }
     }
 
 }

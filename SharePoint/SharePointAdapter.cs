@@ -9,6 +9,7 @@ using System.Net;
 
 using RootFields = Domain.Constants.Root.Fields;
 using ProductFields = Domain.Constants.Product.Fields;
+using OlmPhaseFields = Domain.Constants.OlmPhase.Fields;
 using User = Domain.Entities.User;
 
 namespace SharePoint
@@ -23,6 +24,33 @@ namespace SharePoint
 
         public Uri SharepointSiteUrl { get; }
         public NetworkCredential Credentials { get; }
+
+        public OlmPhase OlmPhase()
+        {
+            using (ClientContext context = new ClientContext(SharepointSiteUrl))
+            {
+                context.Credentials = Credentials;
+                var list = GetList(context, Constants.OlmPhase.Lists.AllOlmPhases.TITLE);
+                return GetOlmPhase(context, list);
+            }
+        }
+
+        private OlmPhase GetOlmPhase(ClientContext ctx, List list)
+        {
+            CamlQuery query = new CamlQuery
+            {
+                ViewXml = CAML.ViewQuery(
+                    ViewScope.DefaultValue,
+                    rowLimit: 1)
+            };
+
+            ListItemCollection items = list.GetItems(query);
+            ctx.Load(items);
+            ctx.ExecuteQuery();
+            var item = items[0];
+
+            return MapOlmPhasesToEntity(item);
+        }
 
         public OmItemHeader ProductRecord()
         {
@@ -166,6 +194,21 @@ namespace SharePoint
             return header;
         }
 
+        private OlmPhase MapOlmPhasesToEntity(ListItem item)
+        {
+            var olmPhase = new OlmPhase
+            {
+                OlmPhasee = Convert.ToString(item[OlmPhaseFields.OLM_PHASE]),
+                CurrentPhase = Convert.ToString(item[OlmPhaseFields.CURRENT_PHASE]),
+                PhaseStartApprovalDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_APPROVAL_DATE]),
+                PhaseStartDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_DATE]),
+                PhasePlannedEndDate = Convert.ToString(item[OlmPhaseFields.PHASE_PLANNED_END_DATE]),
+                PhaseDuration = Convert.ToString(item[OlmPhaseFields.PHASE_DURATION])
+            };
+
+            return olmPhase;
+        }
+
         private List GetList(ClientContext ctx, string title)
         {
             Web web = ctx.Web;
@@ -220,5 +263,6 @@ namespace SharePoint
         List<AllOmItem> AllOmItems();
         List<AllVersion> AllVersions();
         OmItemHeader ProductRecord();
+        OlmPhase OlmPhase();
     }
 }

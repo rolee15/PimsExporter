@@ -44,6 +44,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Entities\AllOmItem.cs" />
     <Compile Include="Entities\AllVersion.cs" />
+    <Compile Include="Entities\OlmPhase.cs" />
     <Compile Include="Entities\OmItemHeader.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

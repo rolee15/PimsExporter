@@ -29,6 +29,12 @@ namespace PimsExporter.Repositories
         {
             outputAdapter.SaveOmItemHeaders(omItemHeaders);
         }
+
+
+        internal void SaveOlmPhases()
+        {
+            outputAdapter.SaveOlmPhases();
+        }
     }
 
     internal interface IOutputRepository
