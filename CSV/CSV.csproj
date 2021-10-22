@@ -41,7 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllVersionCsvFormatter.cs" />
     <Compile Include="CsvAdapter.cs" />
+    <Compile Include="OmItemHeaderCsvFormatter.cs" />
+    <Compile Include="DocumentFormatterBase.cs" />
+    <Compile Include="AllOmItemCsvFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

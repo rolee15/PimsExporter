@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace PimsExporter
 {
@@ -34,6 +35,7 @@ namespace PimsExporter
         private void ExportOmItems(int from, int to)
         {
             var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
+            var omItemHeaders = new List<OmItemHeader>();
             for (int i = from; i < to; i++)
             {
                 try
@@ -43,14 +45,14 @@ namespace PimsExporter
                     var siteRepository = new OmItemSiteRepository(spAdapter);
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = i;
-                    outputRepository.AppendHeader(header);
+                    omItemHeaders.Add(header);
                 }
                 catch (Exception ex)
                 {
                     continue;
                 }
             }
-            outputRepository.SaveOmItemHeaders();
+            outputRepository.SaveOmItemHeaders(omItemHeaders);
         }
 
         private void ExportRoot()

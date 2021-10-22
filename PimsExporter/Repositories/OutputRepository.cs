@@ -24,15 +24,10 @@ namespace PimsExporter.Repositories
         {
             outputAdapter.SaveAllOmItems(omItems);
         }
-
-        internal void AppendHeader(OmItemHeader header)
+        
+        internal void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
-            outputAdapter.AppendHeader(header);
-        }
-
-        internal void SaveOmItemHeaders()
-        {
-            outputAdapter.SaveOmItemHeaders();
+            outputAdapter.SaveOmItemHeaders(omItemHeaders);
         }
     }
 
