@@ -6,6 +6,10 @@ using System.Net;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace CLI
 {
@@ -13,45 +17,38 @@ namespace CLI
     {
         static void Main(string[] args)
         {
-            var sharepointSiteUrl = GetSharePointSiteUrl();
-            var credentials = GetCredentials();
-            var outDirPath = GetOutputPath();
+            var host = CreateDefaultBuilder().Build();
+            var appSettings = host.Services.GetRequiredService<IOptions<AppSettings>>().Value;
+
+            Console.Write("Password: ");
+            var password = GetPassword();
             Console.WriteLine();
-            var exporter = new Exporter(sharepointSiteUrl, credentials, outDirPath);
-
+            var exporter = new Exporter(new Uri(appSettings.SharepointUrl), new NetworkCredential(appSettings.UserName, password), appSettings.OutputDir);
+            
             exporter.ExportAll();
-
-            Console.WriteLine($"Url: {sharepointSiteUrl}");
-            Console.WriteLine($"User: {credentials.UserName}");
-            Console.WriteLine($"Output: {outDirPath}");
-
+            
+            Console.WriteLine($"Url: {appSettings.SharepointUrl}");
+            Console.WriteLine($"User: {appSettings.UserName}");
+            Console.WriteLine($"Output: {appSettings.OutputDir}");
+            
             Console.WriteLine("\nFinished.\n");
             Console.ReadLine();
         }
 
-        private static string GetOutputPath()
+        static IHostBuilder CreateDefaultBuilder()
         {
-            Console.Write("Output dir path: ");
-            return Console.ReadLine();
+            return Host.CreateDefaultBuilder()
+                .ConfigureAppConfiguration(app =>
+                {
+                    app.AddJsonFile("appsettings.json");
+                    app.AddJsonFile($"appsettings.{Environment.UserName}.json", true);
+                })
+                .ConfigureServices((ctx, services) =>
+                {
+                    services.Configure<AppSettings>(ctx.Configuration);
+                });
         }
-
-        private static Uri GetSharePointSiteUrl()
-        {
-            Console.Write("Sharepoint site url: ");
-            var url = Console.ReadLine();
-            return new Uri(url);
-        }
-
-        private static NetworkCredential GetCredentials()
-        {
-            Console.Write("Username: ");
-            var userName = Console.ReadLine();
-            Console.Write("Password: ");
-            var password = GetPassword();
-            Console.WriteLine();
-            return new NetworkCredential(userName, password);
-        }
-
+        
         private static SecureString GetPassword()
         {
             var pwd = new SecureString();

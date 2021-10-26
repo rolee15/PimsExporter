@@ -45,6 +45,7 @@
     <Compile Include="Entities\AllOmItem.cs" />
     <Compile Include="Entities\AllVersion.cs" />
     <Compile Include="Entities\OmItemHeader.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

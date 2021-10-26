@@ -1,10 +1,11 @@
-﻿using Domain.Entities;
+﻿using System.Globalization;
+using Domain.Entities;
 
 namespace CSV
 {
     public class AllOmItemCsvFormatter : DocumentFormatterBase<AllOmItem>
     {
-        public AllOmItemCsvFormatter() : base(";")
+        public AllOmItemCsvFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
         {
             Columns = new[]
             {

@@ -1,10 +1,11 @@
-﻿using PimsExporter.Entities;
+﻿using System.Globalization;
+using PimsExporter.Entities;
 
 namespace CSV
 {
     public class AllVersionCsvFormatter : DocumentFormatterBase<AllVersion>
     {
-        public AllVersionCsvFormatter() : base(";")
+        public AllVersionCsvFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
         {
             //TODO could do this in the base class with reflection
             Columns = new[]
