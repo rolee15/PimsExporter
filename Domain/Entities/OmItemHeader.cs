@@ -16,8 +16,8 @@ namespace Domain.Entities
         public string OlmCurrentPhase { get; set; }
         public string ConfidentialityClass { get; set; }
         public string OfferingType { get; set; }
-        public DateTime CurrentStart { get; set; }
-        public DateTime CurrentEnd { get; set; }
+        public DateTime? CurrentStart { get; set; }
+        public DateTime? CurrentEnd { get; set; }
         public string OfferingCluster { get; set; }
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }

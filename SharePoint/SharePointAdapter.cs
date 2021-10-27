@@ -156,8 +156,8 @@ namespace SharePoint
                 OlmCurrentPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
                 ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
                 OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]),
-                CurrentStart = Convert.ToDateTime(item[ProductFields.PLM_DATE]),
-                CurrentEnd = Convert.ToDateTime(item[ProductFields.PLM_PHASE_PLANNED]),
+                CurrentStart = item[ProductFields.PLM_DATE] as DateTime?,
+                CurrentEnd = item[ProductFields.PLM_PHASE_PLANNED] as DateTime?,
                 //header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
                 ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
                 LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION])
