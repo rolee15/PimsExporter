@@ -1,14 +1,11 @@
 ﻿using CSV;
+using Domain.Entities;
 using PimsExporter.Repositories;
 using SharePoint;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Entities;
 
 namespace PimsExporter
 {

@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using Domain.Entities;
+﻿using Domain.Entities;
+using System.Globalization;
 
 namespace CSV
 {
@@ -25,7 +25,7 @@ namespace CSV
                 new ColumnFormatter<OmItemHeader>("CurrentEnd", r => r.CurrentEnd),
                 new ColumnFormatter<OmItemHeader>("OfferingCluster", r => r.OfferingCluster),
                 new ColumnFormatter<OmItemHeader>("ShortDescription", r => r.ShortDescription),
-                new ColumnFormatter<OmItemHeader>("LongDescription", r => r.LongDescription),
+                new ColumnFormatter<OmItemHeader>("LongDescription", r => r.LongDescription)
             };
         }
     }

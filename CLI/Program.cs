@@ -1,15 +1,11 @@
-﻿using PimsExporter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using PimsExporter;
+using System;
+using System.Net;
+using System.Security;
 
 namespace CLI
 {
@@ -23,7 +19,10 @@ namespace CLI
             Console.Write("Password: ");
             var password = GetPassword();
             Console.WriteLine();
+            var from = GetOmItemLowerRange();
+            var to = GetOmItemUpperRange();
 
+            var exporter = new Exporter(new Uri(appSettings.SharepointUrl), new NetworkCredential(appSettings.UserName, password), appSettings.OutputDir);
             Console.WriteLine();
             Console.Write("Starting to export root...");
             exporter.ExportRoot();
@@ -35,9 +34,7 @@ namespace CLI
             Console.WriteLine();
             Console.WriteLine("Finished.");
             Console.ReadLine();
-            var exporter = new Exporter(new Uri(appSettings.SharepointUrl), new NetworkCredential(appSettings.UserName, password), appSettings.OutputDir);
-            
-            exporter.ExportRoot();
+        }
 
         private static int GetOmItemLowerRange()
         {
@@ -64,7 +61,7 @@ namespace CLI
                     services.Configure<AppSettings>(ctx.Configuration);
                 });
         }
-        
+
         private static SecureString GetPassword()
         {
             var pwd = new SecureString();

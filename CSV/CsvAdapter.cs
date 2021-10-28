@@ -2,7 +2,6 @@
 using PimsExporter.Entities;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace CSV
 {
@@ -17,23 +16,24 @@ namespace CSV
         private readonly AllVersionCsvFormatter _allVersionFormatter;
         private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
-        
+
         private readonly string _outDirPath;
-        
+
         public CsvAdapter(string outDirPath)
         {
             _outDirPath = outDirPath;
-            _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
             _allOmItemFormatter = new AllOmItemCsvFormatter();
             _allVersionFormatter = new AllVersionCsvFormatter();
+            _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
+            _olmPhaseFormatter = new OlmPhaseCsvFormatter();
         }
-        
+
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
         {
             var path = Path.Combine(_outDirPath, "root");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, AllVersionsFileName);
-            
+
             var resultStream = _allVersionFormatter.FormatAsync(versions);
             using (var fileStream = File.Create(path))
             {
@@ -46,7 +46,7 @@ namespace CSV
             var path = Path.Combine(_outDirPath, "root");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OmItemsFileName);
-            
+
             var resultStream = _allOmItemFormatter.FormatAsync(omItems);
             using (var fileStream = File.Create(path))
             {

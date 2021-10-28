@@ -17,7 +17,7 @@
                     public static readonly string TITLE = "All Products";
                     public static readonly string ROOT_FOLDER = "AllProducts";
                 }
-                
+
                 public static class AllVersions
                 {
                     public static readonly string TITLE = "All Versions";
@@ -86,7 +86,7 @@
                 public static readonly string PLM_PHASE_PLANNED = "PLM_x0020_phase_x0020_planned_x0";
             }
         }
-    
+
         public static class Product
         {
             public static class Lists

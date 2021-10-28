@@ -9,15 +9,15 @@ namespace CSV
         {
             Columns = new[]
             {
-                new ColumnFormatter<OlmPhase>("OlmPhaseName", o => o.OlmPhaseName),
-                new ColumnFormatter<OlmPhase>("CurrentPhase", o => o.CurrentPhase),
-                new ColumnFormatter<OlmPhase>("PhaseStartApprovalDate", o => o.PhaseStartApprovalDate),
-                new ColumnFormatter<OlmPhase>("PhaseStartDate", o => o.PhaseStartDate),
-                new ColumnFormatter<OlmPhase>("PhasePlannedEndDate", o => o.PhasePlannedEndDate),
-                new ColumnFormatter<OlmPhase>("PhaseDuration", o => o.PhaseDuration),
-                new ColumnFormatter<OlmPhase>("ShortDescription", o => o.ShortDescription),
-                new ColumnFormatter<OlmPhase>("LongDescription", o => o.LongDescription),
-                new ColumnFormatter<OlmPhase>("OmItemNumber", o => o.OmItemNumber)
+                new ColumnFormatter<OlmPhase>("OmItemNumber", r => r.OmItemNumber),
+                new ColumnFormatter<OlmPhase>("OlmPhaseName", r => r.OlmPhaseName),
+                new ColumnFormatter<OlmPhase>("CurrentPhase", r => r.CurrentPhase),
+                new ColumnFormatter<OlmPhase>("PhaseStartApprovalDate", r => r.PhaseStartApprovalDate),
+                new ColumnFormatter<OlmPhase>("PhaseStartDate", r => r.PhaseStartDate),
+                new ColumnFormatter<OlmPhase>("PhasePlannedEndDate", r => r.PhasePlannedEndDate),
+                new ColumnFormatter<OlmPhase>("PhaseDuration", r => r.PhaseDuration),
+                new ColumnFormatter<OlmPhase>("ShortDescription", r => r.ShortDescription),
+                new ColumnFormatter<OlmPhase>("LongDescription", r => r.LongDescription)
             };
         }
     }
