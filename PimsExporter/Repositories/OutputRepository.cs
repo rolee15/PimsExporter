@@ -15,12 +15,12 @@ namespace PimsExporter.Repositories
             this.outputAdapter = outputAdapter;
         }
 
-        public void SaveAllVersions(List<AllVersion> versions)
+        public void SaveAllVersions(IEnumerable<AllVersion> versions)
         {
             outputAdapter.SaveAllVersions(versions);
         }
 
-        public void SaveAllOmItems(List<AllOmItem> omItems)
+        public void SaveAllOmItems(IEnumerable<AllOmItem> omItems)
         {
             outputAdapter.SaveAllOmItems(omItems);
         }
@@ -31,20 +31,15 @@ namespace PimsExporter.Repositories
         }
 
 
-        internal void SaveOlmPhases()
+        internal void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
         {
             outputAdapter.SaveOlmPhases();
-        }
-
-        internal void AppendOlmPhase(OlmPhase olmPhase)
-        {
-            outputAdapter.AppendOlmPhase(olmPhase);
         }
     }
 
     internal interface IOutputRepository
     {
-        void SaveAllOmItems(List<AllOmItem> omItems);
-        void SaveAllVersions(List<AllVersion> versions);
+        void SaveAllOmItems(IEnumerable<AllOmItem> omItems);
+        void SaveAllVersions(IEnumerable<AllVersion> versions);
     }
 }

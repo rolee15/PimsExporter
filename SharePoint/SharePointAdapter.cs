@@ -198,6 +198,7 @@ namespace SharePoint
                 OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]),
                 CurrentStart = item[ProductFields.PLM_DATE] as DateTime?,
                 CurrentEnd = item[ProductFields.PLM_PHASE_PLANNED] as DateTime?,
+                // TODO: Uncomment when new version is on TEST
                 //header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
                 ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
                 LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION])
@@ -208,16 +209,17 @@ namespace SharePoint
 
         private OlmPhase MapOlmPhasesToEntity(ListItem item)
         {
-            var olmPhase = new OlmPhase();
-
-            olmPhase.OlmPhaseName = Convert.ToString(item[OlmPhaseFields.OLM_PHASE]);
-            olmPhase.CurrentPhase = Convert.ToString(item[OlmPhaseFields.CURRENT_PHASE]);
-            olmPhase.PhaseStartApprovalDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_APPROVAL_DATE]);
-            olmPhase.PhaseStartDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_DATE]);
-            olmPhase.PhasePlannedEndDate = Convert.ToString(item[OlmPhaseFields.PHASE_PLANNED_END_DATE]);
-            olmPhase.PhaseDuration = Convert.ToString(item[OlmPhaseFields.PHASE_DURATION]);
-            olmPhase.ShortDescription = Convert.ToString(item[OlmPhaseFields.SHORT_DESCRIPTION]);
-            olmPhase.LongDescription = Convert.ToString(item[OlmPhaseFields.LONG_DESCRIPTION]);
+            var olmPhase = new OlmPhase
+            {
+                OlmPhaseName = Convert.ToString(item[OlmPhaseFields.OLM_PHASE]),
+                CurrentPhase = Convert.ToString(item[OlmPhaseFields.CURRENT_PHASE]),
+                PhaseStartApprovalDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_APPROVAL_DATE]),
+                PhaseStartDate = item[OlmPhaseFields.PHASE_START_DATE] as DateTime?,
+                PhasePlannedEndDate = item[OlmPhaseFields.PHASE_PLANNED_END_DATE] as DateTime?,
+                PhaseDuration = Convert.ToString(item[OlmPhaseFields.PHASE_DURATION]),
+                ShortDescription = Convert.ToString(item[OlmPhaseFields.SHORT_DESCRIPTION]),
+                LongDescription = Convert.ToString(item[OlmPhaseFields.LONG_DESCRIPTION])
+            };
 
             return olmPhase;
         }

@@ -25,11 +25,9 @@ namespace CLI
             Console.WriteLine();
             var exporter = new Exporter(new Uri(appSettings.SharepointUrl), new NetworkCredential(appSettings.UserName, password), appSettings.OutputDir);
             
-            exporter.ExportAll();
-            
-            Console.WriteLine($"Url: {appSettings.SharepointUrl}");
-            Console.WriteLine($"User: {appSettings.UserName}");
-            Console.WriteLine($"Output: {appSettings.OutputDir}");
+            exporter.ExportRoot();
+
+            exporter.ExportOmItems(1, 10);
             
             Console.WriteLine("\nFinished.\n");
             Console.ReadLine();

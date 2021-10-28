@@ -8,13 +8,15 @@ namespace CSV
 {
     public class CsvAdapter : IOutputAdapter
     {
-        private const string OmItemHeadersFileName = "omitemheaders.csv";
-        private const string AllVersionsFileName = "versions.csv";
-        private const string OmItemsFileName = "omitems.csv";
+        private const string OmItemsFileName = "OmItems.csv";
+        private const string AllVersionsFileName = "Versions.csv";
+        private const string OmItemHeadersFileName = "OmItemHeaders.csv";
+        private const string OlmPhasesFileName = "OlmPhases.csv";
 
-        private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
+        private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
+        private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
         
         private readonly string _outDirPath;
         
@@ -26,7 +28,7 @@ namespace CSV
             _allVersionFormatter = new AllVersionCsvFormatter();
         }
         
-        public void SaveAllVersions(List<AllVersion> versions)
+        public void SaveAllVersions(IEnumerable<AllVersion> versions)
         {
             var path = Path.Combine(_outDirPath, "root");
             Directory.CreateDirectory(path);
@@ -39,7 +41,7 @@ namespace CSV
             }
         }
 
-        public void SaveAllOmItems(List<AllOmItem> omItems)
+        public void SaveAllOmItems(IEnumerable<AllOmItem> omItems)
         {
             var path = Path.Combine(_outDirPath, "root");
             Directory.CreateDirectory(path);
@@ -64,43 +66,26 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
-        private string ToCsv(OlmPhase olmPhase)
-        {
-            var sb = new StringBuilder();
-            sb.Append(olmPhase.OlmPhaseName + ";");
-            sb.Append(olmPhase.CurrentPhase + ";");
-            sb.Append(olmPhase.PhaseStartApprovalDate + ";");
-            sb.Append(olmPhase.PhaseStartDate + ";");
-            sb.Append(olmPhase.PhasePlannedEndDate + ";");
-            sb.Append(olmPhase.PhaseDuration + ";");
-            sb.Append(olmPhase.ShortDescription + ";");
-            sb.Append(olmPhase.LongDescription + ";");
 
-            return sb.ToString();
-        }
+        public void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
+        {
+            var path = Path.Combine(_outDirPath, "product");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, OlmPhasesFileName);
 
-        public void AppendOlmPhase(OlmPhase olmPhase)
-        {
-            OlmPhases.Add(olmPhase);
-        }
-        public void SaveOlmPhases()
-        {
-            string fileName = "olmphases.csv";
-            string path = Path.Combine(OutDirPath, "olmphase", fileName);
-            using (StreamWriter sw = new StreamWriter(path))
+            var resultStream = _olmPhaseFormatter.FormatAsync(olmPhases);
+            using (var fileStream = File.Create(path))
             {
-                foreach (OlmPhase olm in OlmPhases)
-                    sw.WriteLine(ToCsv(olm));
+                resultStream.CopyTo(fileStream);
             }
         }
     }
 
     public interface IOutputAdapter
     {
-        void AppendOlmPhase(OlmPhase olmPhase);
-        void SaveAllOmItems(List<AllOmItem> omItems);
-        void SaveAllVersions(List<AllVersion> versions);
-        void SaveOlmPhases();
+        void SaveAllOmItems(IEnumerable<AllOmItem> omItems);
+        void SaveAllVersions(IEnumerable<AllVersion> versions);
         void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
+        void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
     }
 }

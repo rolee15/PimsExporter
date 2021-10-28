@@ -69,6 +69,12 @@ namespace CSV
                 Formatter = formatter ?? throw new ArgumentNullException(nameof(formatter));
             }
 
+            public ColumnFormatter(string header, Func<TRow, int> formatter)
+            {
+                Header = header ?? throw new ArgumentNullException(nameof(header));
+                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
+            }
+
             public ColumnFormatter(string header, Func<TRow, double> formatter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));

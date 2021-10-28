@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AllVersionCsvFormatter.cs" />
     <Compile Include="CsvAdapter.cs" />
+    <Compile Include="OlmPhaseCsvFormatter.cs" />
     <Compile Include="OmItemHeaderCsvFormatter.cs" />
     <Compile Include="DocumentFormatterBase.cs" />
     <Compile Include="AllOmItemCsvFormatter.cs" />

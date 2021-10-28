@@ -25,17 +25,11 @@ namespace PimsExporter
         public NetworkCredential Credentials { get; }
         public string OutDirPath { get; }
 
-        public void ExportAll()
-        {
-            ExportRoot();
-            ExportOmItems(1, 10);
-            // ExportVersions();
-        }
-
-        private void ExportOmItems(int from, int to)
+        public void ExportOmItems(int from, int to)
         {
             var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
             var omItemHeaders = new List<OmItemHeader>();
+            var olmPhases = new List<OlmPhase>();
             for (int i = from; i < to; i++)
             {
                 try
@@ -44,10 +38,11 @@ namespace PimsExporter
                     var spAdapter = new SharePointAdapter(new Uri(url), Credentials);
                     var siteRepository = new OmItemSiteRepository(spAdapter);
                     var header = siteRepository.GetHeader();
-                    var olmPhase = siteRepository.GetOlmPhase();
                     header.OmItemNumber = i;
                     omItemHeaders.Add(header);
-                    outputRepository.AppendOlmPhase(olmPhase[0]);
+                    var olmPhase = siteRepository.GetOlmPhase();
+                    olmPhase.ForEach(o => o.OmItemNumber = i);
+                    olmPhases.AddRange(olmPhase);
                 }
                 catch (Exception ex)
                 {
@@ -55,10 +50,10 @@ namespace PimsExporter
                 }
             }
             outputRepository.SaveOmItemHeaders(omItemHeaders);
-            outputRepository.SaveOlmPhases();
+            outputRepository.SaveOlmPhases(olmPhases);
         }
 
-        private void ExportRoot()
+        public void ExportRoot()
         {
             var spAdapter = new SharePointAdapter(SharepointSiteUrl, Credentials);
             var rootRepository = new RootSiteRepository(spAdapter);
