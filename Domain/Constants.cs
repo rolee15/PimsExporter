@@ -154,6 +154,31 @@
                 public static readonly string LONG_DESCRIPTION = "Long_x0020_Description";
             }
         }
+
+        public static class Milestone
+        {
+            public static class Lists
+            {
+                public static class AllMilestones
+                {
+                    public static readonly string TITLE = "Milestones";
+                    public static readonly string ROOT_FOLDER_NAME = "Milestones";
+                }
+            }
+
+            public static class Fields
+            {
+                public static readonly string MILESTONE_NAME = "MST_Name";
+                public static readonly string DATE_BASIC_PLAN = "Date_x0020_Basic_x0020_Plan";
+                public static readonly string DATE_PLAN = "Date_x0020_Plan";
+                public static readonly string DATE_ACTUAL = "Date_x0020_Actual";
+                public static readonly string MILESTONE_TYPE = "MST_Type";
+                public static readonly string OLM_PHASE = "PLM_x0020_Phase";
+                public static readonly string DEFAULT = "Default";
+                public static readonly string SHORTDESCRIPTION = "Short_x0020_Description";
+                public static readonly string COMMENT = "Comment1";
+            }
+        }
     }
 
 }

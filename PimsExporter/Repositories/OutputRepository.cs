@@ -36,6 +36,12 @@ namespace PimsExporter.Repositories
         }
     }
 
+        internal void SaveOmItemMilestones(IEnumerable<OmItemMilestone> omItemMilestones)
+        {
+            outputAdapter.SaveOmItemMilestones(omItemMilestones);
+        }
+    }
+
     internal interface IOutputRepository
     {
         void SaveAllOmItems(IEnumerable<AllOmItem> omItems);

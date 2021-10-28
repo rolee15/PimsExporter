@@ -22,5 +22,10 @@ namespace PimsExporter.Repositories
         {
             return spAdapter.OlmPhase();
         }
+
+        public List<OmItemMilestone> GetMilestones()
+        {
+            return spAdapter.Milestones();
+        }
     }
 }
