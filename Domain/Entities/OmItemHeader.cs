@@ -5,8 +5,8 @@ namespace Domain.Entities
     public class OmItemHeader
     {
         public string OmItemName { get; set; }
-        public string OmItemAlias {  get; set; }
-        public string OmItemId {  get; set; }
+        public string OmItemAlias { get; set; }
+        public string OmItemId { get; set; }
         public User OfferingManager { get; set; }
         public string PortfolioUnit { get; set; }
         public string PimsId { get; set; }

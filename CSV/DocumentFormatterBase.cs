@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Domain.Entities;
 
 namespace CSV
 {
@@ -47,7 +47,7 @@ namespace CSV
             var data = string.Join(_separator, Columns.Select(c => QuoteFields(c.Formatter(row))));
             writer.WriteLine(data);
         }
-        
+
         private string QuoteFields(string value)
         {
             if (value is null) return string.Empty;
@@ -58,6 +58,7 @@ namespace CSV
         protected sealed class ColumnFormatter<TRow> where TRow : T
         {
             private const string DateFormat = "O";
+            private const string IntFormat = "{0}";
             private const string FloatFormat = "{0:0.00}";
             private const string DecimalFormat = "{0:0.0000}";
 
@@ -66,7 +67,15 @@ namespace CSV
             public ColumnFormatter(string header, Func<TRow, string> formatter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                Formatter = formatter ?? throw new ArgumentNullException(nameof(formatter));
+                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
+                Formatter = formatter;
+            }
+
+            public ColumnFormatter(string header, Func<TRow, int> formatter)
+            {
+                Header = header ?? throw new ArgumentNullException(nameof(header));
+                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
+                Formatter = r => string.Format(_culture, IntFormat, formatter(r));
             }
 
             public ColumnFormatter(string header, Func<TRow, double> formatter)
@@ -96,14 +105,14 @@ namespace CSV
                 if (formatter is null) throw new ArgumentNullException(nameof(formatter));
                 Formatter = r => formatter(r).ToString(DateFormat);
             }
-            
+
             public ColumnFormatter(string header, Func<TRow, DateTime?> formatter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
                 if (formatter is null) throw new ArgumentNullException(nameof(formatter));
                 Formatter = r => formatter(r).HasValue ? formatter(r).Value.ToString(DateFormat) : null;
             }
-            
+
             public ColumnFormatter(string header, Func<TRow, User> formatter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));

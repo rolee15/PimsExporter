@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using SharePoint;
-using System;
+using System.Collections.Generic;
 
 namespace PimsExporter.Repositories
 {
@@ -16,6 +16,11 @@ namespace PimsExporter.Repositories
         public OmItemHeader GetHeader()
         {
             return spAdapter.ProductRecord();
+        }
+
+        public List<OlmPhase> GetOlmPhase()
+        {
+            return spAdapter.OlmPhase();
         }
     }
 }

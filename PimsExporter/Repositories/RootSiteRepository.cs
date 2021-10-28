@@ -1,9 +1,7 @@
 ﻿using Domain.Entities;
 using PimsExporter.Entities;
 using SharePoint;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PimsExporter.Repositories
 {

@@ -1,7 +1,6 @@
 ﻿using CSV;
 using Domain.Entities;
 using PimsExporter.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace PimsExporter.Repositories
@@ -15,25 +14,31 @@ namespace PimsExporter.Repositories
             this.outputAdapter = outputAdapter;
         }
 
-        public void SaveAllVersions(List<AllVersion> versions)
+        public void SaveAllVersions(IEnumerable<AllVersion> versions)
         {
             outputAdapter.SaveAllVersions(versions);
         }
 
-        public void SaveAllOmItems(List<AllOmItem> omItems)
+        public void SaveAllOmItems(IEnumerable<AllOmItem> omItems)
         {
             outputAdapter.SaveAllOmItems(omItems);
         }
-        
+
         internal void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
             outputAdapter.SaveOmItemHeaders(omItemHeaders);
+        }
+
+
+        internal void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
+        {
+            outputAdapter.SaveOlmPhases(olmPhases);
         }
     }
 
     internal interface IOutputRepository
     {
-        void SaveAllOmItems(List<AllOmItem> omItems);
-        void SaveAllVersions(List<AllVersion> versions);
+        void SaveAllOmItems(IEnumerable<AllOmItem> omItems);
+        void SaveAllVersions(IEnumerable<AllVersion> versions);
     }
 }

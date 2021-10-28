@@ -2,36 +2,38 @@
 using PimsExporter.Entities;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace CSV
 {
     public class CsvAdapter : IOutputAdapter
     {
-        private const string OmItemHeadersFileName = "omitemheaders.csv";
-        private const string AllVersionsFileName = "versions.csv";
-        private const string OmItemsFileName = "omitems.csv";
+        private const string OmItemsFileName = "OmItems.csv";
+        private const string AllVersionsFileName = "Versions.csv";
+        private const string OmItemHeadersFileName = "OmItemHeaders.csv";
+        private const string OlmPhasesFileName = "OlmPhases.csv";
 
-        private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
-        
+        private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
+        private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
+
         private readonly string _outDirPath;
-        
+
         public CsvAdapter(string outDirPath)
         {
             _outDirPath = outDirPath;
-            _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
             _allOmItemFormatter = new AllOmItemCsvFormatter();
             _allVersionFormatter = new AllVersionCsvFormatter();
+            _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
+            _olmPhaseFormatter = new OlmPhaseCsvFormatter();
         }
-        
-        public void SaveAllVersions(List<AllVersion> versions)
+
+        public void SaveAllVersions(IEnumerable<AllVersion> versions)
         {
             var path = Path.Combine(_outDirPath, "root");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, AllVersionsFileName);
-            
+
             var resultStream = _allVersionFormatter.FormatAsync(versions);
             using (var fileStream = File.Create(path))
             {
@@ -39,12 +41,12 @@ namespace CSV
             }
         }
 
-        public void SaveAllOmItems(List<AllOmItem> omItems)
+        public void SaveAllOmItems(IEnumerable<AllOmItem> omItems)
         {
             var path = Path.Combine(_outDirPath, "root");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OmItemsFileName);
-            
+
             var resultStream = _allOmItemFormatter.FormatAsync(omItems);
             using (var fileStream = File.Create(path))
             {
@@ -64,12 +66,26 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        public void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
+        {
+            var path = Path.Combine(_outDirPath, "product");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, OlmPhasesFileName);
+
+            var resultStream = _olmPhaseFormatter.FormatAsync(olmPhases);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
     }
 
     public interface IOutputAdapter
     {
-        void SaveAllOmItems(List<AllOmItem> omItems);
-        void SaveAllVersions(List<AllVersion> versions);
+        void SaveAllOmItems(IEnumerable<AllOmItem> omItems);
+        void SaveAllVersions(IEnumerable<AllVersion> versions);
         void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
+        void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
     }
 }

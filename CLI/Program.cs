@@ -1,15 +1,11 @@
-﻿using PimsExporter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using PimsExporter;
+using System;
+using System.Net;
+using System.Security;
 
 namespace CLI
 {
@@ -23,16 +19,33 @@ namespace CLI
             Console.Write("Password: ");
             var password = GetPassword();
             Console.WriteLine();
+            var from = GetOmItemLowerRange();
+            var to = GetOmItemUpperRange();
+
             var exporter = new Exporter(new Uri(appSettings.SharepointUrl), new NetworkCredential(appSettings.UserName, password), appSettings.OutputDir);
-            
-            exporter.ExportAll();
-            
-            Console.WriteLine($"Url: {appSettings.SharepointUrl}");
-            Console.WriteLine($"User: {appSettings.UserName}");
-            Console.WriteLine($"Output: {appSettings.OutputDir}");
-            
-            Console.WriteLine("\nFinished.\n");
+            Console.WriteLine();
+            Console.Write("Starting to export root...");
+            exporter.ExportRoot();
+            Console.WriteLine("Done.");
+            Console.Write("Starting to export OM Items...");
+            exporter.ExportOmItems(from, to);
+            Console.WriteLine("Done.");
+
+            Console.WriteLine();
+            Console.WriteLine("Finished.");
             Console.ReadLine();
+        }
+
+        private static int GetOmItemLowerRange()
+        {
+            Console.Write("Where do you want to start exporting OM Items? ");
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private static int GetOmItemUpperRange()
+        {
+            Console.Write("Which is the last OM Item to export? ");
+            return Convert.ToInt32(Console.ReadLine());
         }
 
         static IHostBuilder CreateDefaultBuilder()
@@ -48,7 +61,7 @@ namespace CLI
                     services.Configure<AppSettings>(ctx.Configuration);
                 });
         }
-        
+
         private static SecureString GetPassword()
         {
             var pwd = new SecureString();

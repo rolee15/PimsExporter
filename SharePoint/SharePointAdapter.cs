@@ -6,9 +6,9 @@ using PimsExporter.Entities;
 using System;
 using System.Collections.Generic;
 using System.Net;
-
-using RootFields = Domain.Constants.Root.Fields;
+using OlmPhaseFields = Domain.Constants.OlmPhase.Fields;
 using ProductFields = Domain.Constants.Product.Fields;
+using RootFields = Domain.Constants.Root.Fields;
 using User = Domain.Entities.User;
 
 namespace SharePoint
@@ -23,6 +23,46 @@ namespace SharePoint
 
         public Uri SharepointSiteUrl { get; }
         public NetworkCredential Credentials { get; }
+
+        public List<OlmPhase> OlmPhase()
+        {
+            using (ClientContext context = new ClientContext(SharepointSiteUrl))
+            {
+                context.Credentials = Credentials;
+                var list = GetList(context, Constants.OlmPhase.Lists.AllOlmPhases.TITLE);
+                return GetOlmPhase(context, list);
+            }
+        }
+
+        private List<OlmPhase> GetOlmPhase(ClientContext ctx, List list)
+        {
+            var olmPhases = new List<OlmPhase>();
+
+            CamlQuery query = new CamlQuery
+            {
+                ViewXml = CAML.ViewQuery(
+                    ViewScope.DefaultValue,
+                    rowLimit: 1)
+            };
+
+            ListItemCollectionPosition position = null;
+            do
+            {
+                query.ListItemCollectionPosition = position;
+                ListItemCollection items = list.GetItems(query);
+                ctx.Load(items);
+                ctx.ExecuteQuery();
+
+
+                foreach (var item in items)
+                    olmPhases.Add(MapOlmPhasesToEntity(item));
+
+                position = items.ListItemCollectionPosition;
+
+            } while (position != null);
+
+            return olmPhases;
+        }
 
         public OmItemHeader ProductRecord()
         {
@@ -67,7 +107,7 @@ namespace SharePoint
             CamlQuery query = new CamlQuery
             {
                 ViewXml = CAML.ViewQuery(
-                    ViewScope.DefaultValue, 
+                    ViewScope.DefaultValue,
                     rowLimit: Constants.SharePoint.DEFAULT_QUERY_ROW_LIMIT)
             };
 
@@ -158,12 +198,30 @@ namespace SharePoint
                 OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]),
                 CurrentStart = item[ProductFields.PLM_DATE] as DateTime?,
                 CurrentEnd = item[ProductFields.PLM_PHASE_PLANNED] as DateTime?,
+                // TODO: Uncomment when new version is on TEST
                 //header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
                 ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
                 LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION])
             };
 
             return header;
+        }
+
+        private OlmPhase MapOlmPhasesToEntity(ListItem item)
+        {
+            var olmPhase = new OlmPhase
+            {
+                OlmPhaseName = Convert.ToString(item[OlmPhaseFields.OLM_PHASE]),
+                CurrentPhase = Convert.ToString(item[OlmPhaseFields.CURRENT_PHASE]),
+                PhaseStartApprovalDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_APPROVAL_DATE]),
+                PhaseStartDate = item[OlmPhaseFields.PHASE_START_DATE] as DateTime?,
+                PhasePlannedEndDate = item[OlmPhaseFields.PHASE_PLANNED_END_DATE] as DateTime?,
+                PhaseDuration = Convert.ToString(item[OlmPhaseFields.PHASE_DURATION]),
+                ShortDescription = Convert.ToString(item[OlmPhaseFields.SHORT_DESCRIPTION]),
+                LongDescription = Convert.ToString(item[OlmPhaseFields.LONG_DESCRIPTION])
+            };
+
+            return olmPhase;
         }
 
         private List GetList(ClientContext ctx, string title)
@@ -220,5 +278,6 @@ namespace SharePoint
         List<AllOmItem> AllOmItems();
         List<AllVersion> AllVersions();
         OmItemHeader ProductRecord();
+        List<OlmPhase> OlmPhase();
     }
 }

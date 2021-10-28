@@ -1,14 +1,11 @@
 ﻿using CSV;
+using Domain.Entities;
 using PimsExporter.Repositories;
 using SharePoint;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Entities;
 
 namespace PimsExporter
 {
@@ -25,18 +22,12 @@ namespace PimsExporter
         public NetworkCredential Credentials { get; }
         public string OutDirPath { get; }
 
-        public void ExportAll()
-        {
-            ExportRoot();
-            ExportOmItems(1, 10);
-            // ExportVersions();
-        }
-
-        private void ExportOmItems(int from, int to)
+        public void ExportOmItems(int from, int to)
         {
             var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
             var omItemHeaders = new List<OmItemHeader>();
-            for (int i = from; i < to; i++)
+            var olmPhases = new List<OlmPhase>();
+            for (int i = from; i <= to; i++)
             {
                 try
                 {
@@ -46,6 +37,9 @@ namespace PimsExporter
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = i;
                     omItemHeaders.Add(header);
+                    var olmPhase = siteRepository.GetOlmPhase();
+                    olmPhase.ForEach(o => o.OmItemNumber = i);
+                    olmPhases.AddRange(olmPhase);
                 }
                 catch (Exception ex)
                 {
@@ -53,9 +47,10 @@ namespace PimsExporter
                 }
             }
             outputRepository.SaveOmItemHeaders(omItemHeaders);
+            outputRepository.SaveOlmPhases(olmPhases);
         }
 
-        private void ExportRoot()
+        public void ExportRoot()
         {
             var spAdapter = new SharePointAdapter(SharepointSiteUrl, Credentials);
             var rootRepository = new RootSiteRepository(spAdapter);
