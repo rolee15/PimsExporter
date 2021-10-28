@@ -28,8 +28,9 @@ namespace CSV
         
         public void SaveAllVersions(List<AllVersion> versions)
         {
-            var path = Path.Combine(_outDirPath, "root", AllVersionsFileName);
-            Directory.CreateDirectory(_outDirPath);
+            var path = Path.Combine(_outDirPath, "root");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, AllVersionsFileName);
             
             var resultStream = _allVersionFormatter.FormatAsync(versions);
             using (var fileStream = File.Create(path))
@@ -40,8 +41,9 @@ namespace CSV
 
         public void SaveAllOmItems(List<AllOmItem> omItems)
         {
-            string path = Path.Combine(_outDirPath, "root", OmItemsFileName);
-            Directory.CreateDirectory(_outDirPath);
+            var path = Path.Combine(_outDirPath, "root");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, OmItemsFileName);
             
             var resultStream = _allOmItemFormatter.FormatAsync(omItems);
             using (var fileStream = File.Create(path))
@@ -52,9 +54,10 @@ namespace CSV
 
         public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
-            var path = Path.Combine(_outDirPath, "product", OmItemHeadersFileName);
-            Directory.CreateDirectory(_outDirPath);
-            
+            var path = Path.Combine(_outDirPath, "product");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, OmItemHeadersFileName);
+
             var resultStream = _omItemHeaderFormatter.FormatAsync(omItemHeaders);
             using (var fileStream = File.Create(path))
             {

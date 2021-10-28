@@ -15,8 +15,7 @@ namespace Domain.Entities
         public string PimsId { get; set; }
         public string OmItemName { get; set; }
         public string OfferingType { get; set; }
-        //TODO should be FieldUserValue and the formatter should decide how to print it (same for every other non string property)
-        public string OfferingManager { get; set; }
+        public User OfferingManager { get; set; }
         public string OmItemAlias { get; set; }
         public string OmItemId { get; set; }
         public string OlmCurrentPhase { get; set; }

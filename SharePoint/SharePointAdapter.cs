@@ -9,6 +9,7 @@ using System.Net;
 
 using RootFields = Domain.Constants.Root.Fields;
 using ProductFields = Domain.Constants.Product.Fields;
+using User = Domain.Entities.User;
 
 namespace SharePoint
 {
@@ -121,7 +122,7 @@ namespace SharePoint
                 PimsId = Convert.ToString(item[RootFields.PIMSIDOMITEM]),
                 OmItemName = Convert.ToString(item[RootFields.PRODUCT_NAME]),
                 OfferingType = Convert.ToString(item[RootFields.OFFERING_TYPE]),
-                OfferingManager = Convert.ToString(item[RootFields.PRODUCT_MANAGER]),
+                OfferingManager = MapToUser(item[RootFields.PRODUCT_MANAGER]),
                 OmItemAlias = Convert.ToString(item[RootFields.PRODUCT_ALIAS]),
                 OmItemId = Convert.ToString(item[RootFields.OMITEMID]),
                 OlmCurrentPhase = Convert.ToString(item[RootFields.PLM_PHASE]),
@@ -131,6 +132,14 @@ namespace SharePoint
             };
         }
 
+        private User MapToUser(object input)
+        {
+            if (!(input is FieldUserValue fieldUserValue))
+                return null;
+
+            return new User(fieldUserValue.LookupValue, fieldUserValue.Email);
+        }
+
         private OmItemHeader MapProductRecordToEntity(ListItem item)
         {
             var header = new OmItemHeader
@@ -138,7 +147,7 @@ namespace SharePoint
                 OmItemName = Convert.ToString(item[ProductFields.PRODUCT_NAME]),
                 OmItemAlias = Convert.ToString(item[ProductFields.PRODUCT_ALIAS]),
                 OmItemId = Convert.ToString(item[ProductFields.PRODUCT_ID]),
-                OfferingManager = Convert.ToString(item[ProductFields.PRODUCT_MANAGER]),
+                OfferingManager = MapToUser(item[ProductFields.PRODUCT_MANAGER]),
                 PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]),
                 PimsId = Convert.ToString(item[ProductFields.PIMSIDOMITEM]),
                 OfferingName = Convert.ToString(item[ProductFields.OFFERING_NAME]),
@@ -147,8 +156,8 @@ namespace SharePoint
                 OlmCurrentPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
                 ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
                 OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]),
-                CurrentStart = Convert.ToString(item[ProductFields.PLM_DATE]),
-                CurrentEnd = Convert.ToString(item[ProductFields.PLM_PHASE_PLANNED]),
+                CurrentStart = item[ProductFields.PLM_DATE] as DateTime?,
+                CurrentEnd = item[ProductFields.PLM_PHASE_PLANNED] as DateTime?,
                 //header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
                 ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
                 LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION])

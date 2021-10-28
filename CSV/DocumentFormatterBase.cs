@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Domain.Entities;
 
 namespace CSV
 {
@@ -37,24 +38,30 @@ namespace CSV
 
         private void PrintHeaderAsync(TextWriter writer)
         {
-            var header = string.Join(_separator, Columns.Select(c => c.Header));
+            var header = string.Join(_separator, Columns.Select(c => QuoteFields(c.Header)));
             writer.WriteLine(header);
         }
 
         private void PrintDataAsync(TextWriter writer, T row)
         {
-            var data = string.Join(_separator, Columns.Select(c => c.Formatter(row)));
+            var data = string.Join(_separator, Columns.Select(c => QuoteFields(c.Formatter(row))));
             writer.WriteLine(data);
         }
+        
+        private string QuoteFields(string value)
+        {
+            if (value is null) return string.Empty;
+            return value.Contains("\"") ? $"\"{value.Replace("\"", "\"\"")}\"" : $"\"{value}\"";
+        }
+
 
         protected sealed class ColumnFormatter<TRow> where TRow : T
         {
-            private const string DateFormat = "yyyy-MM-dd";
-
+            private const string DateFormat = "O";
             private const string FloatFormat = "{0:0.00}";
             private const string DecimalFormat = "{0:0.0000}";
 
-            private readonly CultureInfo _culture = CultureInfo.GetCultureInfo("en-GB");
+            private readonly CultureInfo _culture = CultureInfo.GetCultureInfo("en-US");
 
             public ColumnFormatter(string header, Func<TRow, string> formatter)
             {
@@ -88,6 +95,20 @@ namespace CSV
                 Header = header ?? throw new ArgumentNullException(nameof(header));
                 if (formatter is null) throw new ArgumentNullException(nameof(formatter));
                 Formatter = r => formatter(r).ToString(DateFormat);
+            }
+            
+            public ColumnFormatter(string header, Func<TRow, DateTime?> formatter)
+            {
+                Header = header ?? throw new ArgumentNullException(nameof(header));
+                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
+                Formatter = r => formatter(r).HasValue ? formatter(r).Value.ToString(DateFormat) : null;
+            }
+            
+            public ColumnFormatter(string header, Func<TRow, User> formatter)
+            {
+                Header = header ?? throw new ArgumentNullException(nameof(header));
+                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
+                Formatter = r => formatter(r)?.Name ?? formatter(r)?.Email;
             }
 
             public string Header { get; }
