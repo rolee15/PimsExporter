@@ -23,14 +23,32 @@ namespace CLI
             Console.Write("Password: ");
             var password = GetPassword();
             Console.WriteLine();
+
+            Console.WriteLine();
+            Console.Write("Starting to export root...");
+            exporter.ExportRoot();
+            Console.WriteLine("Done.");
+            Console.Write("Starting to export OM Items...");
+            exporter.ExportOmItems(from, to);
+            Console.WriteLine("Done.");
+
+            Console.WriteLine();
+            Console.WriteLine("Finished.");
+            Console.ReadLine();
             var exporter = new Exporter(new Uri(appSettings.SharepointUrl), new NetworkCredential(appSettings.UserName, password), appSettings.OutputDir);
             
             exporter.ExportRoot();
 
-            exporter.ExportOmItems(1, 10);
-            
-            Console.WriteLine("\nFinished.\n");
-            Console.ReadLine();
+        private static int GetOmItemLowerRange()
+        {
+            Console.Write("Where do you want to start exporting OM Items? ");
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private static int GetOmItemUpperRange()
+        {
+            Console.Write("Which is the last OM Item to export? ");
+            return Convert.ToInt32(Console.ReadLine());
         }
 
         static IHostBuilder CreateDefaultBuilder()

@@ -30,7 +30,7 @@ namespace PimsExporter
             var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
             var omItemHeaders = new List<OmItemHeader>();
             var olmPhases = new List<OlmPhase>();
-            for (int i = from; i < to; i++)
+            for (int i = from; i <= to; i++)
             {
                 try
                 {
