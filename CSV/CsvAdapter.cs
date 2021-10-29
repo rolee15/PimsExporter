@@ -17,7 +17,7 @@ namespace CSV
         private readonly AllVersionCsvFormatter _allVersionFormatter;
         private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
-        private readonly OmItemMilestonesCsvFormatter _milestonesFormatter;
+        private readonly MilestoneCsvFormatter _milestonesFormatter;
 
         private readonly string _outDirPath;
 
@@ -28,7 +28,7 @@ namespace CSV
             _allVersionFormatter = new AllVersionCsvFormatter();
             _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
             _olmPhaseFormatter = new OlmPhaseCsvFormatter();
-            _milestonesFormatter = new OmItemMilestonesCsvFormatter();
+            _milestonesFormatter = new MilestoneCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)

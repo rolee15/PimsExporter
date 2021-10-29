@@ -3,9 +3,9 @@ using System.Globalization;
 
 namespace CSV
 {
-    public class OmItemMilestonesCsvFormatter : DocumentFormatterBase<Milestone>
+    public class MilestoneCsvFormatter : DocumentFormatterBase<Milestone>
     {
-        public OmItemMilestonesCsvFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
+        public MilestoneCsvFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
         {
             Columns = new[]
             {
