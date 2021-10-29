@@ -47,6 +47,7 @@
     <Compile Include="OmItemHeaderCsvFormatter.cs" />
     <Compile Include="DocumentFormatterBase.cs" />
     <Compile Include="AllOmItemCsvFormatter.cs" />
+    <Compile Include="MilestoneCsvFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

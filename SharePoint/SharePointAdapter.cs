@@ -6,7 +6,6 @@ using PimsExporter.Entities;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using OlmPhaseFields = Domain.Constants.OlmPhase.Fields;
 using ProductFields = Domain.Constants.Product.Fields;
 using RootFields = Domain.Constants.Root.Fields;
 using User = Domain.Entities.User;
@@ -29,7 +28,7 @@ namespace SharePoint
             using (ClientContext context = new ClientContext(SharepointSiteUrl))
             {
                 context.Credentials = Credentials;
-                var list = GetList(context, Constants.OlmPhase.Lists.AllOlmPhases.TITLE);
+                var list = GetList(context, Constants.Product.Lists.OlmPhases.TITLE);
                 return GetOlmPhase(context, list);
             }
         }
@@ -130,6 +129,46 @@ namespace SharePoint
             return versions;
         }
 
+        public List<Milestone> Milestones()
+        {
+            using (ClientContext context = new ClientContext(SharepointSiteUrl))
+            {
+                context.Credentials = Credentials;
+                var list = GetList(context, Constants.Product.Lists.Milestones.TITLE);
+                return GetMilestones(context, list);
+            }
+        }
+
+        private List<Milestone> GetMilestones(ClientContext ctx, List list)
+        {
+            var milestones = new List<Milestone>();
+
+            CamlQuery query = new CamlQuery
+            {
+                ViewXml = CAML.ViewQuery(
+                    ViewScope.DefaultValue,
+                    rowLimit: Constants.SharePoint.DEFAULT_QUERY_ROW_LIMIT)
+            };
+
+            ListItemCollectionPosition position = null;
+            do
+            {
+                query.ListItemCollectionPosition = position;
+                ListItemCollection items = list.GetItems(query);
+                ctx.Load(items);
+                ctx.ExecuteQuery();
+
+
+                foreach (var item in items)
+                    milestones.Add(MapMilestoneToEntity(item));
+
+                position = items.ListItemCollectionPosition;
+
+            } while (position != null);
+
+            return milestones;
+        }
+
         private AllVersion MapAllVersionToEntity(ListItem item)
         {
             return new AllVersion
@@ -211,17 +250,34 @@ namespace SharePoint
         {
             var olmPhase = new OlmPhase
             {
-                OlmPhaseName = Convert.ToString(item[OlmPhaseFields.OLM_PHASE]),
-                CurrentPhase = Convert.ToString(item[OlmPhaseFields.CURRENT_PHASE]),
-                PhaseStartApprovalDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_APPROVAL_DATE]),
-                PhaseStartDate = item[OlmPhaseFields.PHASE_START_DATE] as DateTime?,
-                PhasePlannedEndDate = item[OlmPhaseFields.PHASE_PLANNED_END_DATE] as DateTime?,
-                PhaseDuration = Convert.ToString(item[OlmPhaseFields.PHASE_DURATION]),
-                ShortDescription = Convert.ToString(item[OlmPhaseFields.SHORT_DESCRIPTION]),
-                LongDescription = Convert.ToString(item[OlmPhaseFields.LONG_DESCRIPTION])
+                OlmPhaseName = Convert.ToString(item[ProductFields.OLM_PHASE]),
+                CurrentPhase = Convert.ToString(item[ProductFields.CURRENT_PHASE]),
+                PhaseStartApprovalDate = Convert.ToString(item[ProductFields.PHASE_START_APPROVAL_DATE]),
+                PhaseStartDate = item[ProductFields.PHASE_START_DATE] as DateTime?,
+                PhasePlannedEndDate = item[ProductFields.PHASE_PLANNED_END_DATE] as DateTime?,
+                PhaseDuration = Convert.ToString(item[ProductFields.PHASE_DURATION]),
+                ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
+                LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION])
             };
 
             return olmPhase;
+        }
+
+        private Milestone MapMilestoneToEntity(ListItem item)
+        {
+            var milestone = new Milestone
+            {
+                MilestoneName = Convert.ToString(item[ProductFields.MILESTONE_NAME]),
+                DateBasicPlan = item[ProductFields.DATE_BASIC_PLAN] as DateTime?,
+                DatePlan = item[ProductFields.DATE_PLAN] as DateTime?,
+                DateActual = item[ProductFields.DATE_ACTUAL] as DateTime?,
+                MilestoneType = Convert.ToString(item[ProductFields.MILESTONE_TYPE]),
+                OLMPhase = Convert.ToString(item[ProductFields.OLM_PHASE]),
+                Default = Convert.ToString(item[ProductFields.DEFAULT]),
+                ShortDescription = Convert.ToString(item[ProductFields.SHORTDESCRIPTION]),
+                LongDescription = Convert.ToString(item[ProductFields.COMMENT]),
+            };
+            return milestone;
         }
 
         private List GetList(ClientContext ctx, string title)
@@ -279,5 +335,6 @@ namespace SharePoint
         List<AllVersion> AllVersions();
         OmItemHeader ProductRecord();
         List<OlmPhase> OlmPhase();
+        List<Milestone> Milestones();
     }
 }

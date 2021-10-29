@@ -24,15 +24,20 @@ namespace PimsExporter.Repositories
             outputAdapter.SaveAllOmItems(omItems);
         }
 
-        internal void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
+        public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
             outputAdapter.SaveOmItemHeaders(omItemHeaders);
         }
 
 
-        internal void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
+        public void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
         {
             outputAdapter.SaveOlmPhases(olmPhases);
+        }
+
+        public void SaveMilestones(IEnumerable<Milestone> milestones)
+        {
+            outputAdapter.SaveMilestones(milestones);
         }
     }
 
@@ -40,5 +45,8 @@ namespace PimsExporter.Repositories
     {
         void SaveAllOmItems(IEnumerable<AllOmItem> omItems);
         void SaveAllVersions(IEnumerable<AllVersion> versions);
+        void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
+        void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
+        void SaveMilestones(IEnumerable<Milestone> milestones);
     }
 }
