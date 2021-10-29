@@ -46,7 +46,7 @@
     <Compile Include="Entities\AllVersion.cs" />
     <Compile Include="Entities\OlmPhase.cs" />
     <Compile Include="Entities\OmItemHeader.cs" />
-    <Compile Include="Entities\OmItemMilestone.cs" />
+    <Compile Include="Entities\Milestone.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,23 +1,24 @@
-﻿using System.Globalization;
-using Domain.Entities;
+﻿using Domain.Entities;
+using System.Globalization;
 
 namespace CSV
 {
-    public class OmItemMilestonesCsvFormatter : DocumentFormatterBase<OmItemMilestone>
+    public class OmItemMilestonesCsvFormatter : DocumentFormatterBase<Milestone>
     {
-        public OmItemMilestonesCsvFormatter() : base(";")
+        public OmItemMilestonesCsvFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
         {
             Columns = new[]
             {
-                new ColumnFormatter<OmItemMilestone>("MilestoneName", r => r.MilestoneName),
-                new ColumnFormatter<OmItemMilestone>("DateBasicPlan", r => r.DateBasicPlan),
-                new ColumnFormatter<OmItemMilestone>("DatePlan", r => r.DatePlan),
-                new ColumnFormatter<OmItemMilestone>("DateActual", r => r.DateActual),
-                new ColumnFormatter<OmItemMilestone>("MilestoneType", r => r.MilestoneType),
-                new ColumnFormatter<OmItemMilestone>("OLMPhase", r => r.OLMPhase),
-                new ColumnFormatter<OmItemMilestone>("Default", r => r.Default),
-                new ColumnFormatter<OmItemMilestone>("ShortDescription", r => r.ShortDescription),
-                new ColumnFormatter<OmItemMilestone>("LongDescription", r => r.LongDescription)
+                new ColumnFormatter<Milestone>("OmItemNumber", r => r.OmItemNumber),
+                new ColumnFormatter<Milestone>("MilestoneName", r => r.MilestoneName),
+                new ColumnFormatter<Milestone>("DateBasicPlan", r => r.DateBasicPlan),
+                new ColumnFormatter<Milestone>("DatePlan", r => r.DatePlan),
+                new ColumnFormatter<Milestone>("DateActual", r => r.DateActual),
+                new ColumnFormatter<Milestone>("MilestoneType", r => r.MilestoneType),
+                new ColumnFormatter<Milestone>("OLMPhase", r => r.OLMPhase),
+                new ColumnFormatter<Milestone>("Default", r => r.Default),
+                new ColumnFormatter<Milestone>("ShortDescription", r => r.ShortDescription),
+                new ColumnFormatter<Milestone>("LongDescription", r => r.LongDescription)
             };
         }
     }

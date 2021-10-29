@@ -3,7 +3,6 @@ using Moq;
 using PimsExporter.Entities;
 using PimsExporter.Repositories;
 using SharePoint;
-using System;
 using System.Collections.Generic;
 
 namespace PimsExporter.UnitTest.Repositories

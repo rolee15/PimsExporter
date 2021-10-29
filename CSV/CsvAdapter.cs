@@ -83,7 +83,7 @@ namespace CSV
             }
         }
 
-        public void SaveOmItemMilestones(IEnumerable<OmItemMilestone> omItemMilestones)
+        public void SaveMilestones(IEnumerable<Milestone> omItemMilestones)
         {
             var path = Path.Combine(_outDirPath, "product");
             Directory.CreateDirectory(path);
@@ -103,6 +103,6 @@ namespace CSV
         void SaveAllVersions(IEnumerable<AllVersion> versions);
         void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
         void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
-        void SaveOmItemMilestones(IEnumerable<OmItemMilestone> omItemMilestones);
+        void SaveMilestones(IEnumerable<Milestone> omItemMilestones);
     }
 }

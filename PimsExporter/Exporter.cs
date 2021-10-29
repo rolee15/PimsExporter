@@ -26,8 +26,8 @@ namespace PimsExporter
         {
             var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
             var omItemHeaders = new List<OmItemHeader>();
-            var olmPhases = new List<OlmPhase>();
-            var omItemMilestones = new List<OmItemMilestone>();
+            var omItemOlmPhases = new List<OlmPhase>();
+            var omItemMilestones = new List<Milestone>();
             for (int i = from; i < to; i++)
             {
                 try
@@ -35,15 +35,18 @@ namespace PimsExporter
                     var url = Path.Combine(SharepointSiteUrl.ToString(), $"products/{i}");
                     var spAdapter = new SharePointAdapter(new Uri(url), Credentials);
                     var siteRepository = new OmItemSiteRepository(spAdapter);
-                    var milestones = siteRepository.GetMilestones();
+
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = i;
-                    milestones[0].OmItemNumber = i; //foreach & exception handling needed
                     omItemHeaders.Add(header);
-                    var olmPhase = siteRepository.GetOlmPhase();
-                    olmPhase.ForEach(o => o.OmItemNumber = i);
-                    olmPhases.AddRange(olmPhase);
-                    omItemMilestones.Add(milestones[0]); //omItemMilestones.Add(milestones);
+
+                    var olmPhases = siteRepository.GetOlmPhase();
+                    olmPhases.ForEach(o => o.OmItemNumber = i);
+                    omItemOlmPhases.AddRange(olmPhases);
+
+                    var milestones = siteRepository.GetMilestones();
+                    milestones.ForEach(m => m.OmItemNumber = i);
+                    omItemMilestones.AddRange(milestones);
                 }
                 catch (Exception ex)
                 {
@@ -51,8 +54,8 @@ namespace PimsExporter
                 }
             }
             outputRepository.SaveOmItemHeaders(omItemHeaders);
-            outputRepository.SaveOlmPhases(olmPhases);
-            outputRepository.SaveOmItemMilestones(omItemMilestones);
+            outputRepository.SaveOlmPhases(omItemOlmPhases);
+            outputRepository.SaveMilestones(omItemMilestones);
         }
 
         public void ExportRoot()

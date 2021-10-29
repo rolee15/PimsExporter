@@ -6,10 +6,8 @@ using PimsExporter.Entities;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using OlmPhaseFields = Domain.Constants.OlmPhase.Fields;
 using ProductFields = Domain.Constants.Product.Fields;
 using RootFields = Domain.Constants.Root.Fields;
-using MilestoneFields = Domain.Constants.Milestone.Fields;
 using User = Domain.Entities.User;
 
 namespace SharePoint
@@ -30,7 +28,7 @@ namespace SharePoint
             using (ClientContext context = new ClientContext(SharepointSiteUrl))
             {
                 context.Credentials = Credentials;
-                var list = GetList(context, Constants.OlmPhase.Lists.AllOlmPhases.TITLE);
+                var list = GetList(context, Constants.Product.Lists.AllOlmPhases.TITLE);
                 return GetOlmPhase(context, list);
             }
         }
@@ -131,19 +129,19 @@ namespace SharePoint
             return versions;
         }
 
-        public List<OmItemMilestone> Milestones()
+        public List<Milestone> Milestones()
         {
             using (ClientContext context = new ClientContext(SharepointSiteUrl))
             {
                 context.Credentials = Credentials;
-                var list = GetList(context, Constants.Milestone.Lists.AllMilestones.TITLE);
+                var list = GetList(context, Constants.Product.Lists.AllMilestones.TITLE);
                 return GetMilestones(context, list);
             }
         }
 
-        private List<OmItemMilestone> GetMilestones(ClientContext ctx, List list)
+        private List<Milestone> GetMilestones(ClientContext ctx, List list)
         {
-            var milestones = new List<OmItemMilestone>();
+            var milestones = new List<Milestone>();
 
             CamlQuery query = new CamlQuery
             {
@@ -252,32 +250,32 @@ namespace SharePoint
         {
             var olmPhase = new OlmPhase
             {
-                OlmPhaseName = Convert.ToString(item[OlmPhaseFields.OLM_PHASE]),
-                CurrentPhase = Convert.ToString(item[OlmPhaseFields.CURRENT_PHASE]),
-                PhaseStartApprovalDate = Convert.ToString(item[OlmPhaseFields.PHASE_START_APPROVAL_DATE]),
-                PhaseStartDate = item[OlmPhaseFields.PHASE_START_DATE] as DateTime?,
-                PhasePlannedEndDate = item[OlmPhaseFields.PHASE_PLANNED_END_DATE] as DateTime?,
-                PhaseDuration = Convert.ToString(item[OlmPhaseFields.PHASE_DURATION]),
-                ShortDescription = Convert.ToString(item[OlmPhaseFields.SHORT_DESCRIPTION]),
-                LongDescription = Convert.ToString(item[OlmPhaseFields.LONG_DESCRIPTION])
+                OlmPhaseName = Convert.ToString(item[ProductFields.OLM_PHASE]),
+                CurrentPhase = Convert.ToString(item[ProductFields.CURRENT_PHASE]),
+                PhaseStartApprovalDate = Convert.ToString(item[ProductFields.PHASE_START_APPROVAL_DATE]),
+                PhaseStartDate = item[ProductFields.PHASE_START_DATE] as DateTime?,
+                PhasePlannedEndDate = item[ProductFields.PHASE_PLANNED_END_DATE] as DateTime?,
+                PhaseDuration = Convert.ToString(item[ProductFields.PHASE_DURATION]),
+                ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
+                LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION])
             };
 
             return olmPhase;
         }
 
-        private OmItemMilestone MapMilestoneToEntity(ListItem item)
+        private Milestone MapMilestoneToEntity(ListItem item)
         {
-            var milestone = new OmItemMilestone
-            { 
-                MilestoneName = Convert.ToString(item[MilestoneFields.MILESTONE_NAME]),
-                DateBasicPlan = Convert.ToDateTime(item[MilestoneFields.DATE_BASIC_PLAN]),
-                DatePlan = Convert.ToDateTime(item[MilestoneFields.DATE_PLAN]),
-                DateActual = Convert.ToDateTime(item[MilestoneFields.DATE_ACTUAL]),
-                MilestoneType = Convert.ToString(item[MilestoneFields.MILESTONE_TYPE]),
-                OLMPhase = Convert.ToString(item[MilestoneFields.OLM_PHASE]),
-                Default = Convert.ToString(item[MilestoneFields.DEFAULT]),
-                ShortDescription = Convert.ToString(item[MilestoneFields.SHORTDESCRIPTION]),
-                LongDescription = Convert.ToString(item[MilestoneFields.COMMENT]),
+            var milestone = new Milestone
+            {
+                MilestoneName = Convert.ToString(item[ProductFields.MILESTONE_NAME]),
+                DateBasicPlan = Convert.ToDateTime(item[ProductFields.DATE_BASIC_PLAN]),
+                DatePlan = Convert.ToDateTime(item[ProductFields.DATE_PLAN]),
+                DateActual = Convert.ToDateTime(item[ProductFields.DATE_ACTUAL]),
+                MilestoneType = Convert.ToString(item[ProductFields.MILESTONE_TYPE]),
+                OLMPhase = Convert.ToString(item[ProductFields.OLM_PHASE]),
+                Default = Convert.ToString(item[ProductFields.DEFAULT]),
+                ShortDescription = Convert.ToString(item[ProductFields.SHORTDESCRIPTION]),
+                LongDescription = Convert.ToString(item[ProductFields.COMMENT]),
             };
             return milestone;
         }
@@ -337,6 +335,6 @@ namespace SharePoint
         List<AllVersion> AllVersions();
         OmItemHeader ProductRecord();
         List<OlmPhase> OlmPhase();
-        List<OmItemMilestone> Milestones();
+        List<Milestone> Milestones();
     }
 }

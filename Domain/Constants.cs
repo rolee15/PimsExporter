@@ -96,6 +96,17 @@
                     public static readonly string TITLE = "Product Record";
                     public static readonly string ROOT_FOLDER_NAME = "ProductRecord";
                 }
+                public static class AllOlmPhases
+                {
+                    public static readonly string TITLE = "PLM Phase";
+                    public static readonly string ROOT_FOLDER_NAME = "PLMPhase";
+                }
+
+                public static class AllMilestones
+                {
+                    public static readonly string TITLE = "Milestones";
+                    public static readonly string ROOT_FOLDER_NAME = "Milestones";
+                }
             }
 
             public static class Fields
@@ -128,52 +139,17 @@
                 public static readonly string PRODUCT_NUMBER = "ProductNumber";
                 public static readonly string PIMSIDOMITEM = "PIMSIDOMItem";
                 public static readonly string OFFERING_CLUSTER = "Offering_x0020_Cluster";
-            }
-        }
-
-        public static class OlmPhase
-        {
-            public static class Lists
-            {
-                public static class AllOlmPhases
-                {
-                    public static readonly string TITLE = "PLM Phase";
-                    public static readonly string ROOT_FOLDER_NAME = "PLMPhase";
-                }
-            }
-
-            public static class Fields
-            {
                 public static readonly string OLM_PHASE = "PLM_x0020_Phase";
                 public static readonly string CURRENT_PHASE = "Current_x0020_Phase";
                 public static readonly string PHASE_START_APPROVAL_DATE = "Phase_x0020_Start_x0020_Approval";
                 public static readonly string PHASE_START_DATE = "Phase_x0020_Start_x0020_Date";
                 public static readonly string PHASE_PLANNED_END_DATE = "Phase_x0020_Planned_x0020_End_x0";
                 public static readonly string PHASE_DURATION = "Phase_x0020_Duration";
-                public static readonly string SHORT_DESCRIPTION = "Short_x0020_Description";
-                public static readonly string LONG_DESCRIPTION = "Long_x0020_Description";
-            }
-        }
-
-        public static class Milestone
-        {
-            public static class Lists
-            {
-                public static class AllMilestones
-                {
-                    public static readonly string TITLE = "Milestones";
-                    public static readonly string ROOT_FOLDER_NAME = "Milestones";
-                }
-            }
-
-            public static class Fields
-            {
                 public static readonly string MILESTONE_NAME = "MST_Name";
                 public static readonly string DATE_BASIC_PLAN = "Date_x0020_Basic_x0020_Plan";
                 public static readonly string DATE_PLAN = "Date_x0020_Plan";
                 public static readonly string DATE_ACTUAL = "Date_x0020_Actual";
                 public static readonly string MILESTONE_TYPE = "MST_Type";
-                public static readonly string OLM_PHASE = "PLM_x0020_Phase";
                 public static readonly string DEFAULT = "Default";
                 public static readonly string SHORTDESCRIPTION = "Short_x0020_Description";
                 public static readonly string COMMENT = "Comment1";

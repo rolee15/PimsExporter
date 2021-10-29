@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class OmItemMilestone
+    public class Milestone
     {
         public string MilestoneName { get; set; }
         public DateTime DateBasicPlan { get; set; }

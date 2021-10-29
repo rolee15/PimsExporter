@@ -5,23 +5,31 @@ using System.Collections.Generic;
 
 namespace PimsExporter.Repositories
 {
-    internal class RootSiteRepository
+
+    internal class RootSiteRepository : IRootSiteRepository
     {
-        private ISharePointAdapter sp;
+        private readonly ISharePointAdapter sp;
 
         public RootSiteRepository(ISharePointAdapter sharePointAdapter)
         {
             this.sp = sharePointAdapter;
         }
 
-        internal List<AllVersion> GetAllVersions()
+        public List<AllVersion> GetAllVersions()
         {
             return sp.AllVersions();
         }
 
-        internal List<AllOmItem> GetAllOmItems()
+        public List<AllOmItem> GetAllOmItems()
         {
             return sp.AllOmItems();
         }
+
+    }
+
+    internal interface IRootSiteRepository
+    {
+        List<AllOmItem> GetAllOmItems();
+        List<AllVersion> GetAllVersions();
     }
 }
