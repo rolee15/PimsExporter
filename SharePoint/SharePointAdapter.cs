@@ -28,7 +28,7 @@ namespace SharePoint
             using (ClientContext context = new ClientContext(SharepointSiteUrl))
             {
                 context.Credentials = Credentials;
-                var list = GetList(context, Constants.Product.Lists.AllOlmPhases.TITLE);
+                var list = GetList(context, Constants.Product.Lists.OlmPhases.TITLE);
                 return GetOlmPhase(context, list);
             }
         }
@@ -134,7 +134,7 @@ namespace SharePoint
             using (ClientContext context = new ClientContext(SharepointSiteUrl))
             {
                 context.Credentials = Credentials;
-                var list = GetList(context, Constants.Product.Lists.AllMilestones.TITLE);
+                var list = GetList(context, Constants.Product.Lists.Milestones.TITLE);
                 return GetMilestones(context, list);
             }
         }
@@ -147,7 +147,7 @@ namespace SharePoint
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
-                    rowLimit: 1)
+                    rowLimit: Constants.SharePoint.DEFAULT_QUERY_ROW_LIMIT)
             };
 
             ListItemCollectionPosition position = null;
@@ -268,9 +268,9 @@ namespace SharePoint
             var milestone = new Milestone
             {
                 MilestoneName = Convert.ToString(item[ProductFields.MILESTONE_NAME]),
-                DateBasicPlan = Convert.ToDateTime(item[ProductFields.DATE_BASIC_PLAN]),
-                DatePlan = Convert.ToDateTime(item[ProductFields.DATE_PLAN]),
-                DateActual = Convert.ToDateTime(item[ProductFields.DATE_ACTUAL]),
+                DateBasicPlan = item[ProductFields.DATE_BASIC_PLAN] as DateTime?,
+                DatePlan = item[ProductFields.DATE_PLAN] as DateTime?,
+                DateActual = item[ProductFields.DATE_ACTUAL] as DateTime?,
                 MilestoneType = Convert.ToString(item[ProductFields.MILESTONE_TYPE]),
                 OLMPhase = Convert.ToString(item[ProductFields.OLM_PHASE]),
                 Default = Convert.ToString(item[ProductFields.DEFAULT]),

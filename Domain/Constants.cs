@@ -96,13 +96,13 @@
                     public static readonly string TITLE = "Product Record";
                     public static readonly string ROOT_FOLDER_NAME = "ProductRecord";
                 }
-                public static class AllOlmPhases
+                public static class OlmPhases
                 {
                     public static readonly string TITLE = "PLM Phase";
                     public static readonly string ROOT_FOLDER_NAME = "PLMPhase";
                 }
 
-                public static class AllMilestones
+                public static class Milestones
                 {
                     public static readonly string TITLE = "Milestones";
                     public static readonly string ROOT_FOLDER_NAME = "Milestones";

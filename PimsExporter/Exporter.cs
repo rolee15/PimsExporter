@@ -28,7 +28,7 @@ namespace PimsExporter
             var omItemHeaders = new List<OmItemHeader>();
             var omItemOlmPhases = new List<OlmPhase>();
             var omItemMilestones = new List<Milestone>();
-            for (int i = from; i < to; i++)
+            for (int i = from; i <= to; i++)
             {
                 try
                 {
