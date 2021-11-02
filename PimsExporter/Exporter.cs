@@ -1,6 +1,7 @@
 ﻿using CSV;
 using Domain.Entities;
-using PimsExporter.Repositories;
+using PimsExporter.Services.InputRepositories;
+using PimsExporter.Services.OutputRepositories;
 using SharePoint;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,20 @@ namespace PimsExporter
 {
     public class Exporter
     {
-        public Exporter(Uri sharepointSiteUrl, NetworkCredential credentials, string outDirPath)
+        private readonly IInputRepositoryFactory _inputRepositoryFactory;
+        private readonly IOutputRepository _outputRepository;
+
+        public Exporter(IInputRepositoryFactory inputRepositoryFactory, IOutputRepository outputRepository)
         {
-            SharepointSiteUrl = sharepointSiteUrl;
-            Credentials = credentials;
-            OutDirPath = outDirPath;
+            _inputRepositoryFactory = inputRepositoryFactory;
+            _outputRepository = outputRepository;
         }
 
-        public Uri SharepointSiteUrl { get; }
-        public NetworkCredential Credentials { get; }
-        public string OutDirPath { get; }
+        public Uri SharepointSiteUrl { get; set; }
+        public NetworkCredential Credentials { get; set; }
 
         public void ExportOmItems(int from, int to)
         {
-            var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
             var omItemHeaders = new List<OmItemHeader>();
             var omItemOlmPhases = new List<OlmPhase>();
             var omItemMilestones = new List<Milestone>();
@@ -33,8 +34,8 @@ namespace PimsExporter
                 try
                 {
                     var url = Path.Combine(SharepointSiteUrl.ToString(), $"products/{i}");
-                    var spAdapter = new SharePointAdapter(new Uri(url), Credentials);
-                    var siteRepository = new OmItemSiteRepository(spAdapter);
+                    var spUri = new Uri(url);
+                    var siteRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(spUri, Credentials);
 
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = i;
@@ -53,20 +54,18 @@ namespace PimsExporter
                     continue;
                 }
             }
-            outputRepository.SaveOmItemHeaders(omItemHeaders);
-            outputRepository.SaveOlmPhases(omItemOlmPhases);
-            outputRepository.SaveMilestones(omItemMilestones);
+            _outputRepository.SaveOmItemHeaders(omItemHeaders);
+            _outputRepository.SaveOlmPhases(omItemOlmPhases);
+            _outputRepository.SaveMilestones(omItemMilestones);
         }
 
         public void ExportRoot()
         {
-            var spAdapter = new SharePointAdapter(SharepointSiteUrl, Credentials);
-            var rootRepository = new RootSiteRepository(spAdapter);
-            var outputRepository = new OutputRepository(new CsvAdapter(OutDirPath));
+            var rootRepository = _inputRepositoryFactory.Create<IRootSiteRepository>(SharepointSiteUrl, Credentials);
             var allOmItems = rootRepository.GetAllOmItems();
             var allVersions = rootRepository.GetAllVersions();
-            outputRepository.SaveAllOmItems(allOmItems);
-            outputRepository.SaveAllVersions(allVersions);
+            _outputRepository.SaveAllOmItems(allOmItems);
+            _outputRepository.SaveAllVersions(allVersions);
         }
     }
 }

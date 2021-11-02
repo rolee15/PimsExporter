@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CSV;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PimsExporter;
+using Services.InputRepositories;
+using Services.OutputRepositories;
 using System;
 using System.Net;
 using System.Security;
@@ -22,7 +25,14 @@ namespace CLI
             var from = GetOmItemLowerRange();
             var to = GetOmItemUpperRange();
 
-            var exporter = new Exporter(new Uri(appSettings.SharepointUrl), new NetworkCredential(appSettings.UserName, password), appSettings.OutputDir);
+            var inputRepositoryFactory = new InputRepositoryFactory();
+            var outputAdapter = new CsvAdapter(appSettings.OutputDir);
+            var outputRepository = new OutputRepository(outputAdapter);
+            var exporter = new Exporter(inputRepositoryFactory, outputRepository)
+            {
+                SharepointSiteUrl = new Uri(appSettings.SharepointUrl),
+                Credentials = new NetworkCredential(appSettings.UserName, password)
+            };
             Console.WriteLine();
             Console.Write("Starting to export root...");
             exporter.ExportRoot();

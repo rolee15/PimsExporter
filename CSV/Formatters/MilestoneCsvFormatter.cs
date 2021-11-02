@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using System.Globalization;
 
-namespace CSV
+namespace CSV.Formatters
 {
     public class MilestoneCsvFormatter : DocumentFormatterBase<Milestone>
     {

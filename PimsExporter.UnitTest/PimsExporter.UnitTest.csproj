@@ -83,6 +83,10 @@
       <Project>{FAB8F011-F86C-4D07-8B9F-33DBB5B85BD5}</Project>
       <Name>PimsExporter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{967C26A8-4866-411F-9FED-5A552BAF575E}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharePoint\SharePoint.csproj">
       <Project>{266FD68E-93FB-4126-92CC-1429443E6855}</Project>
       <Name>SharePoint</Name>

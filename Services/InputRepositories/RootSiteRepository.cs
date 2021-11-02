@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
-using PimsExporter.Entities;
+using PimsExporter.Services.InputRepositories;
 using SharePoint;
 using System.Collections.Generic;
 
-namespace PimsExporter.Repositories
+namespace Services.InputRepositories
 {
     public class RootSiteRepository : IRootSiteRepository
     {
@@ -11,7 +11,7 @@ namespace PimsExporter.Repositories
 
         public RootSiteRepository(ISharePointAdapter sharePointAdapter)
         {
-            this._spAdapter = sharePointAdapter;
+            _spAdapter = sharePointAdapter;
         }
 
         public List<AllVersion> GetAllVersions()
@@ -24,11 +24,5 @@ namespace PimsExporter.Repositories
             return _spAdapter.AllOmItems();
         }
 
-    }
-
-    public interface IRootSiteRepository
-    {
-        List<AllOmItem> GetAllOmItems();
-        List<AllVersion> GetAllVersions();
     }
 }

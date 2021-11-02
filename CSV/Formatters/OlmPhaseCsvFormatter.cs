@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using System.Globalization;
 
-namespace CSV
+namespace CSV.Formatters
 {
     internal class OlmPhaseCsvFormatter : DocumentFormatterBase<OlmPhase>
     {

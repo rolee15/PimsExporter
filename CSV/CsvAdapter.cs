@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using PimsExporter.Entities;
+﻿using CSV.Formatters;
+using Domain.Entities;
 using System.Collections.Generic;
 using System.IO;
 

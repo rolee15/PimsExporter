@@ -42,10 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exporter.cs" />
-    <Compile Include="Repositories\OmItemSiteRepository.cs" />
-    <Compile Include="Repositories\OutputRepository.cs" />
+    <Compile Include="Services\InputRepositories\IInputRepositoryBase.cs" />
+    <Compile Include="Services\InputRepositories\IInputRepositoryFactory.cs" />
+    <Compile Include="Services\InputRepositories\IOmItemSiteRepository.cs" />
+    <Compile Include="Services\OutputRepositories\IOutputRepository.cs" />
+    <Compile Include="Services\InputRepositories\IRootSiteRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\RootSiteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSV\CSV.csproj">

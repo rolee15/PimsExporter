@@ -223,9 +223,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CSV\CSV.csproj">
+      <Project>{81F42A72-691E-4A01-BA76-9C338EE92A4B}</Project>
+      <Name>CSV</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PimsExporter\PimsExporter.csproj">
       <Project>{FAB8F011-F86C-4D07-8B9F-33DBB5B85BD5}</Project>
       <Name>PimsExporter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{967C26A8-4866-411F-9FED-5A552BAF575E}</Project>
+      <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,6 @@
 using Domain.Entities;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
-using PimsExporter.Entities;
 using System;
 using System.Collections.Generic;
 using System.Net;

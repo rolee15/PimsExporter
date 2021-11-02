@@ -1,8 +1,9 @@
 ﻿using Domain.Entities;
+using PimsExporter.Services.InputRepositories;
 using SharePoint;
 using System.Collections.Generic;
 
-namespace PimsExporter.Repositories
+namespace Services.InputRepositories
 {
     public class OmItemSiteRepository : IOmItemSiteRepository
     {
@@ -27,12 +28,5 @@ namespace PimsExporter.Repositories
         {
             return spAdapter.Milestones();
         }
-    }
-
-    public interface IOmItemSiteRepository
-    {
-        OmItemHeader GetHeader();
-        List<Milestone> GetMilestones();
-        List<OlmPhase> GetOlmPhase();
     }
 }
