@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PimsExporter.Repositories
 {
-    internal class OmItemSiteRepository : IOmItemSiteRepository
+    public class OmItemSiteRepository : IOmItemSiteRepository
     {
         private readonly ISharePointAdapter spAdapter;
 
@@ -29,7 +29,7 @@ namespace PimsExporter.Repositories
         }
     }
 
-    internal interface IOmItemSiteRepository
+    public interface IOmItemSiteRepository
     {
         OmItemHeader GetHeader();
         List<Milestone> GetMilestones();

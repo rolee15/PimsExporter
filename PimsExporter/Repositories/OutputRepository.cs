@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PimsExporter.Repositories
 {
-    internal class OutputRepository : IOutputRepository
+    public class OutputRepository : IOutputRepository
     {
         private readonly IOutputAdapter outputAdapter;
 
@@ -41,7 +41,7 @@ namespace PimsExporter.Repositories
         }
     }
 
-    internal interface IOutputRepository
+    public interface IOutputRepository
     {
         void SaveAllOmItems(IEnumerable<AllOmItem> omItems);
         void SaveAllVersions(IEnumerable<AllVersion> versions);
