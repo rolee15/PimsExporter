@@ -2,6 +2,7 @@
 using Domain.Entities;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Extensions.Options;
 
 namespace CSV
 {
@@ -22,9 +23,9 @@ namespace CSV
 
         public string OutputDir { get; }
 
-        public CsvAdapter(CsvAdapterSettings settings)
+        public CsvAdapter(IOptions<CsvAdapterSettings> settings)
         {
-            _settings = settings;
+            _settings = settings.Value;
             _allOmItemFormatter = new AllOmItemCsvFormatter();
             _allVersionFormatter = new AllVersionCsvFormatter();
             _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
