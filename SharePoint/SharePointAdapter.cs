@@ -249,7 +249,7 @@ namespace SharePoint
         {
             var olmPhase = new OlmPhase
             {
-                OlmPhaseName = Convert.ToString(item[ProductFields.OLM_PHASE]),
+                OlmPhaseName = Convert.ToString(item[ProductFields.PLM_PHASE]),
                 CurrentPhase = Convert.ToString(item[ProductFields.CURRENT_PHASE]),
                 PhaseStartApprovalDate = Convert.ToString(item[ProductFields.PHASE_START_APPROVAL_DATE]),
                 PhaseStartDate = item[ProductFields.PHASE_START_DATE] as DateTime?,
@@ -271,9 +271,9 @@ namespace SharePoint
                 DatePlan = item[ProductFields.DATE_PLAN] as DateTime?,
                 DateActual = item[ProductFields.DATE_ACTUAL] as DateTime?,
                 MilestoneType = Convert.ToString(item[ProductFields.MILESTONE_TYPE]),
-                OLMPhase = Convert.ToString(item[ProductFields.OLM_PHASE]),
+                OLMPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
                 Default = Convert.ToString(item[ProductFields.DEFAULT]),
-                ShortDescription = Convert.ToString(item[ProductFields.SHORTDESCRIPTION]),
+                ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
                 LongDescription = Convert.ToString(item[ProductFields.COMMENT]),
             };
             return milestone;
