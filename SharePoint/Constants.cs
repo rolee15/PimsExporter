@@ -1,11 +1,8 @@
-﻿namespace Domain
+﻿namespace SharePoint
 {
     public static class Constants
     {
-        public static class SharePoint
-        {
-            public const int DEFAULT_QUERY_ROW_LIMIT = 100;
-        }
+        public const int DEFAULT_QUERY_ROW_LIMIT = 100;
 
         public static class Root
         {

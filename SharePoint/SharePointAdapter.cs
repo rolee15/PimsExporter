@@ -1,12 +1,11 @@
-﻿using Domain;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using ProductFields = Domain.Constants.Product.Fields;
-using RootFields = Domain.Constants.Root.Fields;
+using ProductFields = SharePoint.Constants.Product.Fields;
+using RootFields = SharePoint.Constants.Root.Fields;
 using User = Domain.Entities.User;
 
 namespace SharePoint
@@ -106,7 +105,7 @@ namespace SharePoint
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
-                    rowLimit: Constants.SharePoint.DEFAULT_QUERY_ROW_LIMIT)
+                    rowLimit: Constants.DEFAULT_QUERY_ROW_LIMIT)
             };
 
             ListItemCollectionPosition position = null;
@@ -146,7 +145,7 @@ namespace SharePoint
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
-                    rowLimit: Constants.SharePoint.DEFAULT_QUERY_ROW_LIMIT)
+                    rowLimit: Constants.DEFAULT_QUERY_ROW_LIMIT)
             };
 
             ListItemCollectionPosition position = null;
@@ -295,7 +294,7 @@ namespace SharePoint
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
-                    rowLimit: Constants.SharePoint.DEFAULT_QUERY_ROW_LIMIT)
+                    rowLimit: Constants.DEFAULT_QUERY_ROW_LIMIT)
             };
 
             ListItemCollectionPosition position = null;

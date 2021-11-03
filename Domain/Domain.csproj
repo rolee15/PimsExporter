@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Entities\AllOmItem.cs" />
     <Compile Include="Entities\AllVersion.cs" />
     <Compile Include="Entities\EntityBase.cs" />
