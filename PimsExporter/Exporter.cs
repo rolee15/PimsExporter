@@ -1,28 +1,33 @@
-﻿using CSV;
-using Domain.Entities;
+﻿using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
 using PimsExporter.Services.OutputRepositories;
-using SharePoint;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security;
 
 namespace PimsExporter
 {
-    public class Exporter
+    public class Exporter : IApplication
     {
+        private readonly ExporterSettings _settings;
         private readonly IInputRepositoryFactory _inputRepositoryFactory;
         private readonly IOutputRepository _outputRepository;
 
-        public Exporter(IInputRepositoryFactory inputRepositoryFactory, IOutputRepository outputRepository)
+        public Exporter(ExporterSettings settings, IInputRepositoryFactory inputRepositoryFactory, IOutputRepository outputRepository)
         {
+            _settings = settings;
             _inputRepositoryFactory = inputRepositoryFactory;
             _outputRepository = outputRepository;
+
+            RootSiteUrl = _settings.SharepointUrl;
+            UserName = _settings.UserName;
         }
 
-        public Uri SharepointSiteUrl { get; set; }
-        public NetworkCredential Credentials { get; set; }
+        public string RootSiteUrl { get; private set; }
+        public string UserName { get; private set; }
+        public SecureString Password { get; set; }
 
         public void ExportOmItems(int from, int to)
         {
@@ -33,9 +38,10 @@ namespace PimsExporter
             {
                 try
                 {
-                    var url = Path.Combine(SharepointSiteUrl.ToString(), $"products/{i}");
-                    var spUri = new Uri(url);
-                    var siteRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(spUri, Credentials);
+                    var url = Path.Combine(RootSiteUrl, $"products/{i}");
+                    var siteUri = new Uri(url);
+                    var credentials = new NetworkCredential(UserName, Password);
+                    var siteRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(siteUri, credentials);
 
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = i;
@@ -61,11 +67,21 @@ namespace PimsExporter
 
         public void ExportRoot()
         {
-            var rootRepository = _inputRepositoryFactory.Create<IRootSiteRepository>(SharepointSiteUrl, Credentials);
+            var siteUri = new Uri(RootSiteUrl);
+            var credentials = new NetworkCredential(UserName, Password);
+            var rootRepository = _inputRepositoryFactory.Create<IRootSiteRepository>(siteUri, credentials);
             var allOmItems = rootRepository.GetAllOmItems();
             var allVersions = rootRepository.GetAllVersions();
             _outputRepository.SaveAllOmItems(allOmItems);
             _outputRepository.SaveAllVersions(allVersions);
         }
+    }
+
+    public interface IApplication
+    {
+        void ExportRoot();
+        void ExportOmItems(int from, int to);
+
+        SecureString Password { get; set; }
     }
 }

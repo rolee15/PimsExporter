@@ -1,9 +1,9 @@
-﻿namespace CLI
+﻿namespace PimsExporter
 {
-    public class AppSettings
+    public class ExporterSettings
     {
         public string SharepointUrl { get; set; }
         public string UserName { get; set; }
-        public string OutputDir { get; set; }
+
     }
 }

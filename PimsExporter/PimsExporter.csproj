@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExporterSettings.cs" />
     <Compile Include="Exporter.cs" />
-    <Compile Include="Services\InputRepositories\IInputRepositoryBase.cs" />
     <Compile Include="Services\InputRepositories\IInputRepositoryFactory.cs" />
     <Compile Include="Services\InputRepositories\IOmItemSiteRepository.cs" />
     <Compile Include="Services\OutputRepositories\IOutputRepository.cs" />

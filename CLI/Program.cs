@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PimsExporter;
+using PimsExporter.Services.InputRepositories;
+using PimsExporter.Services.OutputRepositories;
 using Services.InputRepositories;
 using Services.OutputRepositories;
 using System;
@@ -17,7 +19,6 @@ namespace CLI
         static void Main(string[] args)
         {
             var host = CreateDefaultBuilder().Build();
-            var appSettings = host.Services.GetRequiredService<IOptions<AppSettings>>().Value;
 
             Console.Write("Password: ");
             var password = GetPassword();
@@ -25,14 +26,8 @@ namespace CLI
             var from = GetOmItemLowerRange();
             var to = GetOmItemUpperRange();
 
-            var inputRepositoryFactory = new InputRepositoryFactory();
-            var outputAdapter = new CsvAdapter(appSettings.OutputDir);
-            var outputRepository = new OutputRepository(outputAdapter);
-            var exporter = new Exporter(inputRepositoryFactory, outputRepository)
-            {
-                SharepointSiteUrl = new Uri(appSettings.SharepointUrl),
-                Credentials = new NetworkCredential(appSettings.UserName, password)
-            };
+            var exporter = host.Services.GetRequiredService<IApplication>();
+            exporter.Password = password;
             Console.WriteLine();
             Console.Write("Starting to export root...");
             exporter.ExportRoot();
@@ -68,7 +63,18 @@ namespace CLI
                 })
                 .ConfigureServices((ctx, services) =>
                 {
-                    services.Configure<AppSettings>(ctx.Configuration);
+                    var exporterSettings = new ExporterSettings();
+                    ctx.Configuration.GetSection(nameof(ExporterSettings)).Bind(exporterSettings);
+                    services.AddSingleton(exporterSettings);
+
+                    var csvAdapterSettings = new CsvAdapterSettings();
+                    ctx.Configuration.GetSection(nameof(CsvAdapterSettings)).Bind(csvAdapterSettings);
+                    services.AddSingleton(csvAdapterSettings);
+
+                    services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
+                    services.AddSingleton<IOutputAdapter, CsvAdapter>();
+                    services.AddSingleton<IOutputRepository, OutputRepository>();
+                    services.AddSingleton<IApplication, Exporter>();
                 });
         }
 
