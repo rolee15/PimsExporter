@@ -1,11 +1,11 @@
 ﻿using CSV;
 using Domain.Entities;
-using PimsExporter.Entities;
+using PimsExporter.Services.OutputRepositories;
 using System.Collections.Generic;
 
-namespace PimsExporter.Repositories
+namespace Services.OutputRepositories
 {
-    internal class OutputRepository : IOutputRepository
+    public class OutputRepository : IOutputRepository
     {
         private readonly IOutputAdapter outputAdapter;
 
@@ -39,14 +39,5 @@ namespace PimsExporter.Repositories
         {
             outputAdapter.SaveMilestones(milestones);
         }
-    }
-
-    internal interface IOutputRepository
-    {
-        void SaveAllOmItems(IEnumerable<AllOmItem> omItems);
-        void SaveAllVersions(IEnumerable<AllVersion> versions);
-        void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
-        void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
-        void SaveMilestones(IEnumerable<Milestone> milestones);
     }
 }

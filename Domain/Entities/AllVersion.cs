@@ -1,4 +1,4 @@
-﻿namespace PimsExporter.Entities
+﻿namespace Domain.Entities
 {
     public class AllVersion
     {

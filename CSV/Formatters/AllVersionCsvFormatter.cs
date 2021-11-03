@@ -1,7 +1,7 @@
-﻿using PimsExporter.Entities;
+﻿using Domain.Entities;
 using System.Globalization;
 
-namespace CSV
+namespace CSV.Formatters
 {
     public class AllVersionCsvFormatter : DocumentFormatterBase<AllVersion>
     {

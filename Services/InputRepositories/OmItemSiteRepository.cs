@@ -1,10 +1,11 @@
 ﻿using Domain.Entities;
+using PimsExporter.Services.InputRepositories;
 using SharePoint;
 using System.Collections.Generic;
 
-namespace PimsExporter.Repositories
+namespace Services.InputRepositories
 {
-    internal class OmItemSiteRepository : IOmItemSiteRepository
+    public class OmItemSiteRepository : IOmItemSiteRepository
     {
         private readonly ISharePointAdapter spAdapter;
 
@@ -27,12 +28,5 @@ namespace PimsExporter.Repositories
         {
             return spAdapter.Milestones();
         }
-    }
-
-    internal interface IOmItemSiteRepository
-    {
-        OmItemHeader GetHeader();
-        List<Milestone> GetMilestones();
-        List<OlmPhase> GetOlmPhase();
     }
 }

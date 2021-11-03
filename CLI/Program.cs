@@ -1,8 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CSV;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PimsExporter;
+using PimsExporter.Services.InputRepositories;
+using PimsExporter.Services.OutputRepositories;
+using Services.InputRepositories;
+using Services.OutputRepositories;
 using System;
 using System.Net;
 using System.Security;
@@ -14,7 +19,6 @@ namespace CLI
         static void Main(string[] args)
         {
             var host = CreateDefaultBuilder().Build();
-            var appSettings = host.Services.GetRequiredService<IOptions<AppSettings>>().Value;
 
             Console.Write("Password: ");
             var password = GetPassword();
@@ -22,7 +26,8 @@ namespace CLI
             var from = GetOmItemLowerRange();
             var to = GetOmItemUpperRange();
 
-            var exporter = new Exporter(new Uri(appSettings.SharepointUrl), new NetworkCredential(appSettings.UserName, password), appSettings.OutputDir);
+            var exporter = host.Services.GetRequiredService<IApplication>();
+            exporter.Password = password;
             Console.WriteLine();
             Console.Write("Starting to export root...");
             exporter.ExportRoot();
@@ -58,7 +63,13 @@ namespace CLI
                 })
                 .ConfigureServices((ctx, services) =>
                 {
-                    services.Configure<AppSettings>(ctx.Configuration);
+                    services.Configure<ExporterSettings>(ctx.Configuration.GetSection(nameof(ExporterSettings)), o => o.BindNonPublicProperties = true);
+                    services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)), o => o.BindNonPublicProperties = true);
+
+                    services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
+                    services.AddSingleton<IOutputAdapter, CsvAdapter>();
+                    services.AddSingleton<IOutputRepository, OutputRepository>();
+                    services.AddSingleton<IApplication, Exporter>();
                 });
         }
 

@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace CSV
+namespace CSV.Formatters
 {
     public abstract class DocumentFormatterBase<T>
     {

@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Domain.Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using PimsExporter.Entities;
-using PimsExporter.Repositories;
+using Services.InputRepositories;
 using SharePoint;
 using System.Collections.Generic;
 
@@ -35,10 +35,10 @@ namespace PimsExporter.UnitTest.Repositories
             };
             var spMock = new Mock<ISharePointAdapter>();
             spMock.Setup(sp => sp.AllVersions()).Returns(list);
-            var repository = new RootSiteRepository(spMock.Object);
+            var rootRepository = new RootSiteRepository(spMock.Object);
 
             // ACT
-            var versions = repository.GetAllVersions();
+            var versions = rootRepository.GetAllVersions();
 
             // ASSERT
             var version1 = versions[0];
