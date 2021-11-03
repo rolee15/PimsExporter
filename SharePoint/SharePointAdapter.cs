@@ -325,6 +325,77 @@ namespace SharePoint
                 return GetAllOmItems(context, list);
             }
         }
+
+        public VersionHeader ProductVersion()
+        {
+            using (var context = new ClientContext(SharepointSiteUrl))
+            {
+                context.Credentials = Credentials;
+                var list = GetList(context, Constants.Version.Lists.ProductVersion.TITLE);
+                return GetProductVersion(context, list);
+            }
+        }
+
+        private VersionHeader GetProductVersion(ClientContext ctx, List list)
+        {
+            CamlQuery query = new CamlQuery
+            {
+                ViewXml = CAML.ViewQuery(
+                    ViewScope.DefaultValue,
+                    rowLimit: 1)
+            };
+
+            ListItemCollection items = list.GetItems(query);
+            ctx.Load(items);
+            ctx.ExecuteQuery();
+            var item = items[0];
+
+            return MapProductVersionToEntity(item);
+        }
+
+        private VersionHeader MapProductVersionToEntity(ListItem item)
+        {
+            var header = new VersionHeader();
+
+            header.VersionName = Convert.ToString(item[ProductFields.VERSION_NAME]);
+            header.VersionAlias = Convert.ToString(item[ProductFields.VERSION_ALIAS]);
+            header.FullVersionId = Convert.ToString(item[ProductFields.FULL_VERSION_ID]);
+            header.VersionManager = MapToUser(item[ProductFields.VERSION_MANAGER]);
+            header.CurrentOlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE_VERSION]);
+            header.PimsId = Convert.ToString(item[ProductFields.VERSION_PIMSID]);
+            header.ArticleNumber = Convert.ToString(item[ProductFields.ARTICLE_NUMBER]);
+            header.VersionStatus = Convert.ToString(item[ProductFields.VERSION_STATUS]);
+            header.ActiveStatus = Convert.ToBoolean(item[ProductFields.ACTIVE_STATUS]);
+            header.AllowUsageInTsiForce = Convert.ToBoolean(item[ProductFields.USEDINTSIFORCE]);
+            header.OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]);
+            header.PuReleaseAssignment = Convert.ToString(item[ProductFields.DD_RELEASE_ASSIGNMENT]);
+            header.TsiPortfolioVersion = Convert.ToString(item[ProductFields.TSIPORTFOLIOVERSION]);
+            header.BssReleaseAssignment = Convert.ToString(item[ProductFields.BSS_RELEASE_ASSIGNMENT]);
+            header.OssReleaseAssignment = Convert.ToString(item[ProductFields.OSS_RELEASE_ASSIGNMENT]);
+            header.RequestedOnboarding = item[ProductFields.REQUESTED_ONBOARDING] as DateTime?;
+            header.OnboardingDueDate = item[ProductFields.ONBOARDING_DUE_DATE] as DateTime?;
+            header.ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]);
+            header.LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION]);
+            header.Comment = Convert.ToString(item[ProductFields.OMITEMVERSION_COMMENT]);
+            header.FocusOfMeasure = Convert.ToString(item[ProductFields.FOCUSOFMEASURE]);
+            header.PrimaryFunding = Convert.ToString(item[ProductFields.PRIMARYFUNDING]);
+            header.SecondaryFunding = Convert.ToString(item[ProductFields.SECONDARYFUNDING]);
+            header.InnovationTopic = Convert.ToString(item[ProductFields.INNOVATIONTOPIC]);
+            header.InIpf = Convert.ToString(item[ProductFields.INIPF]);
+            header.InPib = Convert.ToString(item[ProductFields.INPIB]);
+            header.InnovationStructure = Convert.ToString(item[ProductFields.DTAGINNOVATIONBMSTRUCTURE]);
+            header.InnovationCategory = Convert.ToString(item[ProductFields.DTAGINNOVATIONCATEGORY]);
+            header.InternationalRelevance = Convert.ToString(item[ProductFields.INTERNATIONALRELEVANCE]);
+            header.SupportedMarketingUmbrellaMeasure = Convert.ToString(item[ProductFields.SUPPORTEDMARKETINGMEASURE]);
+            header.MeasurePriority = Convert.ToString(item[ProductFields.MEASUREPRIORITY]);
+            header.MeasureStatus = Convert.ToString(item[ProductFields.MEASURESTATUS]);
+            header.ShortCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITSHORT]);
+            header.LongCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITSHORT]);
+            header.TargetAudience = Convert.ToString(item[ProductFields.TARGETAUDIENCE]);
+            header.RiskAndMitigation = Convert.ToString(item[ProductFields.RISKMITIGATION]);
+
+            return header;
+        }
     }
 
     public interface ISharePointAdapter
@@ -334,5 +405,6 @@ namespace SharePoint
         OmItemHeader ProductRecord();
         List<OlmPhase> OlmPhase();
         List<Milestone> Milestones();
+        VersionHeader ProductVersion();
     }
 }

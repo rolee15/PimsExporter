@@ -2,14 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using PimsExporter;
 using PimsExporter.Services.InputRepositories;
 using PimsExporter.Services.OutputRepositories;
 using Services.InputRepositories;
 using Services.OutputRepositories;
 using System;
-using System.Net;
 using System.Security;
 
 namespace CLI
@@ -26,19 +24,40 @@ namespace CLI
             var from = GetOmItemLowerRange();
             var to = GetOmItemUpperRange();
 
+            Console.WriteLine("Which version do you want to export?");
+            Console.Write("Parent OM Item number: ");
+            var omItemNumber = GetOmItemNumber();
+            Console.Write("Version number: ");
+            var versionNumber = GetVersionNumber();
+            Console.WriteLine();
+
             var exporter = host.Services.GetRequiredService<IApplication>();
             exporter.Password = password;
-            Console.WriteLine();
+
             Console.Write("Starting to export root...");
-            exporter.ExportRoot();
+            //exporter.ExportRoot();
             Console.WriteLine("Done.");
+
             Console.Write("Starting to export OM Items...");
-            exporter.ExportOmItems(from, to);
+            //exporter.ExportOmItems(from, to);
+            Console.WriteLine("Done.");
+
+            Console.Write("Starting to export version...");
+            exporter.ExportVersion(omItemNumber, versionNumber);
             Console.WriteLine("Done.");
 
             Console.WriteLine();
             Console.WriteLine("Finished.");
             Console.ReadLine();
+        }
+        private static int GetOmItemNumber()
+        {
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private static int GetVersionNumber()
+        {
+            return Convert.ToInt32(Console.ReadLine());
         }
 
         private static int GetOmItemLowerRange()

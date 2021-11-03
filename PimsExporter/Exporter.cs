@@ -76,12 +76,25 @@ namespace PimsExporter
             _outputRepository.SaveAllOmItems(allOmItems);
             _outputRepository.SaveAllVersions(allVersions);
         }
+
+        public void ExportVersion(int omItemNumber, int versionNumber)
+        {
+            var url = Path.Combine(RootSiteUrl, $"products/{omItemNumber}/{versionNumber}");
+            var siteUri = new Uri(url);
+            var credentials = new NetworkCredential(UserName, Password);
+            var versionRepository = _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
+
+            var header = versionRepository.GetHeader();
+
+            _outputRepository.SaveVersionHeader(header);
+        }
     }
 
     public interface IApplication
     {
         void ExportRoot();
         void ExportOmItems(int from, int to);
+        void ExportVersion(int omItemNumber, int versionNumber);
 
         SecureString Password { get; set; }
     }

@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="ExporterSettings.cs" />
     <Compile Include="Exporter.cs" />
+    <Compile Include="Services\InputRepositories\IVersionRepository.cs" />
     <Compile Include="Services\InputRepositories\IInputRepositoryFactory.cs" />
     <Compile Include="Services\InputRepositories\IOmItemSiteRepository.cs" />
     <Compile Include="Services\OutputRepositories\IOutputRepository.cs" />
