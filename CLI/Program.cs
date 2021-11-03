@@ -63,13 +63,8 @@ namespace CLI
                 })
                 .ConfigureServices((ctx, services) =>
                 {
-                    var exporterSettings = new ExporterSettings();
-                    ctx.Configuration.GetSection(nameof(ExporterSettings)).Bind(exporterSettings);
-                    services.AddSingleton(exporterSettings);
-
-                    var csvAdapterSettings = new CsvAdapterSettings();
-                    ctx.Configuration.GetSection(nameof(CsvAdapterSettings)).Bind(csvAdapterSettings);
-                    services.AddSingleton(csvAdapterSettings);
+                    services.Configure<ExporterSettings>(ctx.Configuration.GetSection(nameof(ExporterSettings)), o => o.BindNonPublicProperties = true);
+                    services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)), o => o.BindNonPublicProperties = true);
 
                     services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();

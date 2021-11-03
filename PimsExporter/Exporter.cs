@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security;
+using Microsoft.Extensions.Options;
 
 namespace PimsExporter
 {
@@ -15,9 +16,9 @@ namespace PimsExporter
         private readonly IInputRepositoryFactory _inputRepositoryFactory;
         private readonly IOutputRepository _outputRepository;
 
-        public Exporter(ExporterSettings settings, IInputRepositoryFactory inputRepositoryFactory, IOutputRepository outputRepository)
+        public Exporter(IOptions<ExporterSettings> settings, IInputRepositoryFactory inputRepositoryFactory, IOutputRepository outputRepository)
         {
-            _settings = settings;
+            _settings = settings.Value;
             _inputRepositoryFactory = inputRepositoryFactory;
             _outputRepository = outputRepository;
 
