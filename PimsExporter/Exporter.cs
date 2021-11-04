@@ -66,6 +66,33 @@ namespace PimsExporter
             _outputRepository.SaveMilestones(omItemMilestones);
         }
 
+        public void ExportVersions(int omItemNumberFrom, int omItemNumberTo)
+        {
+            var versionHeaders = new List<VersionHeader>();
+
+            for (int omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
+            {
+                var omItemUrl = Path.Combine(RootSiteUrl, $"products/{omItemNumber}");
+                var omItemSiteUri = new Uri(omItemUrl);
+                var credentials = new NetworkCredential(UserName, Password);
+                var omItemRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(omItemSiteUri, credentials);
+                
+                var versionNumbers = omItemRepository.GetVersionNumbers();
+                foreach (var versionNumber in versionNumbers)
+                {
+                    var url = Path.Combine(RootSiteUrl, $"products/{omItemNumber}/{versionNumber}");
+                    var siteUri = new Uri(url);
+                    var versionRepository = _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
+
+                    var header = versionRepository.GetHeader();
+                    header.OmItemNumber = omItemNumber;
+                    header.VersionNumber = versionNumber;
+                    versionHeaders.Add(header);
+                }
+            }
+            _outputRepository.SaveVersionHeaders(versionHeaders);
+        }
+
         public void ExportRoot()
         {
             var siteUri = new Uri(RootSiteUrl);
@@ -76,25 +103,13 @@ namespace PimsExporter
             _outputRepository.SaveAllOmItems(allOmItems);
             _outputRepository.SaveAllVersions(allVersions);
         }
-
-        public void ExportVersion(int omItemNumber, int versionNumber)
-        {
-            var url = Path.Combine(RootSiteUrl, $"products/{omItemNumber}/{versionNumber}");
-            var siteUri = new Uri(url);
-            var credentials = new NetworkCredential(UserName, Password);
-            var versionRepository = _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
-
-            var header = versionRepository.GetHeader();
-
-            _outputRepository.SaveVersionHeader(header);
-        }
     }
 
     public interface IApplication
     {
         void ExportRoot();
         void ExportOmItems(int from, int to);
-        void ExportVersion(int omItemNumber, int versionNumber);
+        void ExportVersions(int omItemNumberFrom, int omItemNumberTo);
 
         SecureString Password { get; set; }
     }

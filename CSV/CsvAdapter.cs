@@ -64,7 +64,7 @@ namespace CSV
 
         public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
-            var path = Path.Combine(_settings.OutputDir, "product");
+            var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OmItemHeadersFileName);
 
@@ -77,7 +77,7 @@ namespace CSV
 
         public void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
         {
-            var path = Path.Combine(_settings.OutputDir, "product");
+            var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OlmPhasesFileName);
 
@@ -90,7 +90,7 @@ namespace CSV
 
         public void SaveMilestones(IEnumerable<Milestone> omItemMilestones)
         {
-            var path = Path.Combine(_settings.OutputDir, "product");
+            var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, MilestonesFileName);
 
@@ -101,14 +101,13 @@ namespace CSV
             }
         }
 
-        public void SaveVersionHeader(VersionHeader versionHeader)
+        public void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders)
         {
-            var path = Path.Combine(_settings.OutputDir, "version");
+            var path = Path.Combine(_settings.OutputDir, "versions");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, VersionHeadersFileName);
 
-            var list = new List<VersionHeader>() { versionHeader };
-            var resultStream = _versionHeaderFormatter.FormatAsync(list);
+            var resultStream = _versionHeaderFormatter.FormatAsync(versionHeaders);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -123,6 +122,6 @@ namespace CSV
         void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
         void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
         void SaveMilestones(IEnumerable<Milestone> omItemMilestones);
-        void SaveVersionHeader(VersionHeader versionHeader);
+        void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeader);
     }
 }

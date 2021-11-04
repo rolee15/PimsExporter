@@ -76,6 +76,12 @@
                     public static readonly string TITLE = "Milestones";
                     public static readonly string ROOT_FOLDER_NAME = "Milestones";
                 }
+
+                public static class Versions
+                {
+                    public static readonly string TITLE = "Versions";
+                    public static readonly string ROOT_FOLDER_NAME = "Versions";
+                }
             }
 
             public static class Fields
@@ -146,6 +152,7 @@
                 public static readonly string INIPF = "IniPF";
                 public static readonly string INNOVATIONTOPIC = "InnovationTopic";
                 public static readonly string INPIB = "InPIB";
+                public static readonly string ID = "ID";
                 public static readonly string INTERNATIONALRELEVANCE = "InternationalRelevance";
                 public static readonly string PRIMARYFUNDING = "PrimaryFunding";
                 public static readonly string RISKMITIGATION = "RiskMitigation";

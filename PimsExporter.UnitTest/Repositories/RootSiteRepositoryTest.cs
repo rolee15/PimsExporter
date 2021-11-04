@@ -11,7 +11,7 @@ namespace PimsExporter.UnitTest.Repositories
     public class RootSiteRepositoryTest
     {
         [TestMethod]
-        public void GetVersionsTest()
+        public void GetAllVersionsTest()
         {
             // ARRANGE
             var list = new List<AllVersion>()

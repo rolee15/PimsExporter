@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Repositories\RootSiteRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\VersionRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

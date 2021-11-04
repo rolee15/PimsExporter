@@ -396,6 +396,45 @@ namespace SharePoint
 
             return header;
         }
+
+        public List<int> VersionNumbers()
+        {
+            using (var context = new ClientContext(SharepointSiteUrl))
+            {
+                context.Credentials = Credentials;
+                var list = GetList(context, Constants.Product.Lists.Versions.TITLE);
+                return GetVersionNumbers(context, list);
+            }
+        }
+
+        private List<int> GetVersionNumbers(ClientContext ctx, List list)
+        {
+            var versionNumbers = new List<int>();
+            var query = new CamlQuery
+            {
+                ViewXml = CAML.ViewQuery(
+                    ViewScope.DefaultValue,
+                    rowLimit: Constants.DEFAULT_QUERY_ROW_LIMIT)
+            };
+
+            ListItemCollectionPosition position = null;
+            do
+            {
+                query.ListItemCollectionPosition = position;
+                ListItemCollection items = list.GetItems(query);
+                ctx.Load(items);
+                ctx.ExecuteQuery();
+
+
+                foreach (var item in items)
+                    versionNumbers.Add(Convert.ToInt32(item[ProductFields.ID]));
+
+                position = items.ListItemCollectionPosition;
+
+            } while (position != null);
+
+            return versionNumbers;
+        }
     }
 
     public interface ISharePointAdapter
@@ -406,5 +445,6 @@ namespace SharePoint
         List<OlmPhase> OlmPhase();
         List<Milestone> Milestones();
         VersionHeader ProductVersion();
+        List<int> VersionNumbers();
     }
 }

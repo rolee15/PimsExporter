@@ -40,5 +40,8 @@ namespace Domain.Entities
         public string LongCustomerSalesBenefit { get; set; }
         public string TargetAudience { get; set; }
         public string RiskAndMitigation { get; set; }
+
+        public int OmItemNumber { get; set; }
+        public int VersionNumber { get; set; }
     }
 }

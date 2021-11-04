@@ -24,26 +24,19 @@ namespace CLI
             var from = GetOmItemLowerRange();
             var to = GetOmItemUpperRange();
 
-            Console.WriteLine("Which version do you want to export?");
-            Console.Write("Parent OM Item number: ");
-            var omItemNumber = GetOmItemNumber();
-            Console.Write("Version number: ");
-            var versionNumber = GetVersionNumber();
-            Console.WriteLine();
-
             var exporter = host.Services.GetRequiredService<IApplication>();
             exporter.Password = password;
 
             Console.Write("Starting to export root...");
-            //exporter.ExportRoot();
+            exporter.ExportRoot();
             Console.WriteLine("Done.");
 
             Console.Write("Starting to export OM Items...");
-            //exporter.ExportOmItems(from, to);
+            exporter.ExportOmItems(from, to);
             Console.WriteLine("Done.");
 
-            Console.Write("Starting to export version...");
-            exporter.ExportVersion(omItemNumber, versionNumber);
+            Console.Write("Starting to export Versions...");
+            exporter.ExportVersions(from, to);
             Console.WriteLine("Done.");
 
             Console.WriteLine();
