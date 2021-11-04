@@ -23,6 +23,45 @@ namespace SharePoint
         public Uri SharepointSiteUrl { get; }
         public NetworkCredential Credentials { get; }
 
+        public List<Team> Teams()
+        {
+            using (ClientContext context = new ClientContext(SharepointSiteUrl))
+            {
+                context.Credentials = Credentials;
+                var list = GetList(context, Constants.Product.Lists.Team.TITLE);
+                return GetTeams(context, list);
+            }
+        }
+
+        private List<Team> GetTeams(ClientContext ctx, List list)
+        {
+            var teams = new List<Team>();
+
+            CamlQuery query = new CamlQuery
+            {
+                ViewXml = CAML.ViewQuery(
+                    ViewScope.DefaultValue,
+                    rowLimit: 1)
+            };
+
+            ListItemCollectionPosition position = null;
+            do
+            {
+                query.ListItemCollectionPosition = position;
+                ListItemCollection items = list.GetItems(query);
+                ctx.Load(items);
+                ctx.ExecuteQuery();
+
+
+                foreach (var item in items)
+                    teams.Add(MapTeamsToEntity(item));
+
+                position = items.ListItemCollectionPosition;
+
+            } while (position != null);
+
+            return teams;
+        }
         public List<OlmPhase> OlmPhase()
         {
             using (ClientContext context = new ClientContext(SharepointSiteUrl))
@@ -245,6 +284,22 @@ namespace SharePoint
             return header;
         }
 
+        private Team MapTeamsToEntity(ListItem item)
+        {
+            var team = new Team();
+           
+            team.ValidFrom = item[ProductFields.VALID_FROM] as DateTime?;
+            team.ValidTo = item[ProductFields.VALID_TO] as DateTime?;
+            team.TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]);
+            team.RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]);
+            team.Member = MapToUser(item[ProductFields.MEMBER1]);
+            team.DeputyOf = MapToUser(item[ProductFields.DEPUTY_OF]);
+            team.CoSigner = Convert.ToBoolean(item[ProductFields.ISCOSIGNER]);
+            
+            
+
+            return team;
+        }
         private OlmPhase MapOlmPhasesToEntity(ListItem item)
         {
             var olmPhase = new OlmPhase
@@ -522,5 +577,6 @@ namespace SharePoint
         VersionHeader ProductVersion();
         List<int> VersionNumbers();
         IEnumerable<VersionBudget> VersionBudgets();
+        List<Team> Teams();
     }
 }

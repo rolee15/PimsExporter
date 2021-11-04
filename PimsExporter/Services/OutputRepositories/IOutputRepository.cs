@@ -12,5 +12,6 @@ namespace PimsExporter.Services.OutputRepositories
         void SaveMilestones(IEnumerable<Milestone> milestones);
         void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders);
         void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets);
+        void SaveTeams(IEnumerable<Team> teams);
     }
 }
