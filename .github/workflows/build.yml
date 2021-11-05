@@ -27,20 +27,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      # Intall dependencies
-      - name: Restore NuGet Packages
-        uses: NuGet/setup-nuget@v1.0.5
-      - run: nuget restore ${{ env.SolutionName }}
-      # Install the .NET Core workload and build assemblies
-      - name: Install .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 5.0.100
-      - run: dotnet build ${{ env.SolutionName }} --no-restore
-      # Execute all unit tests in the solution
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
-      # Install the Sonar Scanner and analyze the solution
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -67,5 +53,7 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"PimsExporter" /o:"pims" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build ${{ env.SolutionName }}
+          dotnet clean
+          nuget restore
+          dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
