@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Entities\AllOmItem.cs" />
     <Compile Include="Entities\AllVersion.cs" />
     <Compile Include="Entities\EntityBase.cs" />
@@ -49,6 +48,7 @@
     <Compile Include="Entities\OmItemHeader.cs" />
     <Compile Include="Entities\Milestone.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\VersionHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

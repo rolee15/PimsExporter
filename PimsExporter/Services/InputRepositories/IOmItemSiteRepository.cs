@@ -8,5 +8,6 @@ namespace PimsExporter.Services.InputRepositories
         OmItemHeader GetHeader();
         List<Milestone> GetMilestones();
         List<OlmPhase> GetOlmPhase();
+        List<int> GetVersionNumbers();
     }
 }

@@ -13,12 +13,14 @@ namespace CSV
         private const string OmItemHeadersFileName = "OmItemHeaders.csv";
         private const string OlmPhasesFileName = "OlmPhases.csv";
         private const string MilestonesFileName = "Milestones.csv";
+        private const string VersionHeadersFileName = "VersionHeaders.csv";
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
         private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
         private readonly MilestoneCsvFormatter _milestonesFormatter;
+        private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
         private readonly CsvAdapterSettings _settings;
 
         public string OutputDir { get; }
@@ -31,6 +33,7 @@ namespace CSV
             _omItemHeaderFormatter = new OmItemHeaderCsvFormatter();
             _olmPhaseFormatter = new OlmPhaseCsvFormatter();
             _milestonesFormatter = new MilestoneCsvFormatter();
+            _versionHeaderFormatter = new VersionHeaderCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -61,7 +64,7 @@ namespace CSV
 
         public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
-            var path = Path.Combine(_settings.OutputDir, "product");
+            var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OmItemHeadersFileName);
 
@@ -74,7 +77,7 @@ namespace CSV
 
         public void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
         {
-            var path = Path.Combine(_settings.OutputDir, "product");
+            var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OlmPhasesFileName);
 
@@ -87,11 +90,24 @@ namespace CSV
 
         public void SaveMilestones(IEnumerable<Milestone> omItemMilestones)
         {
-            var path = Path.Combine(_settings.OutputDir, "product");
+            var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, MilestonesFileName);
 
             var resultStream = _milestonesFormatter.FormatAsync(omItemMilestones);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
+
+        public void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders)
+        {
+            var path = Path.Combine(_settings.OutputDir, "versions");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, VersionHeadersFileName);
+
+            var resultStream = _versionHeaderFormatter.FormatAsync(versionHeaders);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -106,5 +122,6 @@ namespace CSV
         void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
         void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
         void SaveMilestones(IEnumerable<Milestone> omItemMilestones);
+        void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeader);
     }
 }

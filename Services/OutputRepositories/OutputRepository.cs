@@ -39,5 +39,10 @@ namespace Services.OutputRepositories
         {
             outputAdapter.SaveMilestones(milestones);
         }
+
+        public void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders)
+        {
+            outputAdapter.SaveVersionHeaders(versionHeaders);
+        }
     }
 }

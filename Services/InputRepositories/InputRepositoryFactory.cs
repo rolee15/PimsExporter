@@ -1,11 +1,7 @@
 ﻿using PimsExporter.Services.InputRepositories;
 using SharePoint;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.InputRepositories
 {
@@ -20,6 +16,8 @@ namespace Services.InputRepositories
                     return new RootSiteRepository(sp) as T;
                 case "IOmItemSiteRepository":
                     return new OmItemSiteRepository(sp) as T;
+                case "IVersionRepository":
+                    return new VersionRepository(sp) as T;
                 default:
                     throw new ArgumentException("Illegal argument: {0}", nameof(T));
             }

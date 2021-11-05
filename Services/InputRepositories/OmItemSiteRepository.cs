@@ -28,5 +28,10 @@ namespace Services.InputRepositories
         {
             return spAdapter.Milestones();
         }
+
+        public List<int> GetVersionNumbers()
+        {
+            return spAdapter.VersionNumbers();
+        }
     }
 }
