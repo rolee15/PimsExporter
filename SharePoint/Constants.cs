@@ -182,8 +182,36 @@
                     public const string TITLE = "Product Version";
                     public const string ROOT_FOLDER_NAME = "ProductVersion";
                 }
+
+                public static class VersionBudget
+                {
+                    public static readonly string TITLE = "Version Budgets";
+                    public static readonly string ROOT_FOLDER_NAME = "VersionBudgets";
+                }
+            }
+
+            public static class Fields
+            {
+                public static readonly string YEAR = "Year";
+                public static readonly string DELTAREVENUEPLAN = "Delta_x0020_Revenue_x0020_Plan";
+                public static readonly string DELTAOEPLAN = "Delta_x0020_OE_x0020_Plan";
+                public static readonly string BSSBUDGETOPEXPLAN = "BSS_x0020_Budget_x0020_Opex_x002";
+                public static readonly string BSSBUDGETCAPEXPLAN = "BSS_x0020_Budget_x0020_Capex_x00";
+                public static readonly string BSSBUDGETOPEXAPPROVED = "BSS_x0020_Budget_x0020_Opex_x0020";
+                public static readonly string BSSBUDGETCAPEXAPPROVED = "BSS_x0020_Budget_x0020_Capex_x000";
+                public static readonly string OSSBUDGETOPEXPLAN = "OSS_x0020_Budget_x0020_Opex_x002";
+                public static readonly string OSSBUDGETCAPEXPLAN = "OSS_x0020_Budget_x0020_Capex_x00";
+                public static readonly string OSSBUDGETOPEXAPPROVED = "OSS_x0020_Budget_x0020_Opex_x0020";
+                public static readonly string OSSBUDGETCAPEXAPPROVED = "OSS_x0020_Budget_x0020_Capex_x000";
+                public static readonly string OTHERBUDGETOPEXPLAN = "Other_x0020_Budget_x0020_Opex_x0";
+                public static readonly string OTHERBUDGETCAPEXPLAN = "Other_x0020_Budget_x0020_Capex_x";
+                public static readonly string OTHERBUDGETOPEXAPPROVED = "Other_x0020_Budget_x0020_Opex_x00";
+                public static readonly string OTHERBUDGETCAPEXAPPROVED = "Other_x0020_Budget_x0020_Capex_x0";
+                public static readonly string RNDBUDGETOPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Ope";
+                public static readonly string RNDBUDGETCAPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Cap";
+                public static readonly string RNDBUDGETOPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Ope0";
+                public static readonly string RNDBUDGETCAPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Cap0";
             }
         }
     }
-
 }

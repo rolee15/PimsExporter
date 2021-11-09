@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
 using SharePoint;
+using System.Collections.Generic;
 
 namespace Services.InputRepositories
 {
@@ -10,12 +11,17 @@ namespace Services.InputRepositories
 
         public VersionRepository(ISharePointAdapter sp)
         {
-            this._spAdapter = sp;
+            _spAdapter = sp;
         }
 
         public VersionHeader GetHeader()
         {
             return _spAdapter.ProductVersion();
+        }
+
+        public IEnumerable<VersionBudget> GetVersionBudgets()
+        {
+            return _spAdapter.VersionBudgets();
         }
     }
 }

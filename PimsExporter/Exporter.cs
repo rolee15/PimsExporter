@@ -69,7 +69,7 @@ namespace PimsExporter
         public void ExportVersions(int omItemNumberFrom, int omItemNumberTo)
         {
             var versionHeaders = new List<VersionHeader>();
-
+            var versionBudgets = new List<VersionBudget>();
             for (int omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
             {
                 var omItemUrl = Path.Combine(RootSiteUrl, $"products/{omItemNumber}");
@@ -88,9 +88,18 @@ namespace PimsExporter
                     header.OmItemNumber = omItemNumber;
                     header.VersionNumber = versionNumber;
                     versionHeaders.Add(header);
+
+                    var tempVersionBudgets = versionRepository.GetVersionBudgets();
+                    foreach (var item in tempVersionBudgets)
+                    {
+                        item.OmItemNumber = omItemNumber;
+                        item.VersionNumber = versionNumber;
+                    }
+                    versionBudgets.AddRange(tempVersionBudgets);
                 }
             }
             _outputRepository.SaveVersionHeaders(versionHeaders);
+            _outputRepository.SaveVersionBudgets(versionBudgets);
         }
 
         public void ExportRoot()

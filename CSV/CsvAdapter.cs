@@ -14,6 +14,7 @@ namespace CSV
         private const string OlmPhasesFileName = "OlmPhases.csv";
         private const string MilestonesFileName = "Milestones.csv";
         private const string VersionHeadersFileName = "VersionHeaders.csv";
+        private const string VersionBudgetsFileName = "VersionBudgets.csv";
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
@@ -21,6 +22,7 @@ namespace CSV
         private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
         private readonly MilestoneCsvFormatter _milestonesFormatter;
         private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
+        private readonly VersionBudgetCsvFormatter _versionBudgetFormatter;
         private readonly CsvAdapterSettings _settings;
 
         public string OutputDir { get; }
@@ -34,6 +36,7 @@ namespace CSV
             _olmPhaseFormatter = new OlmPhaseCsvFormatter();
             _milestonesFormatter = new MilestoneCsvFormatter();
             _versionHeaderFormatter = new VersionHeaderCsvFormatter();
+            _versionBudgetFormatter = new VersionBudgetCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -42,7 +45,7 @@ namespace CSV
             Directory.CreateDirectory(path);
             path = Path.Combine(path, AllVersionsFileName);
 
-            var resultStream = _allVersionFormatter.FormatAsync(versions);
+            var resultStream = _allVersionFormatter.FormatStream(versions);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -55,7 +58,7 @@ namespace CSV
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OmItemsFileName);
 
-            var resultStream = _allOmItemFormatter.FormatAsync(omItems);
+            var resultStream = _allOmItemFormatter.FormatStream(omItems);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -68,7 +71,7 @@ namespace CSV
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OmItemHeadersFileName);
 
-            var resultStream = _omItemHeaderFormatter.FormatAsync(omItemHeaders);
+            var resultStream = _omItemHeaderFormatter.FormatStream(omItemHeaders);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -81,7 +84,7 @@ namespace CSV
             Directory.CreateDirectory(path);
             path = Path.Combine(path, OlmPhasesFileName);
 
-            var resultStream = _olmPhaseFormatter.FormatAsync(olmPhases);
+            var resultStream = _olmPhaseFormatter.FormatStream(olmPhases);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -94,7 +97,7 @@ namespace CSV
             Directory.CreateDirectory(path);
             path = Path.Combine(path, MilestonesFileName);
 
-            var resultStream = _milestonesFormatter.FormatAsync(omItemMilestones);
+            var resultStream = _milestonesFormatter.FormatStream(omItemMilestones);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -107,7 +110,20 @@ namespace CSV
             Directory.CreateDirectory(path);
             path = Path.Combine(path, VersionHeadersFileName);
 
-            var resultStream = _versionHeaderFormatter.FormatAsync(versionHeaders);
+            var resultStream = _versionHeaderFormatter.FormatStream(versionHeaders);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
+
+        public void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets)
+        {
+            var path = Path.Combine(_settings.OutputDir, "versions");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, VersionBudgetsFileName);
+
+            var resultStream = _versionBudgetFormatter.FormatStream(versionBudgets);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -123,5 +139,6 @@ namespace CSV
         void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
         void SaveMilestones(IEnumerable<Milestone> omItemMilestones);
         void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeader);
+        void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets);
     }
 }

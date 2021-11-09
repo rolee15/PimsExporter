@@ -11,5 +11,6 @@ namespace PimsExporter.Services.OutputRepositories
         void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
         void SaveMilestones(IEnumerable<Milestone> milestones);
         void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders);
+        void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets);
     }
 }
