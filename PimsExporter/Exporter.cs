@@ -58,7 +58,6 @@ namespace PimsExporter
                 }
                 catch (Exception)
                 {
-                    continue;
                 }
             }
             _outputRepository.SaveOmItemHeaders(omItemHeaders);
