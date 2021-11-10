@@ -14,6 +14,8 @@ namespace CSV.Formatters
         {
             Columns = new[]
             {
+                new ColumnFormatter<VersionBudget>(nameof(VersionBudget.OmItemNumber), r => r.OmItemNumber),
+                new ColumnFormatter<VersionBudget>(nameof(VersionBudget.VersionNumber), r => r.VersionNumber),
                 new ColumnFormatter<VersionBudget>(nameof(VersionBudget.Year), r => r.Year),
                 new ColumnFormatter<VersionBudget>(nameof(VersionBudget.DeltaRevenuePlan), r => r.DeltaRevenuePlan),
                 new ColumnFormatter<VersionBudget>(nameof(VersionBudget.DeltaOEPlan), r => r.DeltaOEPlan),
