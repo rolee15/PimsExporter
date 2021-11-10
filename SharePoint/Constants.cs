@@ -177,6 +177,46 @@
                 public static readonly string LASTIDXUPDATE = "LastIdxUpdate";
                 public static readonly string VERSION_PIMSID = "PIMSIDAllVersion";
                 public static readonly string USEDINTSIFORCE = "AllowUsageInTSIForce";
+                public static readonly string YEAR = "Year";
+                public static readonly string DELTAREVENUEPLAN = "Delta_x0020_Revenue_x0020_Plan";
+                public static readonly string DELTAOEPLAN = "Delta_x0020_OE_x0020_Plan";
+                public static readonly string BSSBUDGETOPEXPLAN = "BSS_x0020_Budget_x0020_Opex_x002";
+                public static readonly string BSSBUDGETCAPEXPLAN = "BSS_x0020_Budget_x0020_Capex_x00";
+                public static readonly string BSSBUDGETOPEXAPPROVED = "BSS_x0020_Budget_x0020_Opex_x0020";
+                public static readonly string BSSBUDGETCAPEXAPPROVED = "BSS_x0020_Budget_x0020_Capex_x000";
+                public static readonly string OSSBUDGETOPEXPLAN = "OSS_x0020_Budget_x0020_Opex_x002";
+                public static readonly string OSSBUDGETCAPEXPLAN = "OSS_x0020_Budget_x0020_Capex_x00";
+                public static readonly string OSSBUDGETOPEXAPPROVED = "OSS_x0020_Budget_x0020_Opex_x0020";
+                public static readonly string OSSBUDGETCAPEXAPPROVED = "OSS_x0020_Budget_x0020_Capex_x000";
+                public static readonly string OTHERBUDGETOPEXPLAN = "Other_x0020_Budget_x0020_Opex_x0";
+                public static readonly string OTHERBUDGETCAPEXPLAN = "Other_x0020_Budget_x0020_Capex_x";
+                public static readonly string OTHERBUDGETOPEXAPPROVED = "Other_x0020_Budget_x0020_Opex_x00";
+                public static readonly string OTHERBUDGETCAPEXAPPROVED = "Other_x0020_Budget_x0020_Capex_x0";
+                public static readonly string RNDBUDGETOPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Ope";
+                public static readonly string RNDBUDGETCAPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Cap";
+                public static readonly string RNDBUDGETOPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Ope0";
+                public static readonly string RNDBUDGETCAPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Cap0";
+                public static readonly string SIGNATURE_NAME = "SignatureName";
+                public static readonly string OM_ITEM_VERSION = "OM_x0020_Item_x0020_Version";
+                public static readonly string REQUESTOR = "Requestor";
+                public static readonly string COSIGN_DATE = "Co_x0020_Sign_x0020_Date";
+                public static readonly string COSIGN_DUE_DATE = "Co_x0020_Sign_x0020_Due_x0020_Da";
+                public static readonly string OLM_PHASE = "OLM_x0020_Phase";
+                public static readonly string OLM_MILESTONE = "OLM_x0020_Milestone";
+                public static readonly string COSIGN_STATUS = "Co_x0020_Sign_x0020_Status";
+                public static readonly string COSIGNER_LIST = "Co_x0020_Signer_x0020_List";
+                public static readonly string TOPIC = "Topic";
+                public static readonly string REMARK = "Remark";
+                public static readonly string COSIGN_SUBMITTED_DATE = "Co_x0020_Sign_x0020_Submitted_x0";
+                public static readonly string COSIGN_RESULT_DATE = "Co_x0020_Sign_x0020_Result_x0020";
+                public static readonly string COSIGNATURE_RESULT = "Co_x0020_Signature_x0020_Result";
+                public static readonly string IS_SUBMITTED = "isSubmitted";
+                public static readonly string IS_CANCELLED = "isCancelled";
+                public static readonly string IS_DONE = "isDone";
+                public static readonly string COSIGN_VOTES = "CoSignVotes";
+                public static readonly string TOTAL_COSIGN_VOTES = "TotalCoSignVotes";
+                public static readonly string COSIGNATURE_ID = "CoSignatureID";
+            }
                 public static readonly string VALID_FROM = "Valid_x0020_From";
                 public static readonly string VALID_TO = "Valid_x0020_To";
                 public static readonly string TEAM_ROLE = "Team_x0020_Role";
@@ -203,29 +243,12 @@
                     public static readonly string TITLE = "Version Budgets";
                     public static readonly string ROOT_FOLDER_NAME = "VersionBudgets";
                 }
-            }
 
-            public static class Fields
-            {
-                public static readonly string YEAR = "Year";
-                public static readonly string DELTAREVENUEPLAN = "Delta_x0020_Revenue_x0020_Plan";
-                public static readonly string DELTAOEPLAN = "Delta_x0020_OE_x0020_Plan";
-                public static readonly string BSSBUDGETOPEXPLAN = "BSS_x0020_Budget_x0020_Opex_x002";
-                public static readonly string BSSBUDGETCAPEXPLAN = "BSS_x0020_Budget_x0020_Capex_x00";
-                public static readonly string BSSBUDGETOPEXAPPROVED = "BSS_x0020_Budget_x0020_Opex_x0020";
-                public static readonly string BSSBUDGETCAPEXAPPROVED = "BSS_x0020_Budget_x0020_Capex_x000";
-                public static readonly string OSSBUDGETOPEXPLAN = "OSS_x0020_Budget_x0020_Opex_x002";
-                public static readonly string OSSBUDGETCAPEXPLAN = "OSS_x0020_Budget_x0020_Capex_x00";
-                public static readonly string OSSBUDGETOPEXAPPROVED = "OSS_x0020_Budget_x0020_Opex_x0020";
-                public static readonly string OSSBUDGETCAPEXAPPROVED = "OSS_x0020_Budget_x0020_Capex_x000";
-                public static readonly string OTHERBUDGETOPEXPLAN = "Other_x0020_Budget_x0020_Opex_x0";
-                public static readonly string OTHERBUDGETCAPEXPLAN = "Other_x0020_Budget_x0020_Capex_x";
-                public static readonly string OTHERBUDGETOPEXAPPROVED = "Other_x0020_Budget_x0020_Opex_x00";
-                public static readonly string OTHERBUDGETCAPEXAPPROVED = "Other_x0020_Budget_x0020_Capex_x0";
-                public static readonly string RNDBUDGETOPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Ope";
-                public static readonly string RNDBUDGETCAPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Cap";
-                public static readonly string RNDBUDGETOPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Ope0";
-                public static readonly string RNDBUDGETCAPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Cap0";
+                public static class CoSignature
+                {
+                    public static readonly string TITLE = "CoSignatureWorkflow";
+                    public static readonly string ROOT_FOLDER_NAME = "CoSignatureWorkflow";
+                }
             }
         }
     }
