@@ -79,6 +79,7 @@
     <Compile Include="Formatters\DocumentFormatterBase.cs" />
     <Compile Include="Formatters\AllOmItemCsvFormatter.cs" />
     <Compile Include="Formatters\MilestoneCsvFormatter.cs" />
+    <Compile Include="Formatters\VersionBudgetCsvFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Formatters\VersionHeaderCsvFormatter.cs" />
   </ItemGroup>

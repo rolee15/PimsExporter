@@ -44,5 +44,10 @@ namespace Services.OutputRepositories
         {
             outputAdapter.SaveVersionHeaders(versionHeaders);
         }
+
+        public void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets)
+        {
+            outputAdapter.SaveVersionBudgets(versionBudgets);
+        }
     }
 }

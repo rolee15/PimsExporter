@@ -19,7 +19,7 @@ namespace CSV.Formatters
 
         protected IEnumerable<ColumnFormatter<T>> Columns { get; set; }
 
-        public Stream FormatAsync(IEnumerable<T> rows)
+        public Stream FormatStream(IEnumerable<T> rows)
         {
             var stream = new MemoryStream();
 
@@ -64,67 +64,74 @@ namespace CSV.Formatters
 
             private readonly CultureInfo _culture = CultureInfo.GetCultureInfo("en-US");
 
-            public ColumnFormatter(string header, Func<TRow, string> formatter)
+            public ColumnFormatter(string header, Func<TRow, string> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = formatter;
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = getter;
             }
 
-            public ColumnFormatter(string header, Func<TRow, bool> formatter)
+            public ColumnFormatter(string header, Func<TRow, bool> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = r => formatter(r).ToString();
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => getter(r).ToString();
             }
 
-            public ColumnFormatter(string header, Func<TRow, int> formatter)
+            public ColumnFormatter(string header, Func<TRow, int> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = r => string.Format(_culture, IntFormat, formatter(r));
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => string.Format(_culture, IntFormat, getter(r));
             }
 
-            public ColumnFormatter(string header, Func<TRow, double> formatter)
+            public ColumnFormatter(string header, Func<TRow, double> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = r => string.Format(_culture, FloatFormat, formatter(r));
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => string.Format(_culture, FloatFormat, getter(r));
             }
 
-            public ColumnFormatter(string header, Func<TRow, decimal> formatter)
+            public ColumnFormatter(string header, Func<TRow, double?> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = r => string.Format(_culture, FloatFormat, formatter(r));
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => getter(r).HasValue ? string.Format(_culture, FloatFormat, getter(r)) : string.Empty;
             }
 
-            public ColumnFormatter(string header, Func<TRow, decimal?> formatter)
+            public ColumnFormatter(string header, Func<TRow, decimal> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = r => string.Format(_culture, DecimalFormat, formatter(r));
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => string.Format(_culture, FloatFormat, getter(r));
             }
 
-            public ColumnFormatter(string header, Func<TRow, DateTime> formatter)
+            public ColumnFormatter(string header, Func<TRow, decimal?> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = r => formatter(r).ToString(DateFormat);
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => string.Format(_culture, DecimalFormat, getter(r));
             }
 
-            public ColumnFormatter(string header, Func<TRow, DateTime?> formatter)
+            public ColumnFormatter(string header, Func<TRow, DateTime> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = r => formatter(r).HasValue ? formatter(r).Value.ToString(DateFormat) : null;
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => getter(r).ToString(DateFormat);
             }
 
-            public ColumnFormatter(string header, Func<TRow, User> formatter)
+            public ColumnFormatter(string header, Func<TRow, DateTime?> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (formatter is null) throw new ArgumentNullException(nameof(formatter));
-                Formatter = r => formatter(r)?.Name ?? formatter(r)?.Email;
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => getter(r).HasValue ? getter(r).Value.ToString(DateFormat) : null;
+            }
+
+            public ColumnFormatter(string header, Func<TRow, User> getter)
+            {
+                Header = header ?? throw new ArgumentNullException(nameof(header));
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => getter(r)?.Name ?? getter(r)?.Email;
             }
 
             public string Header { get; }

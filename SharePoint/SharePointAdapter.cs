@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using ProductFields = SharePoint.Constants.Product.Fields;
+using VersionFields = SharePoint.Constants.Version.Fields;
 using RootFields = SharePoint.Constants.Root.Fields;
 using User = Domain.Entities.User;
+using System.Globalization;
 
 namespace SharePoint
 {
@@ -278,6 +280,71 @@ namespace SharePoint
             return milestone;
         }
 
+        private VersionBudget MapVerionBudgetToEntity(ListItem item)
+        {
+            var versionBudget = new VersionBudget();
+            versionBudget.Year = Convert.ToInt32(item[VersionFields.YEAR]);
+            versionBudget.DeltaRevenuePlan = ConvertNullableDouble(item[VersionFields.DELTAREVENUEPLAN]);
+            versionBudget.DeltaOEPlan = ConvertNullableDouble(item[VersionFields.DELTAOEPLAN]);
+            versionBudget.BSSBudgetOpexPlan = ConvertNullableDouble(item[VersionFields.BSSBUDGETOPEXPLAN]);
+            versionBudget.BSSBudgetCapexPlan = ConvertNullableDouble(item[VersionFields.BSSBUDGETCAPEXPLAN]);
+            versionBudget.BSSBudgetOpexApproved = ConvertNullableDouble(item[VersionFields.BSSBUDGETOPEXAPPROVED]);
+            versionBudget.BSSBudgetCapexApproved = ConvertNullableDouble(item[VersionFields.BSSBUDGETCAPEXAPPROVED]);
+            versionBudget.OSSBudgetOpexPlan = ConvertNullableDouble(item[VersionFields.OSSBUDGETOPEXPLAN]);
+            versionBudget.OSSBudgetCapexPlan = ConvertNullableDouble(item[VersionFields.OSSBUDGETCAPEXPLAN]);
+            versionBudget.OSSBudgetOpexApproved = ConvertNullableDouble(item[VersionFields.OSSBUDGETOPEXAPPROVED]);
+            versionBudget.OSSBudgetCapexApproved = ConvertNullableDouble(item[VersionFields.OSSBUDGETCAPEXAPPROVED]);
+            versionBudget.OtherBudgetOpexPlan = ConvertNullableDouble(item[VersionFields.OTHERBUDGETOPEXPLAN]);
+            versionBudget.OtherBudgetCapexPlan = ConvertNullableDouble(item[VersionFields.OTHERBUDGETCAPEXPLAN]);
+            versionBudget.OtherBudgetOpexApproved = ConvertNullableDouble(item[VersionFields.OTHERBUDGETOPEXAPPROVED]);
+            versionBudget.OtherBudgetCapexApproved = ConvertNullableDouble(item[VersionFields.OTHERBUDGETCAPEXAPPROVED]);
+            versionBudget.RnDBudgetOpexPlan = ConvertNullableDouble(item[VersionFields.RNDBUDGETOPEXPLAN]);
+            versionBudget.RnDBudgetCapexPlan = ConvertNullableDouble(item[VersionFields.RNDBUDGETCAPEXPLAN]);
+            versionBudget.RnDBudgetOpexApproved = ConvertNullableDouble(item[VersionFields.RNDBUDGETOPEXAPPROVED]);
+            versionBudget.RnDBudgetCapexApproved = ConvertNullableDouble(item[VersionFields.RNDBUDGETCAPEXAPPROVED]);
+            return versionBudget;
+        }
+
+        private IEnumerable<T> GetAllItems<T>(ClientContext ctx, List list, Func<ListItem, T> map)
+        {
+            var result = new List<T>();
+
+            CamlQuery query = new CamlQuery
+            {
+                ViewXml = CAML.ViewQuery(
+                    ViewScope.DefaultValue,
+                    rowLimit: Constants.DEFAULT_QUERY_ROW_LIMIT)
+            };
+
+            ListItemCollectionPosition position = null;
+            do
+            {
+                query.ListItemCollectionPosition = position;
+                ListItemCollection items = list.GetItems(query);
+                ctx.Load(items);
+                ctx.ExecuteQuery();
+
+
+                foreach (var item in items)
+                    result.Add(map(item));
+
+                position = items.ListItemCollectionPosition;
+
+            } while (position != null);
+
+            return result;
+        }
+
+        public double? ConvertNullableDouble(object value)
+        {
+            double? result = null;
+            if (value != null)
+            {
+                result = Convert.ToDouble(value, CultureInfo.InvariantCulture);
+            }
+            return result;
+        }
+
         private List GetList(ClientContext ctx, string title)
         {
             Web web = ctx.Web;
@@ -435,6 +502,16 @@ namespace SharePoint
 
             return versionNumbers;
         }
+
+        public IEnumerable<VersionBudget> VersionBudgets()
+        {
+            using (var context = new ClientContext(SharepointSiteUrl))
+            {
+                context.Credentials = Credentials;
+                var list = GetList(context, Constants.Version.Lists.VersionBudget.TITLE);
+                return GetAllItems(context, list, (item => MapVerionBudgetToEntity(item)));
+            }
+        }
     }
 
     public interface ISharePointAdapter
@@ -446,5 +523,6 @@ namespace SharePoint
         List<Milestone> Milestones();
         VersionHeader ProductVersion();
         List<int> VersionNumbers();
+        IEnumerable<VersionBudget> VersionBudgets();
     }
 }

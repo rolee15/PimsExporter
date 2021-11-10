@@ -56,9 +56,8 @@ namespace PimsExporter
                     milestones.ForEach(m => m.OmItemNumber = i);
                     omItemMilestones.AddRange(milestones);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    continue;
                 }
             }
             _outputRepository.SaveOmItemHeaders(omItemHeaders);
@@ -69,28 +68,49 @@ namespace PimsExporter
         public void ExportVersions(int omItemNumberFrom, int omItemNumberTo)
         {
             var versionHeaders = new List<VersionHeader>();
-
+            var versionBudgets = new List<VersionBudget>();
             for (int omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
             {
-                var omItemUrl = Path.Combine(RootSiteUrl, $"products/{omItemNumber}");
-                var omItemSiteUri = new Uri(omItemUrl);
-                var credentials = new NetworkCredential(UserName, Password);
-                var omItemRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(omItemSiteUri, credentials);
-                
-                var versionNumbers = omItemRepository.GetVersionNumbers();
-                foreach (var versionNumber in versionNumbers)
+                try
                 {
-                    var url = Path.Combine(RootSiteUrl, $"products/{omItemNumber}/{versionNumber}");
-                    var siteUri = new Uri(url);
-                    var versionRepository = _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
+                    var omItemUrl = Path.Combine(RootSiteUrl, $"products/{omItemNumber}");
+                    var omItemSiteUri = new Uri(omItemUrl);
+                    var credentials = new NetworkCredential(UserName, Password);
+                    var omItemRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(omItemSiteUri, credentials);
 
-                    var header = versionRepository.GetHeader();
-                    header.OmItemNumber = omItemNumber;
-                    header.VersionNumber = versionNumber;
-                    versionHeaders.Add(header);
+                    var versionNumbers = omItemRepository.GetVersionNumbers();
+                    foreach (var versionNumber in versionNumbers)
+                    {
+                        try
+                        {
+                            var url = Path.Combine(RootSiteUrl, $"products/{omItemNumber}/{versionNumber}");
+                            var siteUri = new Uri(url);
+                            var versionRepository = _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
+
+                            var header = versionRepository.GetHeader();
+                            header.OmItemNumber = omItemNumber;
+                            header.VersionNumber = versionNumber;
+                            versionHeaders.Add(header);
+
+                            var tempVersionBudgets = versionRepository.GetVersionBudgets();
+                            foreach (var item in tempVersionBudgets)
+                            {
+                                item.OmItemNumber = omItemNumber;
+                                item.VersionNumber = versionNumber;
+                            }
+                            versionBudgets.AddRange(tempVersionBudgets);
+                        }
+                        catch (Exception)
+                        { 
+                        }
+                    }
+                }
+                catch (Exception)
+                { 
                 }
             }
             _outputRepository.SaveVersionHeaders(versionHeaders);
+            _outputRepository.SaveVersionBudgets(versionBudgets);
         }
 
         public void ExportRoot()
