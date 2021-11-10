@@ -43,15 +43,6 @@ namespace CLI
             Console.WriteLine("Finished.");
             Console.ReadLine();
         }
-        private static int GetOmItemNumber()
-        {
-            return Convert.ToInt32(Console.ReadLine());
-        }
-
-        private static int GetVersionNumber()
-        {
-            return Convert.ToInt32(Console.ReadLine());
-        }
 
         private static int GetOmItemLowerRange()
         {

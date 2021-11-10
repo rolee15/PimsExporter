@@ -7,7 +7,6 @@ namespace CSV.Formatters
     {
         public AllVersionCsvFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
         {
-            //TODO could do this in the base class with reflection
             Columns = new[]
             {
                 new ColumnFormatter<AllVersion>("PortfolioUnit", r => r.PortfolioUnit),
