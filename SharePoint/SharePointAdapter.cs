@@ -305,7 +305,7 @@ namespace SharePoint
             return versionBudget;
         }
 
-        private List<T> GetAllItems<T>(ClientContext ctx, List list, Func<ListItem, T> map)
+        private IEnumerable<T> GetAllItems<T>(ClientContext ctx, List list, Func<ListItem, T> map)
         {
             var result = new List<T>();
 
