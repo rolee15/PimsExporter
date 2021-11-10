@@ -237,8 +237,7 @@ namespace SharePoint
                 OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]),
                 CurrentStart = item[ProductFields.PLM_DATE] as DateTime?,
                 CurrentEnd = item[ProductFields.PLM_PHASE_PLANNED] as DateTime?,
-                // TODO: Uncomment when new version is on TEST
-                //header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
+                OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
                 ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
                 LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION])
             };
@@ -422,46 +421,45 @@ namespace SharePoint
 
         private VersionHeader MapProductVersionToEntity(ListItem item)
         {
-            var header = new VersionHeader();
-
-            header.VersionName = Convert.ToString(item[ProductFields.VERSION_NAME]);
-            header.VersionAlias = Convert.ToString(item[ProductFields.VERSION_ALIAS]);
-            header.FullVersionId = Convert.ToString(item[ProductFields.FULL_VERSION_ID]);
-            header.VersionManager = MapToUser(item[ProductFields.VERSION_MANAGER]);
-            header.CurrentOlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE_VERSION]);
-            header.PimsId = Convert.ToString(item[ProductFields.VERSION_PIMSID]);
-            header.ArticleNumber = Convert.ToString(item[ProductFields.ARTICLE_NUMBER]);
-            header.VersionStatus = Convert.ToString(item[ProductFields.VERSION_STATUS]);
-            header.ActiveStatus = Convert.ToBoolean(item[ProductFields.ACTIVE_STATUS]);
-            header.AllowUsageInTsiForce = Convert.ToBoolean(item[ProductFields.USEDINTSIFORCE]);
-            header.OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]);
-            header.PuReleaseAssignment = Convert.ToString(item[ProductFields.DD_RELEASE_ASSIGNMENT]);
-            header.TsiPortfolioVersion = Convert.ToString(item[ProductFields.TSIPORTFOLIOVERSION]);
-            header.BssReleaseAssignment = Convert.ToString(item[ProductFields.BSS_RELEASE_ASSIGNMENT]);
-            header.OssReleaseAssignment = Convert.ToString(item[ProductFields.OSS_RELEASE_ASSIGNMENT]);
-            header.RequestedOnboarding = item[ProductFields.REQUESTED_ONBOARDING] as DateTime?;
-            header.OnboardingDueDate = item[ProductFields.ONBOARDING_DUE_DATE] as DateTime?;
-            header.ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]);
-            header.LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION]);
-            header.Comment = Convert.ToString(item[ProductFields.OMITEMVERSION_COMMENT]);
-            header.FocusOfMeasure = Convert.ToString(item[ProductFields.FOCUSOFMEASURE]);
-            header.PrimaryFunding = Convert.ToString(item[ProductFields.PRIMARYFUNDING]);
-            header.SecondaryFunding = Convert.ToString(item[ProductFields.SECONDARYFUNDING]);
-            header.InnovationTopic = Convert.ToString(item[ProductFields.INNOVATIONTOPIC]);
-            header.InIpf = Convert.ToString(item[ProductFields.INIPF]);
-            header.InPib = Convert.ToString(item[ProductFields.INPIB]);
-            header.InnovationStructure = Convert.ToString(item[ProductFields.DTAGINNOVATIONBMSTRUCTURE]);
-            header.InnovationCategory = Convert.ToString(item[ProductFields.DTAGINNOVATIONCATEGORY]);
-            header.InternationalRelevance = Convert.ToString(item[ProductFields.INTERNATIONALRELEVANCE]);
-            header.SupportedMarketingUmbrellaMeasure = Convert.ToString(item[ProductFields.SUPPORTEDMARKETINGMEASURE]);
-            header.MeasurePriority = Convert.ToString(item[ProductFields.MEASUREPRIORITY]);
-            header.MeasureStatus = Convert.ToString(item[ProductFields.MEASURESTATUS]);
-            header.ShortCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITSHORT]);
-            header.LongCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITSHORT]);
-            header.TargetAudience = Convert.ToString(item[ProductFields.TARGETAUDIENCE]);
-            header.RiskAndMitigation = Convert.ToString(item[ProductFields.RISKMITIGATION]);
-
-            return header;
+            return new VersionHeader
+            {
+                VersionName = Convert.ToString(item[ProductFields.VERSION_NAME]),
+                VersionAlias = Convert.ToString(item[ProductFields.VERSION_ALIAS]),
+                FullVersionId = Convert.ToString(item[ProductFields.FULL_VERSION_ID]),
+                VersionManager = MapToUser(item[ProductFields.VERSION_MANAGER]),
+                CurrentOlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE_VERSION]),
+                PimsId = Convert.ToString(item[ProductFields.VERSION_PIMSID]),
+                ArticleNumber = Convert.ToString(item[ProductFields.ARTICLE_NUMBER]),
+                VersionStatus = Convert.ToString(item[ProductFields.VERSION_STATUS]),
+                ActiveStatus = Convert.ToBoolean(item[ProductFields.ACTIVE_STATUS]),
+                AllowUsageInTsiForce = Convert.ToBoolean(item[ProductFields.USEDINTSIFORCE]),
+                OfferingType = Convert.ToString(item[ProductFields.OFFERING_TYPE]),
+                PuReleaseAssignment = Convert.ToString(item[ProductFields.DD_RELEASE_ASSIGNMENT]),
+                TsiPortfolioVersion = Convert.ToString(item[ProductFields.TSIPORTFOLIOVERSION]),
+                BssReleaseAssignment = Convert.ToString(item[ProductFields.BSS_RELEASE_ASSIGNMENT]),
+                OssReleaseAssignment = Convert.ToString(item[ProductFields.OSS_RELEASE_ASSIGNMENT]),
+                RequestedOnboarding = item[ProductFields.REQUESTED_ONBOARDING] as DateTime?,
+                OnboardingDueDate = item[ProductFields.ONBOARDING_DUE_DATE] as DateTime?,
+                ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
+                LongDescription = Convert.ToString(item[ProductFields.LONG_DESCRIPTION]),
+                Comment = Convert.ToString(item[ProductFields.OMITEMVERSION_COMMENT]),
+                FocusOfMeasure = Convert.ToString(item[ProductFields.FOCUSOFMEASURE]),
+                PrimaryFunding = Convert.ToString(item[ProductFields.PRIMARYFUNDING]),
+                SecondaryFunding = Convert.ToString(item[ProductFields.SECONDARYFUNDING]),
+                InnovationTopic = Convert.ToString(item[ProductFields.INNOVATIONTOPIC]),
+                InIpf = Convert.ToString(item[ProductFields.INIPF]),
+                InPib = Convert.ToString(item[ProductFields.INPIB]),
+                InnovationStructure = Convert.ToString(item[ProductFields.DTAGINNOVATIONBMSTRUCTURE]),
+                InnovationCategory = Convert.ToString(item[ProductFields.DTAGINNOVATIONCATEGORY]),
+                InternationalRelevance = Convert.ToString(item[ProductFields.INTERNATIONALRELEVANCE]),
+                SupportedMarketingUmbrellaMeasure = Convert.ToString(item[ProductFields.SUPPORTEDMARKETINGMEASURE]),
+                MeasurePriority = Convert.ToString(item[ProductFields.MEASUREPRIORITY]),
+                MeasureStatus = Convert.ToString(item[ProductFields.MEASURESTATUS]),
+                ShortCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITSHORT]),
+                LongCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITSHORT]),
+                TargetAudience = Convert.ToString(item[ProductFields.TARGETAUDIENCE]),
+                RiskAndMitigation = Convert.ToString(item[ProductFields.RISKMITIGATION])
+            };
         }
 
         public List<int> VersionNumbers()
