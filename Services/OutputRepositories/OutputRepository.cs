@@ -49,5 +49,10 @@ namespace Services.OutputRepositories
         {
             outputAdapter.SaveVersionBudgets(versionBudgets);
         }
+
+        public void SaveTeams(IEnumerable<Team> teams)
+        {
+            outputAdapter.SaveTeams(teams);
+        }
     }
 }

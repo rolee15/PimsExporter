@@ -33,5 +33,10 @@ namespace Services.InputRepositories
         {
             return spAdapter.VersionNumbers();
         }
+
+        public List<Team> GetTeams()
+        {
+            return spAdapter.Teams();
+        }
     }
 }

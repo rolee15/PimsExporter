@@ -74,7 +74,8 @@
     <Compile Include="CsvAdapterSettings.cs" />
     <Compile Include="Formatters\AllVersionCsvFormatter.cs" />
     <Compile Include="CsvAdapter.cs" />
-    <Compile Include="Formatters\OlmPhaseCsvFormatter.cs" />
+	<Compile Include="Formatters\TeamCsvFormatter.cs" />
+	<Compile Include="Formatters\OlmPhaseCsvFormatter.cs" />
     <Compile Include="Formatters\OmItemHeaderCsvFormatter.cs" />
     <Compile Include="Formatters\DocumentFormatterBase.cs" />
     <Compile Include="Formatters\AllOmItemCsvFormatter.cs" />

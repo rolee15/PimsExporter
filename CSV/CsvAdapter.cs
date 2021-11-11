@@ -15,6 +15,7 @@ namespace CSV
         private const string MilestonesFileName = "Milestones.csv";
         private const string VersionHeadersFileName = "VersionHeaders.csv";
         private const string VersionBudgetsFileName = "VersionBudgets.csv";
+        private const string TeamsFileName = "Teams.csv";
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
@@ -23,6 +24,7 @@ namespace CSV
         private readonly MilestoneCsvFormatter _milestonesFormatter;
         private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
         private readonly VersionBudgetCsvFormatter _versionBudgetFormatter;
+        private readonly TeamCsvFormatter _teamsFormatter;
         private readonly CsvAdapterSettings _settings;
 
         public string OutputDir { get; }
@@ -37,6 +39,7 @@ namespace CSV
             _milestonesFormatter = new MilestoneCsvFormatter();
             _versionHeaderFormatter = new VersionHeaderCsvFormatter();
             _versionBudgetFormatter = new VersionBudgetCsvFormatter();
+            _teamsFormatter = new TeamCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -129,6 +132,19 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        public void SaveTeams(IEnumerable<Team> teams)
+        {
+            var path = Path.Combine(_settings.OutputDir, "product");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, TeamsFileName);
+
+            var resultStream = _teamsFormatter.FormatStream(teams);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
     }
 
     public interface IOutputAdapter
@@ -140,5 +156,6 @@ namespace CSV
         void SaveMilestones(IEnumerable<Milestone> omItemMilestones);
         void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders);
         void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets);
+        void SaveTeams(IEnumerable<Team> teams);
     }
 }
