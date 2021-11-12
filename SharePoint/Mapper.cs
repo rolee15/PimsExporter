@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-using Microsoft.SharePoint.Client;
-using System;
+﻿using System;
 using System.Globalization;
 using Domain.Entities;
 using Microsoft.SharePoint.Client;
