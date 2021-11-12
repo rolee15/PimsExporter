@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using System.Globalization;
+﻿using System.Globalization;
+using Domain.Entities;
 
 namespace CSV.Formatters
 {

@@ -1,4 +1,6 @@
-﻿using CSV;
+﻿using System;
+using System.Security;
+using CSV;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,14 +9,12 @@ using PimsExporter.Services.InputRepositories;
 using PimsExporter.Services.OutputRepositories;
 using Services.InputRepositories;
 using Services.OutputRepositories;
-using System;
-using System.Security;
 
 namespace CLI
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var host = CreateDefaultBuilder().Build();
 
@@ -56,7 +56,7 @@ namespace CLI
             return Convert.ToInt32(Console.ReadLine());
         }
 
-        static IHostBuilder CreateDefaultBuilder()
+        private static IHostBuilder CreateDefaultBuilder()
         {
             return Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration(app =>
@@ -66,8 +66,10 @@ namespace CLI
                 })
                 .ConfigureServices((ctx, services) =>
                 {
-                    services.Configure<ExporterSettings>(ctx.Configuration.GetSection(nameof(ExporterSettings)), o => o.BindNonPublicProperties = true);
-                    services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)), o => o.BindNonPublicProperties = true);
+                    services.Configure<ExporterSettings>(ctx.Configuration.GetSection(nameof(ExporterSettings)),
+                        o => o.BindNonPublicProperties = true);
+                    services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)),
+                        o => o.BindNonPublicProperties = true);
 
                     services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();
@@ -81,23 +83,20 @@ namespace CLI
             var pwd = new SecureString();
             while (true)
             {
-                ConsoleKeyInfo i = Console.ReadKey(true);
-                if (i.Key == ConsoleKey.Enter)
+                var i = Console.ReadKey(true);
+                if (i.Key == ConsoleKey.Enter) break;
+
+                if (i.Key == ConsoleKey.Backspace)
                 {
-                    break;
+                    if (pwd.Length > 0) pwd.RemoveAt(pwd.Length - 1);
                 }
-                else if (i.Key == ConsoleKey.Backspace)
-                {
-                    if (pwd.Length > 0)
-                    {
-                        pwd.RemoveAt(pwd.Length - 1);
-                    }
-                }
-                else if (i.KeyChar != '\u0000') // KeyChar == '\u0000' if the key pressed does not correspond to a printable character, e.g. F1, Pause-Break, etc
+                else if (i.KeyChar != '\u0000'
+                ) // KeyChar == '\u0000' if the key pressed does not correspond to a printable character, e.g. F1, Pause-Break, etc
                 {
                     pwd.AppendChar(i.KeyChar);
                 }
             }
+
             return pwd;
         }
     }

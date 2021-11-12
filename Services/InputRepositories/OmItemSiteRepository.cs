@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
 using SharePoint;
-using System.Collections.Generic;
 
 namespace Services.InputRepositories
 {
@@ -19,22 +19,22 @@ namespace Services.InputRepositories
             return spAdapter.ProductRecord();
         }
 
-        public List<OlmPhase> GetOlmPhase()
+        public IEnumerable<OlmPhase> GetOlmPhase()
         {
             return spAdapter.OlmPhase();
         }
 
-        public List<Milestone> GetMilestones()
+        public IEnumerable<Milestone> GetMilestones()
         {
             return spAdapter.Milestones();
         }
 
-        public List<int> GetVersionNumbers()
+        public IEnumerable<int> GetVersionNumbers()
         {
             return spAdapter.VersionNumbers();
         }
 
-        public List<Team> GetTeams()
+        public IEnumerable<Team> GetTeams()
         {
             return spAdapter.Teams();
         }

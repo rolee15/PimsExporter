@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
 using SharePoint;
-using System.Collections.Generic;
 
 namespace Services.InputRepositories
 {
@@ -14,15 +14,14 @@ namespace Services.InputRepositories
             _spAdapter = sharePointAdapter;
         }
 
-        public List<AllVersion> GetAllVersions()
+        public IEnumerable<AllVersion> GetAllVersions()
         {
             return _spAdapter.AllVersions();
         }
 
-        public List<AllOmItem> GetAllOmItems()
+        public IEnumerable<AllOmItem> GetAllOmItems()
         {
             return _spAdapter.AllOmItems();
         }
-
     }
 }

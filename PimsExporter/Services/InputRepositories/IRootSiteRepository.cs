@@ -1,11 +1,11 @@
-﻿using Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 
 namespace PimsExporter.Services.InputRepositories
 {
     public interface IRootSiteRepository
     {
-        List<AllOmItem> GetAllOmItems();
-        List<AllVersion> GetAllVersions();
+        IEnumerable<AllOmItem> GetAllOmItems();
+        IEnumerable<AllVersion> GetAllVersions();
     }
 }

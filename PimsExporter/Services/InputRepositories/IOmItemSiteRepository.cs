@@ -1,14 +1,14 @@
-﻿using Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 
 namespace PimsExporter.Services.InputRepositories
 {
     public interface IOmItemSiteRepository
     {
         OmItemHeader GetHeader();
-        List<Milestone> GetMilestones();
-        List<OlmPhase> GetOlmPhase();
-        List<int> GetVersionNumbers();
-        List<Team> GetTeams();
+        IEnumerable<Milestone> GetMilestones();
+        IEnumerable<OlmPhase> GetOlmPhase();
+        IEnumerable<int> GetVersionNumbers();
+        IEnumerable<Team> GetTeams();
     }
 }

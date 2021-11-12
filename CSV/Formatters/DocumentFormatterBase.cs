@@ -1,10 +1,10 @@
-﻿using Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Domain.Entities;
 
 namespace CSV.Formatters
 {
@@ -27,11 +27,9 @@ namespace CSV.Formatters
             {
                 PrintHeaderAsync(writer);
 
-                foreach (var row in rows)
-                {
-                    PrintDataAsync(writer, row);
-                }
+                foreach (var row in rows) PrintDataAsync(writer, row);
             }
+
             stream.Seek(0, SeekOrigin.Begin);
             return stream;
         }
@@ -137,8 +135,5 @@ namespace CSV.Formatters
             public string Header { get; }
             public Func<TRow, string> Formatter { get; }
         }
-
-
     }
-
 }

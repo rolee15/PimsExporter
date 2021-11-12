@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using System.Globalization;
+﻿using System.Globalization;
+using Domain.Entities;
 
 namespace CSV.Formatters
 {
@@ -21,7 +21,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<AllOmItem>("OmItemId", r => r.OmItemId),
                 new ColumnFormatter<AllOmItem>("OlmCurrentPhase", r => r.OlmCurrentPhase),
                 new ColumnFormatter<AllOmItem>("OlmPhaseStart", r => r.OlmPhaseStart),
-                new ColumnFormatter<AllOmItem>("OlmPhaseEnd", r => r.OlmPhaseEnd),
+                new ColumnFormatter<AllOmItem>("OlmPhaseEnd", r => r.OlmPhaseEnd)
             };
         }
     }

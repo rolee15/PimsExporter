@@ -1,7 +1,7 @@
-﻿using CSV.Formatters;
-using Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using CSV.Formatters;
+using Domain.Entities;
 using Microsoft.Extensions.Options;
 
 namespace CSV
@@ -19,15 +19,13 @@ namespace CSV
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
-        private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
-        private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
         private readonly MilestoneCsvFormatter _milestonesFormatter;
-        private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
-        private readonly VersionBudgetCsvFormatter _versionBudgetFormatter;
-        private readonly TeamCsvFormatter _teamsFormatter;
+        private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
+        private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly CsvAdapterSettings _settings;
-
-        public string OutputDir { get; }
+        private readonly TeamCsvFormatter _teamsFormatter;
+        private readonly VersionBudgetCsvFormatter _versionBudgetFormatter;
+        private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
         {
@@ -41,6 +39,8 @@ namespace CSV
             _versionBudgetFormatter = new VersionBudgetCsvFormatter();
             _teamsFormatter = new TeamCsvFormatter();
         }
+
+        public string OutputDir { get; }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
         {
@@ -135,7 +135,7 @@ namespace CSV
 
         public void SaveTeams(IEnumerable<Team> teams)
         {
-            var path = Path.Combine(_settings.OutputDir, "product");
+            var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, TeamsFileName);
 

@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using System.Globalization;
+﻿using System.Globalization;
+using Domain.Entities;
 
 namespace CSV.Formatters
 {
@@ -38,7 +38,8 @@ namespace CSV.Formatters
                 new ColumnFormatter<VersionHeader>("InnovationStructure", r => r.InnovationStructure),
                 new ColumnFormatter<VersionHeader>("InnovationCategory", r => r.InnovationCategory),
                 new ColumnFormatter<VersionHeader>("InternationalRelevance", r => r.InternationalRelevance),
-                new ColumnFormatter<VersionHeader>("SupportedMarketingUmbrellaMeasure", r => r.SupportedMarketingUmbrellaMeasure),
+                new ColumnFormatter<VersionHeader>("SupportedMarketingUmbrellaMeasure",
+                    r => r.SupportedMarketingUmbrellaMeasure),
                 new ColumnFormatter<VersionHeader>("MeasurePriority", r => r.MeasurePriority),
                 new ColumnFormatter<VersionHeader>("MeasureStatus", r => r.MeasureStatus),
                 new ColumnFormatter<VersionHeader>("ShortCustomerSalesBenefit", r => r.ShortCustomerSalesBenefit),
