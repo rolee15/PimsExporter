@@ -53,7 +53,7 @@ namespace PimsExporter
                     milestones.ForEach(m => m.OmItemNumber = i);
                     omItemMilestones.AddRange(milestones);
 
-                    var teams = siteRepository.GetTeams();
+                    var teams = siteRepository.GetTeams().ToList();
                     teams.ForEach(o => o.OmItemNumber = i);
                     omItemTeams.AddRange(teams);
                 }

@@ -9,6 +9,6 @@ namespace PimsExporter.Services.InputRepositories
         IEnumerable<Milestone> GetMilestones();
         IEnumerable<OlmPhase> GetOlmPhase();
         IEnumerable<int> GetVersionNumbers();
-        List<Team> GetTeams();
+        IEnumerable<Team> GetTeams();
     }
 }

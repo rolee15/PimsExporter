@@ -186,6 +186,22 @@ namespace SharePoint
             };
         }
 
+        internal Team MapTeamsToEntity(ListItem item)
+        {
+            var team = new Team();
+
+            team.ValidFrom = item[ProductFields.VALID_FROM] as DateTime?;
+            team.ValidTo = item[ProductFields.VALID_TO] as DateTime?;
+            team.TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]);
+            team.RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]);
+            team.Member = MapToUser(item[ProductFields.MEMBER1]);
+            team.DeputyOf = MapToUser(item[ProductFields.DEPUTY_OF]);
+            team.CoSigner = Convert.ToBoolean(item[ProductFields.ISCOSIGNER]);
+
+
+            return team;
+        }
+
         private User MapToUser(object input)
         {
             if (!(input is FieldUserValue fieldUserValue))

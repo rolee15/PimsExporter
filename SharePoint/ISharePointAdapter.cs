@@ -13,5 +13,6 @@ namespace SharePoint
         VersionHeader ProductVersion();
         IEnumerable<int> VersionNumbers();
         IEnumerable<VersionBudget> VersionBudgets();
+        IEnumerable<Team> Teams();
     }
 }

@@ -82,7 +82,7 @@
                     public static readonly string TITLE = "Versions";
                     public static readonly string ROOT_FOLDER_NAME = "Versions";
                 }
-            
+
 
                 public static class Team
                 {
@@ -216,7 +216,6 @@
                 public static readonly string COSIGN_VOTES = "CoSignVotes";
                 public static readonly string TOTAL_COSIGN_VOTES = "TotalCoSignVotes";
                 public static readonly string COSIGNATURE_ID = "CoSignatureID";
-            }
                 public static readonly string VALID_FROM = "Valid_x0020_From";
                 public static readonly string VALID_TO = "Valid_x0020_To";
                 public static readonly string TEAM_ROLE = "Team_x0020_Role";
@@ -225,7 +224,7 @@
                 public static readonly string DEPUTY_OF = "Deputy_x0020_Of";
                 public static readonly string ISCOSIGNER = "Co_x002d_Signer";
                 public static readonly string ROLECOMMENT = "RoleComment";
-        }
+            }
         }
 
         public static class Version

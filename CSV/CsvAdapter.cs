@@ -23,9 +23,9 @@ namespace CSV
         private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
         private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly CsvAdapterSettings _settings;
+        private readonly TeamCsvFormatter _teamsFormatter;
         private readonly VersionBudgetCsvFormatter _versionBudgetFormatter;
         private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
-        private readonly TeamCsvFormatter _teamsFormatter;
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
         {
@@ -135,7 +135,7 @@ namespace CSV
 
         public void SaveTeams(IEnumerable<Team> teams)
         {
-            var path = Path.Combine(_settings.OutputDir, "product");
+            var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, TeamsFileName);
 
