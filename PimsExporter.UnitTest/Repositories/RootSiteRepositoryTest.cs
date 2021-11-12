@@ -1,10 +1,10 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Services.InputRepositories;
 using SharePoint;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PimsExporter.UnitTest.Repositories
 {
@@ -15,24 +15,23 @@ namespace PimsExporter.UnitTest.Repositories
         public void GetAllVersionsTest()
         {
             // ARRANGE
-            var list = new List<AllVersion>()
+            var list = new List<AllVersion>
             {
-                new AllVersion()
+                new AllVersion
                 {
                     PimsId = "0001/0001",
-                    VersionName = "MyVersion1",
+                    VersionName = "MyVersion1"
                 },
-                new AllVersion()
+                new AllVersion
                 {
                     PimsId = "0001/0002",
-                    VersionName = "MyVersion2",
+                    VersionName = "MyVersion2"
                 },
-                new AllVersion()
+                new AllVersion
                 {
                     PimsId = "0002/0001",
-                    VersionName = "MyVersion3",
-                },
-
+                    VersionName = "MyVersion3"
+                }
             };
             var spMock = new Mock<ISharePointAdapter>();
             spMock.Setup(sp => sp.AllVersions()).Returns(list);

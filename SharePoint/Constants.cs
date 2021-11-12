@@ -6,7 +6,6 @@
 
         public static class Root
         {
-
             public static class Lists
             {
                 public static class AllProducts
@@ -65,6 +64,7 @@
                     public static readonly string TITLE = "Product Record";
                     public static readonly string ROOT_FOLDER_NAME = "ProductRecord";
                 }
+
                 public static class OlmPhases
                 {
                     public static readonly string TITLE = "PLM Phase";

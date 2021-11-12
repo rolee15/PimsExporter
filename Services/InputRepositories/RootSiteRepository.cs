@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
 using SharePoint;
-using System.Collections.Generic;
 
 namespace Services.InputRepositories
 {
@@ -23,6 +23,5 @@ namespace Services.InputRepositories
         {
             return _spAdapter.AllOmItems();
         }
-
     }
 }

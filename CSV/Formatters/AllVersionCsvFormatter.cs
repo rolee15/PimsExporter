@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using System.Globalization;
+﻿using System.Globalization;
+using Domain.Entities;
 
 namespace CSV.Formatters
 {
@@ -20,7 +20,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<AllVersion>("PuReleaseAssignment", r => r.PuReleaseAssignment),
                 new ColumnFormatter<AllVersion>("BssReleaseAssignment", r => r.BssReleaseAssignment),
                 new ColumnFormatter<AllVersion>("OssReleaseAssignment", r => r.OssReleaseAssignment),
-                new ColumnFormatter<AllVersion>("Comment", r => r.Comment),
+                new ColumnFormatter<AllVersion>("Comment", r => r.Comment)
             };
         }
     }

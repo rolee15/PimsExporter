@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
-using Microsoft.SharePoint.Client;
-using System;
+﻿using System;
 using System.Globalization;
+using Domain.Entities;
+using Microsoft.SharePoint.Client;
 using ProductFields = SharePoint.Constants.Product.Fields;
 using RootFields = SharePoint.Constants.Root.Fields;
 using User = Domain.Entities.User;
@@ -107,7 +107,7 @@ namespace SharePoint
                 OLMPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
                 Default = Convert.ToString(item[ProductFields.DEFAULT]),
                 ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
-                LongDescription = Convert.ToString(item[ProductFields.COMMENT]),
+                LongDescription = Convert.ToString(item[ProductFields.COMMENT])
             };
             return milestone;
         }
@@ -134,7 +134,8 @@ namespace SharePoint
             versionBudget.OtherBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.OTHERBUDGETOPEXPLAN]);
             versionBudget.OtherBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.OTHERBUDGETCAPEXPLAN]);
             versionBudget.OtherBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.OTHERBUDGETOPEXAPPROVED]);
-            versionBudget.OtherBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.OTHERBUDGETCAPEXAPPROVED]);
+            versionBudget.OtherBudgetCapexApproved =
+                ConvertNullableDouble(item[ProductFields.OTHERBUDGETCAPEXAPPROVED]);
             versionBudget.RnDBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.RNDBUDGETOPEXPLAN]);
             versionBudget.RnDBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.RNDBUDGETCAPEXPLAN]);
             versionBudget.RnDBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.RNDBUDGETOPEXAPPROVED]);
@@ -196,10 +197,7 @@ namespace SharePoint
         public double? ConvertNullableDouble(object value)
         {
             double? result = null;
-            if (value != null)
-            {
-                result = Convert.ToDouble(value, CultureInfo.InvariantCulture);
-            }
+            if (value != null) result = Convert.ToDouble(value, CultureInfo.InvariantCulture);
             return result;
         }
     }

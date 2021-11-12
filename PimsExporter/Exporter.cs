@@ -1,23 +1,24 @@
-﻿using Domain.Entities;
-using Microsoft.Extensions.Options;
-using PimsExporter.Services.InputRepositories;
-using PimsExporter.Services.OutputRepositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security;
+using Domain.Entities;
+using Microsoft.Extensions.Options;
+using PimsExporter.Services.InputRepositories;
+using PimsExporter.Services.OutputRepositories;
 
 namespace PimsExporter
 {
     public class Exporter : IApplication
     {
-        private readonly ExporterSettings _settings;
         private readonly IInputRepositoryFactory _inputRepositoryFactory;
         private readonly IOutputRepository _outputRepository;
+        private readonly ExporterSettings _settings;
 
-        public Exporter(IOptions<ExporterSettings> settings, IInputRepositoryFactory inputRepositoryFactory, IOutputRepository outputRepository)
+        public Exporter(IOptions<ExporterSettings> settings, IInputRepositoryFactory inputRepositoryFactory,
+            IOutputRepository outputRepository)
         {
             _settings = settings.Value;
             _inputRepositoryFactory = inputRepositoryFactory;
@@ -32,8 +33,7 @@ namespace PimsExporter
             var omItemOlmPhases = new List<OlmPhase>();
             var omItemMilestones = new List<Milestone>();
             var omItemTeams = new List<Team>();
-            for (int i = from; i <= to; i++)
-            {
+            for (var i = from; i <= to; i++)
                 try
                 {
                     var url = Path.Combine(_settings.SharepointUrl, $"products/{i}");
@@ -61,7 +61,6 @@ namespace PimsExporter
                 {
                 }
 
-            }
             _outputRepository.SaveOmItemHeaders(omItemHeaders);
             _outputRepository.SaveOlmPhases(omItemOlmPhases);
             _outputRepository.SaveMilestones(omItemMilestones);
@@ -72,23 +71,23 @@ namespace PimsExporter
         {
             var versionHeaders = new List<VersionHeader>();
             var versionBudgets = new List<VersionBudget>();
-            for (int omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
-            {
+            for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
                 try
                 {
                     var omItemUrl = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}");
                     var omItemSiteUri = new Uri(omItemUrl);
                     var credentials = new NetworkCredential(_settings.UserName, Password);
-                    var omItemRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(omItemSiteUri, credentials);
+                    var omItemRepository =
+                        _inputRepositoryFactory.Create<IOmItemSiteRepository>(omItemSiteUri, credentials);
 
                     var versionNumbers = omItemRepository.GetVersionNumbers();
                     foreach (var versionNumber in versionNumbers)
-                    {
                         try
                         {
                             var url = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}/{versionNumber}");
                             var siteUri = new Uri(url);
-                            var versionRepository = _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
+                            var versionRepository =
+                                _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
 
                             var header = versionRepository.GetHeader();
                             header.OmItemNumber = omItemNumber;
@@ -101,17 +100,17 @@ namespace PimsExporter
                                 item.OmItemNumber = omItemNumber;
                                 item.VersionNumber = versionNumber;
                             }
+
                             versionBudgets.AddRange(tempVersionBudgets);
                         }
                         catch (Exception)
-                        { 
+                        {
                         }
-                    }
                 }
                 catch (Exception)
-                { 
+                {
                 }
-            }
+
             _outputRepository.SaveVersionHeaders(versionHeaders);
             _outputRepository.SaveVersionBudgets(versionBudgets);
         }
@@ -130,10 +129,9 @@ namespace PimsExporter
 
     public interface IApplication
     {
+        SecureString Password { get; set; }
         void ExportRoot();
         void ExportOmItems(int from, int to);
         void ExportVersions(int omItemNumberFrom, int omItemNumberTo);
-
-        SecureString Password { get; set; }
     }
 }

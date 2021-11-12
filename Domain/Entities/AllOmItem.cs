@@ -16,6 +16,5 @@
         public string OlmPhaseStart { get; set; }
         public string OlmPhaseEnd { get; set; }
         public int OmItemNumber { get; set; }
-
     }
 }

@@ -1,7 +1,7 @@
-﻿using CSV;
+﻿using System.Collections.Generic;
+using CSV;
 using Domain.Entities;
 using PimsExporter.Services.OutputRepositories;
-using System.Collections.Generic;
 
 namespace Services.OutputRepositories
 {

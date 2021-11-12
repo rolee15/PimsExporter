@@ -1,8 +1,8 @@
-﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Utilities;
 
 namespace SharePoint
 {
@@ -19,7 +19,7 @@ namespace SharePoint
 
         protected IEnumerable<T> GetAllEntities<T>(string title, Func<ListItem, T> map)
         {
-            using (ClientContext context = new ClientContext(SharepointSiteUrl))
+            using (var context = new ClientContext(SharepointSiteUrl))
             {
                 context.Credentials = Credentials;
                 var list = GetList(context, title);
@@ -31,7 +31,7 @@ namespace SharePoint
         {
             var result = new List<T>();
 
-            CamlQuery query = new CamlQuery
+            var query = new CamlQuery
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
@@ -42,7 +42,7 @@ namespace SharePoint
             do
             {
                 query.ListItemCollectionPosition = position;
-                ListItemCollection items = list.GetItems(query);
+                var items = list.GetItems(query);
                 ctx.Load(items);
                 ctx.ExecuteQuery();
 
@@ -51,7 +51,6 @@ namespace SharePoint
                     result.Add(map(item));
 
                 position = items.ListItemCollectionPosition;
-
             } while (position != null);
 
             return result;
@@ -59,7 +58,7 @@ namespace SharePoint
 
         protected T GetEntity<T>(string title, Func<ListItem, T> map)
         {
-            using (ClientContext context = new ClientContext(SharepointSiteUrl))
+            using (var context = new ClientContext(SharepointSiteUrl))
             {
                 context.Credentials = Credentials;
                 var list = GetList(context, title);
@@ -69,14 +68,14 @@ namespace SharePoint
 
         protected T GetItem<T>(ClientContext ctx, List list, Func<ListItem, T> map)
         {
-            CamlQuery query = new CamlQuery
+            var query = new CamlQuery
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
                     rowLimit: 1)
             };
 
-            ListItemCollection items = list.GetItems(query);
+            var items = list.GetItems(query);
             ctx.Load(items);
             ctx.ExecuteQuery();
             var item = items[0];
@@ -86,7 +85,7 @@ namespace SharePoint
 
         private List GetList(ClientContext ctx, string title)
         {
-            Web web = ctx.Web;
+            var web = ctx.Web;
             var list = web.Lists.GetByTitle(title);
             ctx.Load(list);
             ctx.ExecuteQuery();

@@ -1,9 +1,9 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Services.InputRepositories;
 using SharePoint;
-using System.Collections.Generic;
 
 namespace PimsExporter.UnitTest.Repositories
 {
@@ -14,28 +14,28 @@ namespace PimsExporter.UnitTest.Repositories
         public void GetVersionRecordTest()
         {
             // ARRANGE
-            var list = new List<VersionHeader>()
+            var list = new List<VersionHeader>
             {
-                new VersionHeader()
+                new VersionHeader
                 {
                     VersionName = "Version 1",
                     VersionManager = new User("Alice", "alice@mycompany.com"),
                     PimsId = "0001/0001",
                     ActiveStatus = false
                 },
-                new VersionHeader()
+                new VersionHeader
                 {
                     VersionName = "Version 2",
                     VersionManager = new User("Bob", "bob@mycompany.com"),
                     PimsId = "0001/0002",
-                    ActiveStatus= true
+                    ActiveStatus = true
                 },
-                new VersionHeader()
+                new VersionHeader
                 {
                     VersionName = "Version 3",
                     VersionManager = new User("Claire", "claire@mycompany.com"),
                     PimsId = "0002/0001",
-                    ActiveStatus= true
+                    ActiveStatus = true
                 }
             };
 

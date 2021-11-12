@@ -1,13 +1,13 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
 using SharePoint;
-using System.Collections.Generic;
 
 namespace Services.InputRepositories
 {
     internal class VersionRepository : IVersionRepository
     {
-        private ISharePointAdapter _spAdapter;
+        private readonly ISharePointAdapter _spAdapter;
 
         public VersionRepository(ISharePointAdapter sp)
         {
