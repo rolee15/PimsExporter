@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Domain.Entities;
+using System.Collections.Generic;
 using Domain.Entities;
 
 namespace SharePoint

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Microsoft.SharePoint.Client;
@@ -61,6 +63,7 @@ namespace SharePoint
                     result.Add(map(item));
 
                 position = items.ListItemCollectionPosition;
+
             } while (position != null);
 
             return result;
