@@ -27,7 +27,17 @@ namespace SharePoint
             }
         }
 
-        protected IEnumerable<T> GetAllItems<T>(ClientContext ctx, List list, Func<ListItem, T> map)
+        protected T GetEntity<T>(string title, Func<ListItem, T> map)
+        {
+            using (var context = new ClientContext(SharepointSiteUrl))
+            {
+                context.Credentials = Credentials;
+                var list = GetList(context, title);
+                return GetItem(context, list, map);
+            }
+        }
+
+        private IEnumerable<T> GetAllItems<T>(ClientContext ctx, List list, Func<ListItem, T> map)
         {
             var result = new List<T>();
 
@@ -56,17 +66,7 @@ namespace SharePoint
             return result;
         }
 
-        protected T GetEntity<T>(string title, Func<ListItem, T> map)
-        {
-            using (var context = new ClientContext(SharepointSiteUrl))
-            {
-                context.Credentials = Credentials;
-                var list = GetList(context, title);
-                return GetItem(context, list, map);
-            }
-        }
-
-        protected T GetItem<T>(ClientContext ctx, List list, Func<ListItem, T> map)
+        private T GetItem<T>(ClientContext ctx, List list, Func<ListItem, T> map)
         {
             var query = new CamlQuery
             {
