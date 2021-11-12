@@ -14,5 +14,6 @@ namespace SharePoint
         IEnumerable<int> VersionNumbers();
         IEnumerable<VersionBudget> VersionBudgets();
         IEnumerable<Team> Teams();
+        IEnumerable<VersionTeam> VersionTeams();
     }
 }

@@ -23,5 +23,10 @@ namespace Services.InputRepositories
         {
             return _spAdapter.VersionBudgets();
         }
+
+        public IEnumerable<VersionTeam> GetVersionTeams()
+        {
+            return _spAdapter.VersionTeams();
+        }
     }
 }

@@ -71,6 +71,7 @@ namespace PimsExporter
         {
             var versionHeaders = new List<VersionHeader>();
             var versionBudgets = new List<VersionBudget>();
+            var versionTeams = new List<VersionTeam>();
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
                 try
                 {
@@ -102,6 +103,14 @@ namespace PimsExporter
                             }
 
                             versionBudgets.AddRange(tempVersionBudgets);
+
+                            var tempVersionTeams = versionRepository.GetVersionTeams();
+                            foreach(var item in tempVersionTeams)
+                            {
+                                item.OmItemNumber = omItemNumber;
+                                item.VersionNumber = versionNumber;
+                            }
+                            versionTeams.AddRange(tempVersionTeams);
                         }
                         catch (Exception)
                         {
@@ -113,6 +122,7 @@ namespace PimsExporter
 
             _outputRepository.SaveVersionHeaders(versionHeaders);
             _outputRepository.SaveVersionBudgets(versionBudgets);
+            _outputRepository.SaveVersionTeams(versionTeams);
         }
 
         public void ExportRoot()

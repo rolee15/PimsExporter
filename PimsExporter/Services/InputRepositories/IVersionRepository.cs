@@ -7,5 +7,6 @@ namespace PimsExporter.Services.InputRepositories
     {
         VersionHeader GetHeader();
         IEnumerable<VersionBudget> GetVersionBudgets();
+        IEnumerable<VersionTeam> GetVersionTeams();
     }
 }

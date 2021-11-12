@@ -13,5 +13,6 @@ namespace PimsExporter.Services.OutputRepositories
         void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders);
         void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets);
         void SaveTeams(IEnumerable<Team> teams);
+        void SaveVersionTeams(IEnumerable<VersionTeam> versionTeams);
     }
 }
