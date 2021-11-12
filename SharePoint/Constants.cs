@@ -243,6 +243,13 @@
                     public static readonly string ROOT_FOLDER_NAME = "VersionBudgets";
                 }
 
+                public static class VersionTeam
+                {
+                    public static readonly string TITLE = "Team";
+                    public static readonly string ROOT_FOLDER_NAME = "Team";
+                }
+            }
+
                 public static class CoSignature
                 {
                     public static readonly string TITLE = "CoSignatureWorkflow";

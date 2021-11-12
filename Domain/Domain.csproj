@@ -51,6 +51,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\VersionBudget.cs" />
     <Compile Include="Entities\VersionHeader.cs" />
+    <Compile Include="Entities\VersionTeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

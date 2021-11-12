@@ -52,6 +52,21 @@ namespace SharePoint
             };
         }
 
+        internal VersionTeam MapVersionTeamsToEntity(ListItem item)
+        {
+            var versionTeam = new VersionTeam();
+
+            versionTeam.ValidFrom = item[ProductFields.VALID_FROM] as DateTime?;
+            versionTeam.ValidTo = item[ProductFields.VALID_TO] as DateTime?;
+            versionTeam.TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]);
+            versionTeam.RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]);
+            versionTeam.Member = MapToUser(item[ProductFields.MEMBER1]);
+            versionTeam.DeputyOf = MapToUser(item[ProductFields.DEPUTY_OF]);
+            versionTeam.CoSigner = Convert.ToBoolean(item[ProductFields.ISCOSIGNER]);
+
+            return versionTeam;
+        }
+
         internal OmItemHeader MapProductRecordToEntity(ListItem item)
         {
             var header = new OmItemHeader

@@ -76,5 +76,12 @@ namespace SharePoint
                 Constants.Product.Lists.Team.TITLE,
                 item => _mapper.MapTeamsToEntity(item));
         }
+
+        public IEnumerable<VersionTeam> VersionTeams()
+        {
+            return GetAllEntities(
+                Constants.Version.Lists.VersionTeam.TITLE,
+                item => _mapper.MapVersionTeamsToEntity(item));
+        }
     }
 }
