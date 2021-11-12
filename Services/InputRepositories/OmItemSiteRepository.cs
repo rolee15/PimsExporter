@@ -19,17 +19,17 @@ namespace Services.InputRepositories
             return spAdapter.ProductRecord();
         }
 
-        public List<OlmPhase> GetOlmPhase()
+        public IEnumerable<OlmPhase> GetOlmPhase()
         {
             return spAdapter.OlmPhase();
         }
 
-        public List<Milestone> GetMilestones()
+        public IEnumerable<Milestone> GetMilestones()
         {
             return spAdapter.Milestones();
         }
 
-        public List<int> GetVersionNumbers()
+        public IEnumerable<int> GetVersionNumbers()
         {
             return spAdapter.VersionNumbers();
         }

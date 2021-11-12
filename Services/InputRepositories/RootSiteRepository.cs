@@ -14,12 +14,12 @@ namespace Services.InputRepositories
             _spAdapter = sharePointAdapter;
         }
 
-        public List<AllVersion> GetAllVersions()
+        public IEnumerable<AllVersion> GetAllVersions()
         {
             return _spAdapter.AllVersions();
         }
 
-        public List<AllOmItem> GetAllOmItems()
+        public IEnumerable<AllOmItem> GetAllOmItems()
         {
             return _spAdapter.AllOmItems();
         }

@@ -4,6 +4,7 @@ using Moq;
 using Services.InputRepositories;
 using SharePoint;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PimsExporter.UnitTest.Repositories
 {
@@ -38,7 +39,7 @@ namespace PimsExporter.UnitTest.Repositories
             var rootRepository = new RootSiteRepository(spMock.Object);
 
             // ACT
-            var versions = rootRepository.GetAllVersions();
+            var versions = rootRepository.GetAllVersions().ToList();
 
             // ASSERT
             var version1 = versions[0];

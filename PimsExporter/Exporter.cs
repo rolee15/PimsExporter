@@ -5,6 +5,7 @@ using PimsExporter.Services.OutputRepositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security;
 
@@ -44,11 +45,11 @@ namespace PimsExporter
                     header.OmItemNumber = i;
                     omItemHeaders.Add(header);
 
-                    var olmPhases = siteRepository.GetOlmPhase();
+                    var olmPhases = siteRepository.GetOlmPhase().ToList();
                     olmPhases.ForEach(o => o.OmItemNumber = i);
                     omItemOlmPhases.AddRange(olmPhases);
 
-                    var milestones = siteRepository.GetMilestones();
+                    var milestones = siteRepository.GetMilestones().ToList();
                     milestones.ForEach(m => m.OmItemNumber = i);
                     omItemMilestones.AddRange(milestones);
 

@@ -9,7 +9,7 @@ namespace SharePoint
     {
         private readonly Mapper _mapper = new Mapper();
 
-        protected SharePointAdapter(Uri sharepointSiteUrl, NetworkCredential credentials)
+        public SharePointAdapter(Uri sharepointSiteUrl, NetworkCredential credentials)
             : base(sharepointSiteUrl, credentials)
         {
         }
