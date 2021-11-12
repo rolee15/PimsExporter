@@ -223,8 +223,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="ISharePointAdapter.cs" />
+    <Compile Include="Mapper.cs" />
     <Compile Include="SharePointAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SharePointAdapterBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
