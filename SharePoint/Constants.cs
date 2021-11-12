@@ -248,7 +248,6 @@
                     public static readonly string TITLE = "Team";
                     public static readonly string ROOT_FOLDER_NAME = "Team";
                 }
-            }
 
                 public static class CoSignature
                 {

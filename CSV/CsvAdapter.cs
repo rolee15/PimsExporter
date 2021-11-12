@@ -27,11 +27,8 @@ namespace CSV
         private readonly TeamCsvFormatter _teamsFormatter;
         private readonly VersionBudgetCsvFormatter _versionBudgetFormatter;
         private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
-        private readonly TeamCsvFormatter _teamsFormatter;
         private readonly VersionTeamCsvFormatter _versionTeamsFormatter;
-        private readonly CsvAdapterSettings _settings;
 
-        public string OutputDir { get; }
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
         {
