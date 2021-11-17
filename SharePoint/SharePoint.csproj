@@ -223,7 +223,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="ISharePointAdapter.cs" />
+    <Compile Include="Interfaces\ISharePointAdapter.cs" />
+    <Compile Include="Interfaces\ISharePointMapper.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="SharePointAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using CSV.Formatters;
+﻿using CSV.Formatters;
 using Domain.Entities;
+using System.Globalization;
 
 namespace CSV
 {

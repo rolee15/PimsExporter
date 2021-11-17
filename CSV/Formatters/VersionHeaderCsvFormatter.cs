@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using Domain.Entities;
+﻿using Domain.Entities;
+using System.Globalization;
 
 namespace CSV.Formatters
 {
@@ -9,6 +9,8 @@ namespace CSV.Formatters
         {
             Columns = new[]
             {
+                new ColumnFormatter<VersionHeader>("OmItemNumber", r => r.OmItemNumber),
+                new ColumnFormatter<VersionHeader>("VersionNumber", r => r.VersionNumber),
                 new ColumnFormatter<VersionHeader>("VersionName", r => r.VersionName),
                 new ColumnFormatter<VersionHeader>("VersionAlias", r => r.VersionAlias),
                 new ColumnFormatter<VersionHeader>("FullVersionId", r => r.FullVersionId),

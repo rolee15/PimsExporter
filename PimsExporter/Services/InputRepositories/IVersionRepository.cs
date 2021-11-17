@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Domain.Entities;
+﻿using Domain.Entities;
+using System.Collections.Generic;
 
 namespace PimsExporter.Services.InputRepositories
 {
@@ -8,5 +8,6 @@ namespace PimsExporter.Services.InputRepositories
         VersionHeader GetHeader();
         IEnumerable<VersionBudget> GetVersionBudgets();
         IEnumerable<VersionTeam> GetVersionTeams();
+        IEnumerable<CoSignatureHeader> GetCoSignatureHeaders();
     }
 }

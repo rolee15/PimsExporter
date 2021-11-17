@@ -1,7 +1,7 @@
-﻿using System;
-using System.Net;
-using PimsExporter.Services.InputRepositories;
+﻿using PimsExporter.Services.InputRepositories;
 using SharePoint;
+using System;
+using System.Net;
 
 namespace Services.InputRepositories
 {
@@ -19,7 +19,7 @@ namespace Services.InputRepositories
                 case "IVersionRepository":
                     return new VersionRepository(sp) as T;
                 default:
-                    throw new ArgumentException("Illegal argument: {0}", nameof(T));
+                    throw new ArgumentException("Illegal argument: {0}", typeof(T).Name);
             }
         }
     }

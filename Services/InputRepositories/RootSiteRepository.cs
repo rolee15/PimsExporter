@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Domain.Entities;
+﻿using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
-using SharePoint;
+using SharePoint.Interfaces;
+using System.Collections.Generic;
 
 namespace Services.InputRepositories
 {

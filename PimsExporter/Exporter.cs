@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Domain.Entities;
+using Microsoft.Extensions.Options;
+using PimsExporter.Services.InputRepositories;
+using PimsExporter.Services.OutputRepositories;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security;
-using Domain.Entities;
-using Microsoft.Extensions.Options;
-using PimsExporter.Services.InputRepositories;
-using PimsExporter.Services.OutputRepositories;
 
 namespace PimsExporter
 {
@@ -27,38 +27,39 @@ namespace PimsExporter
 
         public SecureString Password { get; set; }
 
-        public void ExportOmItems(int from, int to)
+        public void ExportOmItems(int omItemNumberFrom, int omItemNumberTo)
         {
             var omItemHeaders = new List<OmItemHeader>();
             var omItemOlmPhases = new List<OlmPhase>();
             var omItemMilestones = new List<Milestone>();
             var omItemTeams = new List<Team>();
-            for (var i = from; i <= to; i++)
+            for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
                 try
                 {
-                    var url = Path.Combine(_settings.SharepointUrl, $"products/{i}");
+                    var url = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}");
                     var siteUri = new Uri(url);
                     var credentials = new NetworkCredential(_settings.UserName, Password);
                     var siteRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(siteUri, credentials);
 
                     var header = siteRepository.GetHeader();
-                    header.OmItemNumber = i;
+                    header.OmItemNumber = omItemNumber;
                     omItemHeaders.Add(header);
 
                     var olmPhases = siteRepository.GetOlmPhase().ToList();
-                    olmPhases.ForEach(o => o.OmItemNumber = i);
+                    olmPhases.ForEach(o => o.OmItemNumber = omItemNumber);
                     omItemOlmPhases.AddRange(olmPhases);
 
                     var milestones = siteRepository.GetMilestones().ToList();
-                    milestones.ForEach(m => m.OmItemNumber = i);
+                    milestones.ForEach(m => m.OmItemNumber = omItemNumber);
                     omItemMilestones.AddRange(milestones);
 
                     var teams = siteRepository.GetTeams().ToList();
-                    teams.ForEach(o => o.OmItemNumber = i);
+                    teams.ForEach(o => o.OmItemNumber = omItemNumber);
                     omItemTeams.AddRange(teams);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
 
             _outputRepository.SaveOmItemHeaders(omItemHeaders);
@@ -95,34 +96,78 @@ namespace PimsExporter
                             header.VersionNumber = versionNumber;
                             versionHeaders.Add(header);
 
-                            var tempVersionBudgets = versionRepository.GetVersionBudgets();
+                            var tempVersionBudgets = versionRepository.GetVersionBudgets().ToList();
                             foreach (var item in tempVersionBudgets)
                             {
                                 item.OmItemNumber = omItemNumber;
                                 item.VersionNumber = versionNumber;
                             }
-
                             versionBudgets.AddRange(tempVersionBudgets);
 
-                            var tempVersionTeams = versionRepository.GetVersionTeams();
-                            foreach(var item in tempVersionTeams)
+                            var tempVersionTeams = versionRepository.GetVersionTeams().ToList();
+                            foreach (var item in tempVersionTeams)
                             {
                                 item.OmItemNumber = omItemNumber;
                                 item.VersionNumber = versionNumber;
                             }
                             versionTeams.AddRange(tempVersionTeams);
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            Console.WriteLine("Error at {0}/{1}: {2}", omItemNumber, versionNumber, ex.Message);
                         }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
 
             _outputRepository.SaveVersionHeaders(versionHeaders);
             _outputRepository.SaveVersionBudgets(versionBudgets);
             _outputRepository.SaveVersionTeams(versionTeams);
+        }
+
+        public void ExportCoSignatures(int omItemNumberFrom, int omItemNumberTo)
+        {
+            var coSignatureHeaders = new List<CoSignatureHeader>();
+
+            for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
+                try
+                {
+                    var omItemUrl = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}");
+                    var omItemSiteUri = new Uri(omItemUrl);
+                    var credentials = new NetworkCredential(_settings.UserName, Password);
+                    var omItemRepository =
+                        _inputRepositoryFactory.Create<IOmItemSiteRepository>(omItemSiteUri, credentials);
+
+                    var versionNumbers = omItemRepository.GetVersionNumbers();
+                    foreach (var versionNumber in versionNumbers)
+                        try
+                        {
+                            var versionUrl = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}/{versionNumber}");
+                            var versionSiteUri = new Uri(versionUrl);
+                            var versionRepository =
+                                _inputRepositoryFactory.Create<IVersionRepository>(versionSiteUri, credentials);
+
+                            var headers = versionRepository.GetCoSignatureHeaders().ToList();
+                            foreach (var header in headers)
+                            {
+                                header.OmItemNumber = omItemNumber;
+                                header.VersionNumber = versionNumber;
+                            }
+                            coSignatureHeaders.AddRange(headers);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error at {0}/{1}: {2}", omItemNumber, versionNumber, ex.Message);
+                        }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
+                }
+
+            _outputRepository.SaveCoSignatureHeaders(coSignatureHeaders);
         }
 
         public void ExportRoot()
@@ -141,7 +186,8 @@ namespace PimsExporter
     {
         SecureString Password { get; set; }
         void ExportRoot();
-        void ExportOmItems(int from, int to);
+        void ExportOmItems(int omItemNumberFrom, int omItemNumberTo);
         void ExportVersions(int omItemNumberFrom, int omItemNumberTo);
+        void ExportCoSignatures(int omItemNumberFrom, int omItemNumberTo);
     }
 }

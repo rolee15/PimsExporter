@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Domain.Entities;
+﻿using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
-using SharePoint;
+using SharePoint.Interfaces;
+using System.Collections.Generic;
 
 namespace Services.InputRepositories
 {
@@ -27,6 +27,11 @@ namespace Services.InputRepositories
         public IEnumerable<VersionTeam> GetVersionTeams()
         {
             return _spAdapter.VersionTeams();
+        }
+
+        public IEnumerable<CoSignatureHeader> GetCoSignatureHeaders()
+        {
+            return _spAdapter.CoSignatureHeaders();
         }
     }
 }
