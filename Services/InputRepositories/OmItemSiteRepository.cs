@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
 using SharePoint.Interfaces;
-using System.Collections.Generic;
 
 namespace Services.InputRepositories
 {
@@ -11,7 +11,7 @@ namespace Services.InputRepositories
 
         public OmItemSiteRepository(ISharePointAdapter spAdapter)
         {
-            this._spAdapter = spAdapter;
+            _spAdapter = spAdapter;
         }
 
         public OmItemHeader GetHeader()

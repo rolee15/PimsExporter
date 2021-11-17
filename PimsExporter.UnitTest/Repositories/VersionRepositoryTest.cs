@@ -1,9 +1,9 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Services.InputRepositories;
 using SharePoint.Interfaces;
-using System.Collections.Generic;
 
 namespace PimsExporter.UnitTest.Repositories
 {

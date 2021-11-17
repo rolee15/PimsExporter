@@ -1,23 +1,23 @@
-﻿using Domain.Entities;
-using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Domain.Entities;
+using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Utilities;
 
 namespace SharePoint
 {
     public class SharePointAdapterBase
     {
-        protected ClientContext _ctx;
         protected readonly Mapper mapper;
+        protected ClientContext _ctx;
 
         protected SharePointAdapterBase(Uri sharepointSiteUrl, NetworkCredential credentials)
         {
             SharepointSiteUrl = sharepointSiteUrl;
             Credentials = credentials;
-            this.mapper = new Mapper();
+            mapper = new Mapper();
         }
 
         public Uri SharepointSiteUrl { get; }
@@ -94,7 +94,6 @@ namespace SharePoint
                 foreach (var item in items) yield return item;
 
                 position = items.ListItemCollectionPosition;
-
             } while (position != null);
         }
 

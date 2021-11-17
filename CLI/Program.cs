@@ -1,4 +1,6 @@
-﻿using CSV;
+﻿using System;
+using System.Security;
+using CSV;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,8 +9,6 @@ using PimsExporter.Services.InputRepositories;
 using PimsExporter.Services.OutputRepositories;
 using Services.InputRepositories;
 using Services.OutputRepositories;
-using System;
-using System.Security;
 
 namespace CLI
 {

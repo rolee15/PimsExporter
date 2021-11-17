@@ -1,8 +1,8 @@
-﻿using CSV.Formatters;
+﻿using System.Collections.Generic;
+using System.IO;
+using CSV.Formatters;
 using Domain.Entities;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
-using System.IO;
 
 namespace CSV
 {
@@ -21,6 +21,7 @@ namespace CSV
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
+        private readonly CoSignatureHeaderFormatter _coSignatureHeaderFormatter;
         private readonly MilestoneCsvFormatter _milestonesFormatter;
         private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
         private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
@@ -29,7 +30,6 @@ namespace CSV
         private readonly VersionBudgetCsvFormatter _versionBudgetFormatter;
         private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
         private readonly VersionTeamCsvFormatter _versionTeamsFormatter;
-        private readonly CoSignatureHeaderFormatter _coSignatureHeaderFormatter;
 
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)

@@ -1,13 +1,13 @@
-﻿using Domain.Entities;
-using Microsoft.Extensions.Options;
-using PimsExporter.Services.InputRepositories;
-using PimsExporter.Services.OutputRepositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security;
+using Domain.Entities;
+using Microsoft.Extensions.Options;
+using PimsExporter.Services.InputRepositories;
+using PimsExporter.Services.OutputRepositories;
 
 namespace PimsExporter
 {
@@ -102,6 +102,7 @@ namespace PimsExporter
                                 item.OmItemNumber = omItemNumber;
                                 item.VersionNumber = versionNumber;
                             }
+
                             versionBudgets.AddRange(tempVersionBudgets);
 
                             var tempVersionTeams = versionRepository.GetVersionTeams().ToList();
@@ -110,6 +111,7 @@ namespace PimsExporter
                                 item.OmItemNumber = omItemNumber;
                                 item.VersionNumber = versionNumber;
                             }
+
                             versionTeams.AddRange(tempVersionTeams);
                         }
                         catch (Exception ex)
@@ -144,7 +146,8 @@ namespace PimsExporter
                     foreach (var versionNumber in versionNumbers)
                         try
                         {
-                            var versionUrl = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}/{versionNumber}");
+                            var versionUrl = Path.Combine(_settings.SharepointUrl,
+                                $"products/{omItemNumber}/{versionNumber}");
                             var versionSiteUri = new Uri(versionUrl);
                             var versionRepository =
                                 _inputRepositoryFactory.Create<IVersionRepository>(versionSiteUri, credentials);
@@ -155,6 +158,7 @@ namespace PimsExporter
                                 header.OmItemNumber = omItemNumber;
                                 header.VersionNumber = versionNumber;
                             }
+
                             coSignatureHeaders.AddRange(headers);
                         }
                         catch (Exception ex)

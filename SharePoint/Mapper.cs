@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
-using Microsoft.SharePoint.Client;
-using System;
+﻿using System;
 using System.Globalization;
+using Domain.Entities;
+using Microsoft.SharePoint.Client;
 using ProductFields = SharePoint.Constants.Product.Fields;
 using RootFields = SharePoint.Constants.Root.Fields;
 using User = Domain.Entities.User;
@@ -267,7 +267,8 @@ namespace SharePoint
             return header;
         }
 
-        internal CoSignatureHeader JoinCoSignatures(CoSignatureHeader coSignature, CoSignatureHeader coSignatureWorkflow)
+        internal CoSignatureHeader JoinCoSignatures(CoSignatureHeader coSignature,
+            CoSignatureHeader coSignatureWorkflow)
         {
             var header = new CoSignatureHeader();
 
