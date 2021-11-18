@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Net;
 using Domain.Entities;
+using SharePoint.Interfaces;
 
 namespace SharePoint
 {
-    public class SharePointAdapter : SharePointAdapterBase, ISharePointAdapter
+    public sealed class SharePointAdapter : SharePointAdapterBase, ISharePointAdapter
     {
-        private readonly Mapper _mapper = new Mapper();
-
-        public SharePointAdapter(Uri sharepointSiteUrl, NetworkCredential credentials) : base(sharepointSiteUrl,
-            credentials)
+        public SharePointAdapter(
+            Uri sharepointSiteUrl, NetworkCredential credentials)
+            : base(sharepointSiteUrl, credentials)
         {
         }
 
@@ -18,70 +18,75 @@ namespace SharePoint
         {
             return GetAllEntities(
                 Constants.Root.Lists.AllVersions.TITLE,
-                item => _mapper.MapAllVersionToEntity(item));
+                item => mapper.MapAllVersionToEntity(item));
         }
 
         public IEnumerable<AllOmItem> AllOmItems()
         {
             return GetAllEntities(
                 Constants.Root.Lists.AllProducts.TITLE,
-                item => _mapper.MapAllOmItemToEntity(item));
+                item => mapper.MapAllOmItemToEntity(item));
         }
 
         public OmItemHeader ProductRecord()
         {
-            return GetEntity(
+            return GetFirstEntity(
                 Constants.Product.Lists.ProductRecord.TITLE,
-                item => _mapper.MapProductRecordToEntity(item));
+                item => mapper.MapProductRecordToEntity(item));
         }
 
         public IEnumerable<OlmPhase> OlmPhase()
         {
             return GetAllEntities(
                 Constants.Product.Lists.OlmPhases.TITLE,
-                item => _mapper.MapOlmPhasesToEntity(item));
+                item => mapper.MapOlmPhasesToEntity(item));
         }
 
         public IEnumerable<Milestone> Milestones()
         {
             return GetAllEntities(
                 Constants.Product.Lists.Milestones.TITLE,
-                item => _mapper.MapMilestoneToEntity(item));
+                item => mapper.MapMilestoneToEntity(item));
         }
 
         public IEnumerable<int> VersionNumbers()
         {
             return GetAllEntities(
                 Constants.Product.Lists.Versions.TITLE,
-                item => _mapper.MapVersionToInt(item));
+                item => mapper.MapVersionToInt(item));
         }
 
         public VersionHeader ProductVersion()
         {
-            return GetEntity(
+            return GetFirstEntity(
                 Constants.Version.Lists.ProductVersion.TITLE,
-                item => _mapper.MapProductVersionToEntity(item));
+                item => mapper.MapProductVersionToEntity(item));
         }
 
         public IEnumerable<VersionBudget> VersionBudgets()
         {
             return GetAllEntities(
                 Constants.Version.Lists.VersionBudget.TITLE,
-                item => _mapper.MapVersionBudgetToEntity(item));
+                item => mapper.MapVersionBudgetToEntity(item));
         }
 
         public IEnumerable<Team> Teams()
         {
             return GetAllEntities(
                 Constants.Product.Lists.Team.TITLE,
-                item => _mapper.MapTeamsToEntity(item));
+                item => mapper.MapTeamsToEntity(item));
         }
 
         public IEnumerable<VersionTeam> VersionTeams()
         {
             return GetAllEntities(
                 Constants.Version.Lists.VersionTeam.TITLE,
-                item => _mapper.MapVersionTeamsToEntity(item));
+                item => mapper.MapVersionTeamsToEntity(item));
+        }
+
+        public IEnumerable<CoSignatureHeader> CoSignatureHeaders()
+        {
+            return GetAllCoSignatureEntities();
         }
     }
 }

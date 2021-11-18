@@ -1,4 +1,6 @@
-﻿using CSV;
+﻿using System;
+using System.Security;
+using CSV;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,8 +9,6 @@ using PimsExporter.Services.InputRepositories;
 using PimsExporter.Services.OutputRepositories;
 using Services.InputRepositories;
 using Services.OutputRepositories;
-using System;
-using System.Security;
 
 namespace CLI
 {
@@ -27,16 +27,20 @@ namespace CLI
             var exporter = host.Services.GetRequiredService<IApplication>();
             exporter.Password = password;
 
-            Console.Write("Starting to export root...");
+            Console.WriteLine("Starting to export root...");
             exporter.ExportRoot();
             Console.WriteLine("Done.");
 
-            Console.Write("Starting to export OM Items...");
+            Console.WriteLine("Starting to export OM Items...");
             exporter.ExportOmItems(from, to);
             Console.WriteLine("Done.");
 
-            Console.Write("Starting to export Versions...");
+            Console.WriteLine("Starting to export Versions...");
             exporter.ExportVersions(from, to);
+            Console.WriteLine("Done.");
+
+            Console.WriteLine("Starting to export Co-Signatures...");
+            exporter.ExportCoSignatures(from, to);
             Console.WriteLine("Done.");
 
             Console.WriteLine();
@@ -61,13 +65,15 @@ namespace CLI
             return Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration(app =>
                 {
-                    app.AddJsonFile("appsettings.json");
-                    app.AddJsonFile($"appsettings.{Environment.UserName}.json", true);
+                    app.AddJsonFile("Settings\\appsettings.json");
+                    app.AddJsonFile($"Settings\\appsettings.{Environment.UserName}.json", true);
                 })
                 .ConfigureServices((ctx, services) =>
                 {
-                    services.Configure<ExporterSettings>(ctx.Configuration.GetSection(nameof(ExporterSettings)), o => o.BindNonPublicProperties = true);
-                    services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)), o => o.BindNonPublicProperties = true);
+                    services.Configure<ExporterSettings>(ctx.Configuration.GetSection(nameof(ExporterSettings)),
+                        o => o.BindNonPublicProperties = true);
+                    services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)),
+                        o => o.BindNonPublicProperties = true);
 
                     services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();
@@ -81,23 +87,20 @@ namespace CLI
             var pwd = new SecureString();
             while (true)
             {
-                ConsoleKeyInfo i = Console.ReadKey(true);
-                if (i.Key == ConsoleKey.Enter)
+                var i = Console.ReadKey(true);
+                if (i.Key == ConsoleKey.Enter) break;
+
+                if (i.Key == ConsoleKey.Backspace)
                 {
-                    break;
+                    if (pwd.Length > 0) pwd.RemoveAt(pwd.Length - 1);
                 }
-                else if (i.Key == ConsoleKey.Backspace)
-                {
-                    if (pwd.Length > 0)
-                    {
-                        pwd.RemoveAt(pwd.Length - 1);
-                    }
-                }
-                else if (i.KeyChar != '\u0000') // KeyChar == '\u0000' if the key pressed does not correspond to a printable character, e.g. F1, Pause-Break, etc
+                else if (i.KeyChar != '\u0000'
+                ) // KeyChar == '\u0000' if the key pressed does not correspond to a printable character, e.g. F1, Pause-Break, etc
                 {
                     pwd.AppendChar(i.KeyChar);
                 }
             }
+
             return pwd;
         }
     }

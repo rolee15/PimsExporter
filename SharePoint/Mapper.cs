@@ -8,7 +8,7 @@ using User = Domain.Entities.User;
 
 namespace SharePoint
 {
-    internal class Mapper
+    public class Mapper
     {
         internal AllVersion MapAllVersionToEntity(ListItem item)
         {
@@ -215,6 +215,79 @@ namespace SharePoint
 
 
             return team;
+        }
+
+        internal int MapCoSignatureToInt(ListItem item)
+        {
+            return Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]);
+        }
+
+        internal CoSignatureHeader MapCoSignaturesListToEntity(ListItem item)
+        {
+            var header = new CoSignatureHeader();
+
+            header.CoSignatureId = Convert.ToInt32(item[ProductFields.ID]);
+            header.Requestor = MapToUser(item[ProductFields.REQUESTOR]);
+            header.Topic = Convert.ToString(item[ProductFields.TOPIC]);
+            header.OmItemName = Convert.ToString(item[ProductFields.PRODUCT_NAME]);
+            header.PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]);
+            header.OmItemVersion = Convert.ToString(item[ProductFields.OM_ITEM_VERSION]);
+            header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]);
+            header.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
+            header.OlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE]);
+            header.OlmMilestone = Convert.ToString(item[ProductFields.OLM_MILESTONE]);
+            header.CoSignatureDate = item[ProductFields.COSIGN_DATE] as DateTime?;
+            header.CoSignatureDueDate = item[ProductFields.COSIGN_DUE_DATE] as DateTime?;
+            header.Status = Convert.ToString(item[ProductFields.COSIGN_STATUS]);
+            header.Result = Convert.ToString(item[ProductFields.COSIGNATURE_RESULT]);
+            header.Remark = Convert.ToString(item[ProductFields.REMARK]);
+
+            return header;
+        }
+
+        internal CoSignatureHeader MapCoSignatureWorkflowToEntity(ListItem item)
+        {
+            var header = new CoSignatureHeader();
+
+            header.CoSignatureId = Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]);
+            header.Topic = Convert.ToString(item[ProductFields.SIGNATURE_NAME]);
+            header.OmItemName = Convert.ToString(item[ProductFields.PRODUCT_NAME]);
+            header.PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]);
+            header.OmItemVersion = Convert.ToString(item[ProductFields.OM_ITEM_VERSION]);
+            header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]);
+            header.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
+            header.OlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE]);
+            header.OlmMilestone = Convert.ToString(item[ProductFields.OLM_MILESTONE]);
+            header.CoSignatureDate = item[ProductFields.COSIGN_DATE] as DateTime?;
+            header.CoSignatureDueDate = item[ProductFields.COSIGN_DUE_DATE] as DateTime?;
+            header.Status = Convert.ToString(item[ProductFields.COSIGN_STATUS]);
+            header.Result = Convert.ToString(item[ProductFields.COSIGNATURE_RESULT]);
+            header.Remark = Convert.ToString(item[ProductFields.REMARK]);
+
+            return header;
+        }
+
+        internal CoSignatureHeader JoinCoSignatures(CoSignatureHeader coSignature,
+            CoSignatureHeader coSignatureWorkflow)
+        {
+            var header = new CoSignatureHeader();
+
+            header.CoSignatureId = coSignature.CoSignatureId;
+            header.Topic = coSignature.Topic;
+            header.Requestor = coSignature.Requestor;
+            header.PortfolioUnit = coSignature.PortfolioUnit;
+            header.OmItemVersion = coSignature.OmItemVersion;
+            header.OfferingCluster = coSignature.OfferingCluster;
+            header.ConfidentialityClass = coSignature.ConfidentialityClass;
+            header.OlmPhase = coSignature.OlmPhase;
+            header.OlmMilestone = coSignature.OlmMilestone;
+            header.CoSignatureDate = coSignature.CoSignatureDate;
+            header.CoSignatureDueDate = coSignature.CoSignatureDueDate;
+            header.Status = coSignature.Status;
+            header.Result = coSignature.Result;
+            header.Remark = coSignature.Remark;
+
+            return header;
         }
 
         private User MapToUser(object input)

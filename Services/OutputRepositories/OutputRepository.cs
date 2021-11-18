@@ -7,57 +7,61 @@ namespace Services.OutputRepositories
 {
     public class OutputRepository : IOutputRepository
     {
-        private readonly IOutputAdapter outputAdapter;
+        private readonly IOutputAdapter _outputAdapter;
 
         public OutputRepository(IOutputAdapter outputAdapter)
         {
-            this.outputAdapter = outputAdapter;
+            _outputAdapter = outputAdapter;
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
         {
-            outputAdapter.SaveAllVersions(versions);
+            _outputAdapter.SaveAllVersions(versions);
         }
 
         public void SaveAllOmItems(IEnumerable<AllOmItem> omItems)
         {
-            outputAdapter.SaveAllOmItems(omItems);
+            _outputAdapter.SaveAllOmItems(omItems);
         }
 
         public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
         {
-            outputAdapter.SaveOmItemHeaders(omItemHeaders);
+            _outputAdapter.SaveOmItemHeaders(omItemHeaders);
         }
-
 
         public void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
         {
-            outputAdapter.SaveOlmPhases(olmPhases);
+            _outputAdapter.SaveOlmPhases(olmPhases);
         }
 
         public void SaveMilestones(IEnumerable<Milestone> milestones)
         {
-            outputAdapter.SaveMilestones(milestones);
+            _outputAdapter.SaveMilestones(milestones);
         }
 
         public void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders)
         {
-            outputAdapter.SaveVersionHeaders(versionHeaders);
+            _outputAdapter.SaveVersionHeaders(versionHeaders);
         }
 
         public void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets)
         {
-            outputAdapter.SaveVersionBudgets(versionBudgets);
+            _outputAdapter.SaveVersionBudgets(versionBudgets);
         }
 
         public void SaveTeams(IEnumerable<Team> teams)
         {
-            outputAdapter.SaveTeams(teams);
+            _outputAdapter.SaveTeams(teams);
         }
 
         public void SaveVersionTeams(IEnumerable<VersionTeam> versionTeams)
         {
-            outputAdapter.SaveVersionTeams(versionTeams);
+            _outputAdapter.SaveVersionTeams(versionTeams);
+        }
+
+        public void SaveCoSignatureHeaders(IEnumerable<CoSignatureHeader> coSignatureHeaders)
+        {
+            _outputAdapter.SaveCoSignatureHeaders(coSignatureHeaders);
         }
     }
 }

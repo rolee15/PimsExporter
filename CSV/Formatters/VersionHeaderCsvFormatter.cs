@@ -9,6 +9,8 @@ namespace CSV.Formatters
         {
             Columns = new[]
             {
+                new ColumnFormatter<VersionHeader>("OmItemNumber", r => r.OmItemNumber),
+                new ColumnFormatter<VersionHeader>("VersionNumber", r => r.VersionNumber),
                 new ColumnFormatter<VersionHeader>("VersionName", r => r.VersionName),
                 new ColumnFormatter<VersionHeader>("VersionAlias", r => r.VersionAlias),
                 new ColumnFormatter<VersionHeader>("FullVersionId", r => r.FullVersionId),

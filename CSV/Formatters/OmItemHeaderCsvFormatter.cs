@@ -9,6 +9,7 @@ namespace CSV.Formatters
         {
             Columns = new[]
             {
+                new ColumnFormatter<OmItemHeader>("OmItemNumber", r => r.OmItemNumber),
                 new ColumnFormatter<OmItemHeader>("OmItemName", r => r.OmItemName),
                 new ColumnFormatter<OmItemHeader>("OmItemAlias", r => r.OmItemAlias),
                 new ColumnFormatter<OmItemHeader>("OmItemId", r => r.OmItemId),
@@ -17,6 +18,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<OmItemHeader>("PimsId", r => r.PimsId),
                 new ColumnFormatter<OmItemHeader>("OfferingName", r => r.OfferingName),
                 new ColumnFormatter<OmItemHeader>("OfferingModule", r => r.OfferingModule),
+                new ColumnFormatter<OmItemHeader>("OfferingCluster", r => r.OfferingCluster),
                 new ColumnFormatter<OmItemHeader>("ActiveStatus", r => r.ActiveStatus),
                 new ColumnFormatter<OmItemHeader>("OlmCurrentPhase", r => r.OlmCurrentPhase),
                 new ColumnFormatter<OmItemHeader>("ConfidentialityClass", r => r.ConfidentialityClass),

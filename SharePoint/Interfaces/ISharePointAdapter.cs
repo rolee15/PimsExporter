@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain.Entities;
 
-namespace SharePoint
+namespace SharePoint.Interfaces
 {
     public interface ISharePointAdapter
     {
@@ -15,5 +15,6 @@ namespace SharePoint
         IEnumerable<VersionBudget> VersionBudgets();
         IEnumerable<Team> Teams();
         IEnumerable<VersionTeam> VersionTeams();
+        IEnumerable<CoSignatureHeader> CoSignatureHeaders();
     }
 }

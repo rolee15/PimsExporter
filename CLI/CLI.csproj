@@ -216,13 +216,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="appsettings.a20145873.json">
+    <Content Include="Settings\appsettings.a20145873.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appsettings.a113296818.json">
+    <Content Include="Settings\appsettings.a113296818.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appsettings.a105783053.json">
+    <Content Include="Settings\appsettings.a105783053.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
@@ -242,10 +242,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="appsettings.a106828595.json">
+    <Content Include="Settings\appsettings.a106828595.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appsettings.json">
+    <Content Include="Settings\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

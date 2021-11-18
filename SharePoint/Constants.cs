@@ -249,7 +249,13 @@
                     public static readonly string ROOT_FOLDER_NAME = "Team";
                 }
 
-                public static class CoSignature
+                public static class CoSignaturesList
+                {
+                    public static readonly string TITLE = "Co Signatures List";
+                    public static readonly string ROOT_FOLDER_NAME = "CoSignaturesList";
+                }
+
+                public static class CoSignatureWorkflow
                 {
                     public static readonly string TITLE = "CoSignatureWorkflow";
                     public static readonly string ROOT_FOLDER_NAME = "CoSignatureWorkflow";

@@ -4,7 +4,7 @@ using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Services.InputRepositories;
-using SharePoint;
+using SharePoint.Interfaces;
 
 namespace PimsExporter.UnitTest.Repositories
 {

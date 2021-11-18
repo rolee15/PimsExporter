@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
-using SharePoint;
+using SharePoint.Interfaces;
 
 namespace Services.InputRepositories
 {
