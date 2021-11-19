@@ -33,5 +33,10 @@ namespace Services.InputRepositories
         {
             return _spAdapter.CoSignatureHeaders();
         }
+
+        public IEnumerable<VersionDocument> GetVersionDocuments()
+        {
+            return _spAdapter.VersionDocuments();
+        }
     }
 }

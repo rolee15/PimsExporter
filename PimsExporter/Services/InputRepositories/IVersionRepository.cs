@@ -9,5 +9,6 @@ namespace PimsExporter.Services.InputRepositories
         IEnumerable<VersionBudget> GetVersionBudgets();
         IEnumerable<VersionTeam> GetVersionTeams();
         IEnumerable<CoSignatureHeader> GetCoSignatureHeaders();
+        IEnumerable<VersionDocument> GetVersionDocuments();
     }
 }

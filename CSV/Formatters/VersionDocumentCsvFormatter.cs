@@ -1,0 +1,32 @@
+﻿using Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CSV.Formatters
+{
+    internal class VersionDocumentCsvFormatter : DocumentFormatterBase<VersionDocument>
+    {
+        public VersionDocumentCsvFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
+        {
+            Columns = new[]
+            {
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.OmItemNumber), r => r.OmItemNumber),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.VersionNumber), r => r.VersionNumber),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.ConfidentialityClass), r => r.ConfidentialityClass),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Created), r => r.Created),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentCategory), r => r.DocumentCategory),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentOwner), r => r.DocumentOwner),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentTagging), r => r.DocumentTagging),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Modified), r => r.Modified),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.PlmPhase), r => r.PlmPhase),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Title), r => r.Title),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Updated), r => r.Updated),
+
+            };
+        }
+    }
+}

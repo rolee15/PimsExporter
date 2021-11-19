@@ -224,6 +224,13 @@
                 public static readonly string DEPUTY_OF = "Deputy_x0020_Of";
                 public static readonly string ISCOSIGNER = "Co_x002d_Signer";
                 public static readonly string ROLECOMMENT = "RoleComment";
+                public static readonly string DOCUMENT_CATEGORY = "Document_x0020_Category";
+                public static readonly string DOCUMENT_OWNER = "Document_x0020_Owner";
+                public static readonly string DOCUMENT_TAGGING = "Document_x0020_Tagging";
+                public static readonly string TITLE = "Title";
+                public static readonly string UPDATED = "Updated";
+                public static readonly string URL = "URL";
+                public static readonly string CHECKOUT_USER = "CheckoutUser";
             }
         }
 
@@ -260,6 +267,13 @@
                     public static readonly string TITLE = "CoSignatureWorkflow";
                     public static readonly string ROOT_FOLDER_NAME = "CoSignatureWorkflow";
                 }
+
+                public static class VersionDocument
+                {
+                    public static readonly string TITLE = "Version Documents";
+                    public static readonly string ROOT_FOLDER_NAME = "VersionDocuments";
+                }
+
             }
         }
     }

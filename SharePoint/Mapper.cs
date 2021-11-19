@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Domain.Entities;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using ProductFields = SharePoint.Constants.Product.Fields;
 using RootFields = SharePoint.Constants.Root.Fields;
 using User = Domain.Entities.User;
@@ -10,6 +13,7 @@ namespace SharePoint
 {
     public class Mapper
     {
+
         internal AllVersion MapAllVersionToEntity(ListItem item)
         {
             return new AllVersion
@@ -67,6 +71,27 @@ namespace SharePoint
             return versionTeam;
         }
 
+        internal VersionDocument MapVersionDocumentsToEntity(ListItem item)
+        {
+            var versionDocument = new VersionDocument();
+
+            versionDocument.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
+            versionDocument.Created = item[ProductFields.CREATED] as DateTime?;
+            versionDocument.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
+            versionDocument.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
+            versionDocument.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
+            versionDocument.Modified = item[ProductFields.MODIFIED] as DateTime?;
+            versionDocument.PlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]);
+            versionDocument.Title = Convert.ToString(item[ProductFields.TITLE]);
+            versionDocument.Updated = item[ProductFields.UPDATED] as DateTime?;
+            versionDocument.Url = Convert.ToString(item[ProductFields.URL]);
+            versionDocument.CreatedBy = MapToUser(item[ProductFields.CREATED_BY]);
+            versionDocument.ModifiedBy = MapToUser(item[ProductFields.MODIFIED_BY]);
+            versionDocument.CheckoutUser = MapToUser(item[ProductFields.CHECKOUT_USER]);
+
+            return versionDocument;
+        }
+        
         internal OmItemHeader MapProductRecordToEntity(ListItem item)
         {
             var header = new OmItemHeader
@@ -298,7 +323,9 @@ namespace SharePoint
             return new User(fieldUserValue.LookupValue, fieldUserValue.Email);
         }
 
-        public double? ConvertNullableDouble(object value)
+
+
+        private double? ConvertNullableDouble(object value)
         {
             double? result = null;
             if (value != null) result = Convert.ToDouble(value, CultureInfo.InvariantCulture);

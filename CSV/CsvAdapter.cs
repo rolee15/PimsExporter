@@ -18,6 +18,7 @@ namespace CSV
         private const string TeamsFileName = "Teams.csv";
         private const string VersionTeamsFileName = "VersionTeams.csv";
         private const string CoSignatureHeadersFileName = "CoSignatureHeaders.csv";
+        private const string VersionDocumentsFileName = "VersionDocuments.csv";
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
@@ -30,6 +31,7 @@ namespace CSV
         private readonly VersionBudgetCsvFormatter _versionBudgetFormatter;
         private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
         private readonly VersionTeamCsvFormatter _versionTeamsFormatter;
+        private readonly VersionDocumentCsvFormatter _versionDocumentsFormatter;
 
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
@@ -45,6 +47,7 @@ namespace CSV
             _teamsFormatter = new TeamCsvFormatter();
             _versionTeamsFormatter = new VersionTeamCsvFormatter();
             _coSignatureHeaderFormatter = new CoSignatureHeaderFormatter();
+            _versionDocumentsFormatter = new VersionDocumentCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -176,6 +179,19 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        public void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments)
+        {
+            var path = Path.Combine(_settings.OutputDir, "versions");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, VersionDocumentsFileName);
+
+            var resultStream = _versionDocumentsFormatter.FormatStream(versionDocuments);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
     }
 
     public interface IOutputAdapter
@@ -190,5 +206,6 @@ namespace CSV
         void SaveTeams(IEnumerable<Team> teams);
         void SaveVersionTeams(IEnumerable<VersionTeam> versionTeams);
         void SaveCoSignatureHeaders(IEnumerable<CoSignatureHeader> coSignatureHeaders);
+        void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments);
     }
 }
