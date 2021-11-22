@@ -229,7 +229,11 @@
                 public static readonly string DOCUMENT_TAGGING = "Document_x0020_Tagging";
                 public static readonly string CHECKOUT_TO = "CheckoutUser";
                 public static readonly string NAME = "FileLeafRef";
-
+                public static readonly string EVENT = "Title";
+                public static readonly string DATE_AND_TIME_OF_CHANGE = "Date_x0020_and_x0020_time_x0020_";
+                public static readonly string USER = "Executor";
+                public static readonly string TYPE_OF_CHANGE = "TypeOfChange";
+                public static readonly string CHANGE_SECTION = "ChangeSection";
             }
         }
 
@@ -273,6 +277,11 @@
                     public static readonly string ROOT_FOLDER_NAME = "VersionDocuments";
                 }
 
+                public static class VersionChangeLog
+                {
+                    public static readonly string TITLE = "ChangeLog";
+                    public static readonly string ROOT_FOLDER_NAME = "ChangeLog";
+                }
             }
         }
     }

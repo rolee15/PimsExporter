@@ -68,5 +68,10 @@ namespace Services.OutputRepositories
         {
             _outputAdapter.SaveVersionDocuments(versionDocuments);
         }
+
+        public void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs)
+        {
+            _outputAdapter.SaveVersionChangeLogs(versionChangeLogs);
+        }
     }
 }
