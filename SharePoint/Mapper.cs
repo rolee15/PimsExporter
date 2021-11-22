@@ -75,20 +75,13 @@ namespace SharePoint
         {
             var versionDocument = new VersionDocument();
 
+            versionDocument.Name = Convert.ToString(item[ProductFields.NAME]);
             versionDocument.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
-            versionDocument.Created = item[ProductFields.CREATED] as DateTime?;
             versionDocument.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
-            versionDocument.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
             versionDocument.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
-            versionDocument.Modified = item[ProductFields.MODIFIED] as DateTime?;
-            versionDocument.PlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]);
-            versionDocument.Title = Convert.ToString(item[ProductFields.TITLE]);
-            versionDocument.Updated = item[ProductFields.UPDATED] as DateTime?;
-            versionDocument.Url = Convert.ToString(item[ProductFields.URL]);
-            versionDocument.CreatedBy = MapToUser(item[ProductFields.CREATED_BY]);
-            versionDocument.ModifiedBy = MapToUser(item[ProductFields.MODIFIED_BY]);
-            versionDocument.CheckoutUser = MapToUser(item[ProductFields.CHECKOUT_USER]);
-
+            versionDocument.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
+            versionDocument.CheckoutTo = MapToUser(item[ProductFields.CHECKOUT_TO]);
+            
             return versionDocument;
         }
         

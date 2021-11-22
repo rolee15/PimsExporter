@@ -16,16 +16,12 @@ namespace CSV.Formatters
             {
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.OmItemNumber), r => r.OmItemNumber),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.VersionNumber), r => r.VersionNumber),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Name), r => r.Name),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.ConfidentialityClass), r => r.ConfidentialityClass),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Created), r => r.Created),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentCategory), r => r.DocumentCategory),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentOwner), r => r.DocumentOwner),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentTagging), r => r.DocumentTagging),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Modified), r => r.Modified),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.PlmPhase), r => r.PlmPhase),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Title), r => r.Title),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Updated), r => r.Updated),
-
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentOwner), r => r.DocumentOwner),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.CheckoutTo), r => r.CheckoutTo)
             };
         }
     }
