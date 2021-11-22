@@ -229,6 +229,7 @@
     <Compile Include="SharePointAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharePointAdapterBase.cs" />
+    <Compile Include="TaxonomyHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

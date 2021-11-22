@@ -63,5 +63,10 @@ namespace Services.OutputRepositories
         {
             _outputAdapter.SaveCoSignatureHeaders(coSignatureHeaders);
         }
+
+        public void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments)
+        {
+            _outputAdapter.SaveVersionDocuments(versionDocuments);
+        }
     }
 }

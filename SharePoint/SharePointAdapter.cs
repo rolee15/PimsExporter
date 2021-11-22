@@ -88,5 +88,12 @@ namespace SharePoint
         {
             return GetAllCoSignatureEntities();
         }
+
+        public IEnumerable<VersionDocument> VersionDocuments()
+        {
+            return GetAllEntities(
+                Constants.Version.Lists.VersionDocument.TITLE,
+                item => mapper.MapVersionDocumentsToEntity(item));
+        }
     }
 }

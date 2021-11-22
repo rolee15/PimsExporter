@@ -132,6 +132,22 @@ namespace CSV.Formatters
                 Formatter = r => getter(r)?.Name ?? getter(r)?.Email;
             }
 
+            public ColumnFormatter(string header, Func<TRow, IEnumerable<string>> getter)
+            {
+                Header = header ?? throw new ArgumentNullException(nameof(header));
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r =>
+                {
+                    var collection = getter(r);
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var item in collection)
+                        sb.Append(item + "; ");
+
+                    if(sb.Length>0) sb.Length -= 1;
+                    return sb.ToString();
+                };
+            }
+
             public string Header { get; }
             public Func<TRow, string> Formatter { get; }
         }

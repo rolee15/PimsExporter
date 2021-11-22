@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Domain.Entities;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using ProductFields = SharePoint.Constants.Product.Fields;
 using RootFields = SharePoint.Constants.Root.Fields;
 using User = Domain.Entities.User;
@@ -10,6 +13,7 @@ namespace SharePoint
 {
     public class Mapper
     {
+
         internal AllVersion MapAllVersionToEntity(ListItem item)
         {
             return new AllVersion
@@ -67,6 +71,20 @@ namespace SharePoint
             return versionTeam;
         }
 
+        internal VersionDocument MapVersionDocumentsToEntity(ListItem item)
+        {
+            var versionDocument = new VersionDocument();
+
+            versionDocument.Name = Convert.ToString(item[ProductFields.NAME]);
+            versionDocument.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
+            versionDocument.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
+            versionDocument.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
+            versionDocument.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
+            versionDocument.CheckoutTo = MapToUser(item[ProductFields.CHECKOUT_TO]);
+            
+            return versionDocument;
+        }
+        
         internal OmItemHeader MapProductRecordToEntity(ListItem item)
         {
             var header = new OmItemHeader
@@ -298,7 +316,9 @@ namespace SharePoint
             return new User(fieldUserValue.LookupValue, fieldUserValue.Email);
         }
 
-        public double? ConvertNullableDouble(object value)
+
+
+        private double? ConvertNullableDouble(object value)
         {
             double? result = null;
             if (value != null) result = Convert.ToDouble(value, CultureInfo.InvariantCulture);
