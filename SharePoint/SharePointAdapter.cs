@@ -95,5 +95,12 @@ namespace SharePoint
                 Constants.Version.Lists.VersionDocument.TITLE,
                 item => mapper.MapVersionDocumentsToEntity(item));
         }
+
+        public IEnumerable<VersionChangeLog> VersionChangeLogs()
+        {
+            return GetAllEntities(
+                Constants.Version.Lists.VersionChangeLog.TITLE,
+                item => mapper.MapVersionChangeLogToEntity(item));
+        }
     }
 }

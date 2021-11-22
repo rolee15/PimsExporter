@@ -84,7 +84,20 @@ namespace SharePoint
             
             return versionDocument;
         }
-        
+
+        internal VersionChangeLog MapVersionChangeLogToEntity(ListItem item)
+        {
+            var versionChangeLog = new VersionChangeLog();
+
+            versionChangeLog.Event = Convert.ToString(item[ProductFields.EVENT]);
+            versionChangeLog.DateAndTimeOfChange = item[ProductFields.DATE_AND_TIME_OF_CHANGE] as DateTime?;
+            versionChangeLog.User = MapToUser(item[ProductFields.USER]);
+            versionChangeLog.TypeOfChange = Convert.ToString(item[ProductFields.TYPE_OF_CHANGE]);
+            versionChangeLog.ChangeSection = Convert.ToString(item[ProductFields.CHANGE_SECTION]);
+
+            return versionChangeLog;
+        }
+
         internal OmItemHeader MapProductRecordToEntity(ListItem item)
         {
             var header = new OmItemHeader

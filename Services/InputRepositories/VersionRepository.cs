@@ -38,5 +38,10 @@ namespace Services.InputRepositories
         {
             return _spAdapter.VersionDocuments();
         }
+
+        public IEnumerable<VersionChangeLog> GetVersionChangeLogs()
+        {
+            return _spAdapter.VersionChangeLogs();
+        }
     }
 }
