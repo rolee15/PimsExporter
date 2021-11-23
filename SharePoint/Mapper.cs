@@ -280,7 +280,7 @@ namespace SharePoint
         {
             var cosigner = new CoSignatureCoSigner();
 
-            cosigner.CoSignatureId = Convert.ToInt32(item[ProductFields.ID]);
+            cosigner.CoSignatureId = Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]);
             cosigner.Member = MapToUser(item[ProductFields.MEMBER1]);
             cosigner.Deputy = MapToUser(item[ProductFields.COSIGNDEPUTY]);
             cosigner.TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]);
