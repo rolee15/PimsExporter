@@ -73,5 +73,10 @@ namespace Services.OutputRepositories
         {
             _outputAdapter.SaveVersionChangeLogs(versionChangeLogs);
         }
+
+        public void SaveVersionMilestones(IEnumerable<Milestone> versionMilestones)
+        {
+            _outputAdapter.SaveVersionMilestones(versionMilestones);
+        }
     }
 }

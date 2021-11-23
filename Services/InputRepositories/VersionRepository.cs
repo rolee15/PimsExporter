@@ -43,5 +43,10 @@ namespace Services.InputRepositories
         {
             return _spAdapter.VersionChangeLogs();
         }
+
+        public IEnumerable<Milestone> GetVersionMilestones()
+        {
+            return _spAdapter.Milestones();
+        }
     }
 }

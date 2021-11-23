@@ -20,6 +20,7 @@ namespace CSV
         private const string CoSignatureHeadersFileName = "CoSignatureHeaders.csv";
         private const string VersionDocumentsFileName = "VersionDocuments.csv";
         private const string VersionChangeLogsFileName = "VersionChangeLogs.csv";
+        private const string VersionMilestonesFileName = "VersionMilestones.csv";
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
@@ -112,6 +113,19 @@ namespace CSV
             path = Path.Combine(path, MilestonesFileName);
 
             var resultStream = _milestonesFormatter.FormatStream(omItemMilestones);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
+
+        public void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones)
+        {
+            var path = Path.Combine(_settings.OutputDir, "versions");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, VersionMilestonesFileName);
+
+            var resultStream = _milestonesFormatter.FormatStream(omIVersionMilestones);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -224,5 +238,6 @@ namespace CSV
         void SaveCoSignatureHeaders(IEnumerable<CoSignatureHeader> coSignatureHeaders);
         void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments);
         void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs);
+        void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones);
     }
 }

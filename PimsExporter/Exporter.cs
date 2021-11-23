@@ -73,6 +73,7 @@ namespace PimsExporter
             var versionHeaders = new List<VersionHeader>();
             var versionBudgets = new List<VersionBudget>();
             var versionTeams = new List<VersionTeam>();
+            var versionMilestones = new List<Milestone>();
             var versionDocuments = new List<VersionDocument>();
             var versionChangeLogs = new List<VersionChangeLog>();
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
@@ -133,6 +134,15 @@ namespace PimsExporter
                             }
 
                             versionChangeLogs.AddRange(tempVersionChangeLogs);
+
+                            var tempVersionMilestones = versionRepository.GetVersionMilestones().ToList();
+                            foreach (var item in tempVersionMilestones)
+                            {
+                                item.OmItemNumber = omItemNumber;
+                                item.VersionNumber = versionNumber;
+                            }
+
+                            versionMilestones.AddRange(tempVersionMilestones);
                         }
                         catch (Exception ex)
                         {
@@ -149,6 +159,7 @@ namespace PimsExporter
             _outputRepository.SaveVersionTeams(versionTeams);
             _outputRepository.SaveVersionDocuments(versionDocuments);
             _outputRepository.SaveVersionChangeLogs(versionChangeLogs);
+            _outputRepository.SaveVersionMilestones(versionMilestones);
         }
 
         public void ExportCoSignatures(int omItemNumberFrom, int omItemNumberTo)

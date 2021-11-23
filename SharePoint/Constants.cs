@@ -282,6 +282,12 @@
                     public static readonly string TITLE = "ChangeLog";
                     public static readonly string ROOT_FOLDER_NAME = "ChangeLog";
                 }
+
+                public static class VersionMilestone
+                {
+                    public static readonly string TITLE = "Milestones";
+                    public static readonly string ROOT_FOLDER_NAME = "Milestones";
+                }
             }
         }
     }
