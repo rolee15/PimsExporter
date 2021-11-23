@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formatters\CoSignatureCoSignerCsvFormatter.cs" />
     <Compile Include="Formatters\CoSignatureHeaderFormatter.cs" />
     <Compile Include="CsvAdapterSettings.cs" />
     <Compile Include="Formatters\AllVersionCsvFormatter.cs" />
