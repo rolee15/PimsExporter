@@ -21,6 +21,8 @@ namespace CSV
         private const string VersionDocumentsFileName = "VersionDocuments.csv";
         private const string VersionChangeLogsFileName = "VersionChangeLogs.csv";
         private const string VersionMilestonesFileName = "VersionMilestones.csv";
+        private const string CoSignatureCoSignersFileName = "CoSigners.csv";
+
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
         private readonly AllVersionCsvFormatter _allVersionFormatter;
@@ -35,6 +37,7 @@ namespace CSV
         private readonly VersionTeamCsvFormatter _versionTeamsFormatter;
         private readonly VersionDocumentCsvFormatter _versionDocumentsFormatter;
         private readonly VersionChangeLogCsvFormatter _versionChangeLogsFormatter;
+        private readonly CoSignatureCoSignerFormatter _coSignatureCoSignerFormatter;
 
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
@@ -52,6 +55,7 @@ namespace CSV
             _coSignatureHeaderFormatter = new CoSignatureHeaderFormatter();
             _versionDocumentsFormatter = new VersionDocumentCsvFormatter();
             _versionChangeLogsFormatter = new VersionChangeLogCsvFormatter();
+            _coSignatureCoSignerFormatter = new CoSignatureCoSignerFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -222,6 +226,19 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        public void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners)
+        {
+            var path = Path.Combine(_settings.OutputDir, "cosignatures");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, CoSignatureCoSignersFileName);
+
+            var resultStream = _coSignatureCoSignerFormatter.FormatStream(coSignatureCoSigners);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
     }
 
     public interface IOutputAdapter
@@ -239,5 +256,7 @@ namespace CSV
         void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments);
         void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs);
         void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones);
+        void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
+
     }
 }

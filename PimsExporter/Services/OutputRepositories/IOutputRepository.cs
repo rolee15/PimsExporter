@@ -18,5 +18,6 @@ namespace PimsExporter.Services.OutputRepositories
         void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments);
         void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs);
         void SaveVersionMilestones(IEnumerable<Milestone> versionMilestones);
+        void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
     }
 }

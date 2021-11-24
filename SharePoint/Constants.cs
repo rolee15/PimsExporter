@@ -234,6 +234,10 @@
                 public static readonly string USER = "Executor";
                 public static readonly string TYPE_OF_CHANGE = "TypeOfChange";
                 public static readonly string CHANGE_SECTION = "ChangeSection";
+                public static readonly string COSIGNERDATE = "Co_x0020_Signer_x0020_Date";
+                public static readonly string COSIGNERRESULT = "Co_x0020_Signer_x0020_Result";
+                public static readonly string COSIGNDEPUTY = "CoSignDeputy";
+                public static readonly string COSIGNEDBY = "CoSignedBy";
             }
         }
 
@@ -287,6 +291,11 @@
                 {
                     public static readonly string TITLE = "Milestones";
                     public static readonly string ROOT_FOLDER_NAME = "Milestones";
+                }
+                public static class CoSigners
+                {
+                    public static readonly string TITLE = "Co Signers List";
+                    public static readonly string ROOT_FOLDER_NAME = "CoSignersList";
                 }
             }
         }

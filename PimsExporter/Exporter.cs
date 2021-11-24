@@ -126,6 +126,7 @@ namespace PimsExporter
 
                             versionDocuments.AddRange(tempVersionDocuments);
 
+
                             var tempVersionChangeLogs = versionRepository.GetVersionChangeLogs().ToList();
                             foreach (var item in tempVersionChangeLogs)
                             {
@@ -165,6 +166,7 @@ namespace PimsExporter
         public void ExportCoSignatures(int omItemNumberFrom, int omItemNumberTo)
         {
             var coSignatureHeaders = new List<CoSignatureHeader>();
+            var coSignatureCoSigners = new List<CoSignatureCoSigner>();
 
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
                 try
@@ -193,6 +195,15 @@ namespace PimsExporter
                             }
 
                             coSignatureHeaders.AddRange(headers);
+
+                            var cosigners = versionRepository.GetCoSignatureCoSigners().ToList();
+                            foreach (var cosigner in cosigners)
+                            {
+                                cosigner.OmItemNumber = omItemNumber;
+                                cosigner.VersionNumber = versionNumber;
+                            }
+
+                            coSignatureCoSigners.AddRange(cosigners);
                         }
                         catch (Exception ex)
                         {
@@ -205,6 +216,7 @@ namespace PimsExporter
                 }
 
             _outputRepository.SaveCoSignatureHeaders(coSignatureHeaders);
+            _outputRepository.SaveCoSignatureCoSigners(coSignatureCoSigners);
         }
 
         public void ExportRoot()
