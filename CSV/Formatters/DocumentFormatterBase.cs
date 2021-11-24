@@ -83,6 +83,13 @@ namespace CSV.Formatters
                 Formatter = r => string.Format(_culture, IntFormat, getter(r));
             }
 
+            public ColumnFormatter(string header, Func<TRow, int?> getter)
+            {
+                Header = header ?? throw new ArgumentNullException(nameof(header));
+                if (getter is null) throw new ArgumentNullException(nameof(getter));
+                Formatter = r => string.Format(_culture, IntFormat, getter(r));
+            }
+
             public ColumnFormatter(string header, Func<TRow, double> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));

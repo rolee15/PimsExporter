@@ -83,5 +83,10 @@ namespace Services.OutputRepositories
         {
             _outputAdapter.SaveCoSignatureCoSigners(coSignatureCoSigners);
         }
+
+        public void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities)
+        {
+            _outputAdapter.SaveCoSignatureQualities(coSignatureQualities);
+        }
     }
 }
