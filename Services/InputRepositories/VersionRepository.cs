@@ -43,5 +43,10 @@ namespace Services.InputRepositories
         {
             return _spAdapter.VersionChangeLogs();
         }
+        
+        public IEnumerable<CoSignatureCoSigner> GetCoSignatureCoSigners()
+        {
+            return _spAdapter.CoSignatureCoSigners();
+        }
     }
 }

@@ -276,6 +276,25 @@ namespace SharePoint
             return header;
         }
 
+        internal CoSignatureCoSigner MapCoSignatureCoSignersListToEntity(ListItem item)
+        {
+            var cosigner = new CoSignatureCoSigner();
+
+            cosigner.CoSignatureId = Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]);
+            cosigner.Member = MapToUser(item[ProductFields.MEMBER1]);
+            cosigner.Deputy = MapToUser(item[ProductFields.COSIGNDEPUTY]);
+            cosigner.TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]);
+            cosigner.CoSignedBy = MapToUser(item[ProductFields.COSIGNEDBY]);
+            cosigner.RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]);
+            cosigner.CoSignerDate = item[ProductFields.COSIGNERDATE] as DateTime?;
+            cosigner.CoSignerResult = Convert.ToString(item[ProductFields.COSIGNERRESULT]);
+            cosigner.CoSignedBy =  MapToUser(item[ProductFields.COSIGNEDBY]);
+            cosigner.Remark = Convert.ToString(item[ProductFields.REMARK]);
+
+
+            return cosigner;
+        }
+
         internal CoSignatureHeader MapCoSignatureWorkflowToEntity(ListItem item)
         {
             var header = new CoSignatureHeader();
@@ -329,7 +348,17 @@ namespace SharePoint
             return new User(fieldUserValue.LookupValue, fieldUserValue.Email);
         }
 
-
+        private User[] MapToUsers(object input)
+        {
+            if (!(input is FieldUserValue[] fieldUserValues))
+                return null;
+            if (fieldUserValues.Length == 0)
+                return null;
+            List<User> users = new List<User>();
+            foreach (var u in fieldUserValues)
+                users.Add(new User(u.LookupValue, u.Email));
+            return users.ToArray();
+        }
 
         private double? ConvertNullableDouble(object value)
         {

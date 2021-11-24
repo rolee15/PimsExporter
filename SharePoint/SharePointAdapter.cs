@@ -102,5 +102,12 @@ namespace SharePoint
                 Constants.Version.Lists.VersionChangeLog.TITLE,
                 item => mapper.MapVersionChangeLogToEntity(item));
         }
+
+        public IEnumerable<CoSignatureCoSigner> CoSignatureCoSigners()
+        {
+            return GetAllEntities(
+                Constants.Version.Lists.CoSigners.TITLE,
+                item => mapper.MapCoSignatureCoSignersListToEntity(item));
+        }
     }
 }
