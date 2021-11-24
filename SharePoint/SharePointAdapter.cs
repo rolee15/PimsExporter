@@ -103,6 +103,13 @@ namespace SharePoint
                 item => mapper.MapVersionChangeLogToEntity(item));
         }
 
+        public IEnumerable<Milestone> VersionMilestones()
+        {
+            return GetAllEntities(
+                Constants.Version.Lists.VersionMilestone.TITLE,
+                item => mapper.MapMilestoneToEntity(item));
+        }
+        
         public IEnumerable<CoSignatureCoSigner> CoSignatureCoSigners()
         {
             return GetAllEntities(

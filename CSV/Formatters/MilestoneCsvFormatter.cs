@@ -10,6 +10,7 @@ namespace CSV.Formatters
             Columns = new[]
             {
                 new ColumnFormatter<Milestone>("OmItemNumber", r => r.OmItemNumber),
+                new ColumnFormatter<Milestone>("VersionNumber", r => r.VersionNumber),
                 new ColumnFormatter<Milestone>("MilestoneName", r => r.MilestoneName),
                 new ColumnFormatter<Milestone>("DateBasicPlan", r => r.DateBasicPlan),
                 new ColumnFormatter<Milestone>("DatePlan", r => r.DatePlan),

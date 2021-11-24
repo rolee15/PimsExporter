@@ -287,6 +287,11 @@
                     public static readonly string ROOT_FOLDER_NAME = "ChangeLog";
                 }
 
+                public static class VersionMilestone
+                {
+                    public static readonly string TITLE = "Milestones";
+                    public static readonly string ROOT_FOLDER_NAME = "Milestones";
+                }
                 public static class CoSigners
                 {
                     public static readonly string TITLE = "Co Signers List";

@@ -11,6 +11,7 @@ namespace PimsExporter.Services.InputRepositories
         IEnumerable<CoSignatureHeader> GetCoSignatureHeaders();
         IEnumerable<VersionDocument> GetVersionDocuments();
         IEnumerable<VersionChangeLog> GetVersionChangeLogs();
+        IEnumerable<Milestone> GetVersionMilestones();
         IEnumerable<CoSignatureCoSigner> GetCoSignatureCoSigners();
     }
 }
