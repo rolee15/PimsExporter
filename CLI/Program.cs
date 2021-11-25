@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security;
+using System.Threading.Tasks;
 using CSV;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +15,7 @@ namespace CLI
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var host = CreateDefaultBuilder().Build();
 
@@ -40,7 +41,7 @@ namespace CLI
             Console.WriteLine("Done.");
 
             Console.WriteLine("Starting to export Co-Signatures...");
-            exporter.ExportCoSignatures(from, to);
+            await exporter.ExportCoSignaturesAsync(from, to);
             Console.WriteLine("Done.");
 
             Console.WriteLine();

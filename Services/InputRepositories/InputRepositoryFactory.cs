@@ -18,6 +18,8 @@ namespace Services.InputRepositories
                     return new OmItemSiteRepository(sp) as T;
                 case "IVersionRepository":
                     return new VersionRepository(sp) as T;
+                case "ICoSignatureQualityRepository":
+                    return new CoSignatureQualityRepository(uri, credentials) as T;
                 default:
                     throw new ArgumentException("Illegal argument: {0}", typeof(T).Name);
             }

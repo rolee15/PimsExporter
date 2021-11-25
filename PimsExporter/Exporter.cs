@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security;
+using System.Threading.Tasks;
 using Domain.Entities;
 using Microsoft.Extensions.Options;
 using PimsExporter.Services.InputRepositories;
@@ -163,10 +164,11 @@ namespace PimsExporter
             _outputRepository.SaveVersionMilestones(versionMilestones);
         }
 
-        public void ExportCoSignatures(int omItemNumberFrom, int omItemNumberTo)
+        public async Task ExportCoSignaturesAsync(int omItemNumberFrom, int omItemNumberTo)
         {
             var coSignatureHeaders = new List<CoSignatureHeader>();
             var coSignatureCoSigners = new List<CoSignatureCoSigner>();
+            var coSignatureQualities = new List<CoSignatureQuality>();
 
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
                 try
@@ -187,11 +189,15 @@ namespace PimsExporter
                             var versionRepository =
                                 _inputRepositoryFactory.Create<IVersionRepository>(versionSiteUri, credentials);
 
+                            var apiUri = new Uri(_settings.ApiBaseUrl);
+                            var coSignatureQualityRepository = _inputRepositoryFactory.Create<ICoSignatureQualityRepository>(apiUri, credentials);
                             var headers = versionRepository.GetCoSignatureHeaders().ToList();
                             foreach (var header in headers)
                             {
                                 header.OmItemNumber = omItemNumber;
                                 header.VersionNumber = versionNumber;
+
+                                coSignatureQualities.AddRange(await coSignatureQualityRepository.GetCoSignatureQualitiesAsync(omItemNumber, versionNumber, header.CoSignatureId));
                             }
 
                             coSignatureHeaders.AddRange(headers);
@@ -202,6 +208,8 @@ namespace PimsExporter
                                 cosigner.OmItemNumber = omItemNumber;
                                 cosigner.VersionNumber = versionNumber;
                             }
+
+                            
 
                             coSignatureCoSigners.AddRange(cosigners);
                         }
@@ -217,6 +225,7 @@ namespace PimsExporter
 
             _outputRepository.SaveCoSignatureHeaders(coSignatureHeaders);
             _outputRepository.SaveCoSignatureCoSigners(coSignatureCoSigners);
+            _outputRepository.SaveCoSignatureQualities(coSignatureQualities);
         }
 
         public void ExportRoot()
@@ -237,6 +246,6 @@ namespace PimsExporter
         void ExportRoot();
         void ExportOmItems(int omItemNumberFrom, int omItemNumberTo);
         void ExportVersions(int omItemNumberFrom, int omItemNumberTo);
-        void ExportCoSignatures(int omItemNumberFrom, int omItemNumberTo);
+        Task ExportCoSignaturesAsync(int omItemNumberFrom, int omItemNumberTo);
     }
 }

@@ -38,6 +38,7 @@ namespace CSV
         private readonly VersionDocumentCsvFormatter _versionDocumentsFormatter;
         private readonly VersionChangeLogCsvFormatter _versionChangeLogsFormatter;
         private readonly CoSignatureCoSignerFormatter _coSignatureCoSignerFormatter;
+        private readonly CoSignatureQualityFormatter _coSignatureQualityFormatter;
 
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
@@ -56,6 +57,7 @@ namespace CSV
             _versionDocumentsFormatter = new VersionDocumentCsvFormatter();
             _versionChangeLogsFormatter = new VersionChangeLogCsvFormatter();
             _coSignatureCoSignerFormatter = new CoSignatureCoSignerFormatter();
+            _coSignatureQualityFormatter = new CoSignatureQualityFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -239,6 +241,19 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        public void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities)
+        {
+            var path = Path.Combine(_settings.OutputDir, "cosignaturequalities");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, CoSignatureCoSignersFileName);
+
+            var resultStream = _coSignatureQualityFormatter.FormatStream(coSignatureQualities);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
     }
 
     public interface IOutputAdapter
@@ -257,6 +272,6 @@ namespace CSV
         void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs);
         void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones);
         void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
-
+        void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
     }
 }
