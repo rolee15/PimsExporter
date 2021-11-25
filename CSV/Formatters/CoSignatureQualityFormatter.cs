@@ -22,7 +22,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<CoSignatureQuality>("MandatoryDocumentOrRole", r => r.MandatoryDocumentOrRole),
                 new ColumnFormatter<CoSignatureQuality>("ResultStatus", r => r.ResultStatus),
                 new ColumnFormatter<CoSignatureQuality>("Result", r => r.Result),
-                new ColumnFormatter<CoSignatureQuality>("OptOutRuleId", r => r.OptOutRuleId),
+                new ColumnFormatter<CoSignatureQuality>("IsOptOut", r => r.IsOptOut),
                 new ColumnFormatter<CoSignatureQuality>("OptOutRemark", r => r.OptOutRemark),
             };
         }

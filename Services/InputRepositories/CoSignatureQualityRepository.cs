@@ -22,7 +22,7 @@ namespace Services.InputRepositories
         private const int LOGON32_LOGON_INTERACTIVE = 2;
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool LogonUser(String lpszUsername, String lpszDomain, String lpszPassword,
-        int dwLogonType, int dwLogonProvider, out SafeAccessTokenHandle phToken);
+            int dwLogonType, int dwLogonProvider, out SafeAccessTokenHandle phToken);
 
         private readonly Uri _uri;
         private readonly NetworkCredential _networkCredential;
@@ -62,7 +62,6 @@ namespace Services.InputRepositories
                     contentString = await response.Content.ReadAsStringAsync();
                 });
 
-
                 var coSignQualityWithDateTime = JsonConvert.DeserializeObject<CoSignQualityWithDateTime>(contentString);
                 return coSignQualityWithDateTime.QualityMapping.Select(item => new Domain.Entities.CoSignatureQuality() 
                 {
@@ -73,7 +72,7 @@ namespace Services.InputRepositories
                     CoSignatureQualityIndex = coSignQualityWithDateTime.QualityIndex.ToString(),
                     MandatoryDocumentOrRole = item.MandatoryDocumentOrRole,
                     OptOutRemark = item.OptOutRemark,
-                    OptOutRuleId = item.OptOutRuleId,
+                    IsOptOut = item.OptOutRuleId.HasValue && item.OptOutRuleId.Value > 0,
                     Result = item.Result,
                     ResultStatus = item.ResultStatus,
                     Type = item.Type

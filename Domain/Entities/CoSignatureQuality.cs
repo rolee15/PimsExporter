@@ -15,7 +15,7 @@ namespace Domain.Entities
         public string MandatoryDocumentOrRole { get; set; }
         public string Result { get; set; }
         public bool ResultStatus { get; set; }
-        public int? OptOutRuleId { get; set; }
+        public bool IsOptOut { get; set; }
         public string OptOutRemark { get; set; }
         public string Type { get; set; }
         public string CoSignatureQualityIndex { get; set; }
