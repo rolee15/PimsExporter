@@ -54,6 +54,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\VersionBudget.cs" />
     <Compile Include="Entities\VersionChangeLog.cs" />
+    <Compile Include="Entities\Document.cs" />
     <Compile Include="Entities\VersionDocument.cs" />
     <Compile Include="Entities\VersionHeader.cs" />
     <Compile Include="Entities\VersionTeam.cs" />

@@ -315,6 +315,18 @@ namespace SharePoint
             header.Remark = Convert.ToString(item[ProductFields.REMARK]);
 
             return header;
+        }        
+        
+        internal Document MapDocumentsToEntity(ListItem item)
+        {
+            var document = new Document();
+            document.Name = Convert.ToString(item[ProductFields.NAME]);
+            document.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
+            document.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
+            document.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
+            document.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
+            document.CheckoutTo = MapToUser(item[ProductFields.CHECKOUT_TO]);
+            return document;
         }
 
         internal CoSignatureHeader JoinCoSignatures(CoSignatureHeader coSignature,

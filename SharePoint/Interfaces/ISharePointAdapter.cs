@@ -19,5 +19,6 @@ namespace SharePoint.Interfaces
         IEnumerable<VersionDocument> VersionDocuments();
         IEnumerable<VersionChangeLog> VersionChangeLogs();
         IEnumerable<CoSignatureCoSigner> CoSignatureCoSigners();
+        IEnumerable<Document> Documents();
     }
 }
