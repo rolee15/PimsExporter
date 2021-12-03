@@ -22,6 +22,7 @@ namespace CSV
         private const string VersionChangeLogsFileName = "VersionChangeLogs.csv";
         private const string VersionMilestonesFileName = "VersionMilestones.csv";
         private const string CoSignatureCoSignersFileName = "CoSigners.csv";
+        private const string DocumentsFileName = "Documents.csv";
 
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
@@ -39,6 +40,7 @@ namespace CSV
         private readonly VersionChangeLogCsvFormatter _versionChangeLogsFormatter;
         private readonly CoSignatureCoSignerFormatter _coSignatureCoSignerFormatter;
         private readonly CoSignatureQualityFormatter _coSignatureQualityFormatter;
+        private readonly DocumentCsvFormatter _documentsFormatter;
 
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
@@ -58,6 +60,7 @@ namespace CSV
             _versionChangeLogsFormatter = new VersionChangeLogCsvFormatter();
             _coSignatureCoSignerFormatter = new CoSignatureCoSignerFormatter();
             _coSignatureQualityFormatter = new CoSignatureQualityFormatter();
+            _documentsFormatter = new DocumentCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -254,6 +257,19 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        public void SaveDocuments(IEnumerable<Document> documents)
+        {
+            var path = Path.Combine(_settings.OutputDir, "omitems");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, DocumentsFileName);
+
+            var resultStream = _documentsFormatter.FormatStream(documents);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
     }
 
     public interface IOutputAdapter
@@ -273,5 +289,6 @@ namespace CSV
         void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones);
         void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
         void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
+        void SaveDocuments(IEnumerable<Document> documents);
     }
 }

@@ -89,6 +89,12 @@
                     public static readonly string TITLE = "Team";
                     public static readonly string ROOT_FOLDER_NAME = "Team";
                 }
+
+                public static class Documents
+                {
+                    public static readonly string TITLE = "Product Documents";
+                    public static readonly string ROOT_FOLDER_NAME = "Documents";
+                }
             }
 
             public static class Fields
@@ -238,6 +244,8 @@
                 public static readonly string COSIGNERRESULT = "Co_x0020_Signer_x0020_Result";
                 public static readonly string COSIGNDEPUTY = "CoSignDeputy";
                 public static readonly string COSIGNEDBY = "CoSignedBy";
+                public static readonly string UPDATED = "Updated";
+
             }
         }
 
