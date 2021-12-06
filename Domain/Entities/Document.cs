@@ -18,8 +18,6 @@ namespace Domain.Entities
         public DateTime? Updated { get; set; }
 
         public int OmItemNumber { get; set; }
-        public int VersionNumber { get; set; }
-        public int CoSignatureId { get; set; }
 
 
 

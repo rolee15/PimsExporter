@@ -15,8 +15,6 @@ namespace CSV.Formatters
             Columns = new[]
             {
                 new ColumnFormatter<Document>(nameof(Document.OmItemNumber), r => r.OmItemNumber),
-                new ColumnFormatter<Document>(nameof(Document.VersionNumber), r => r.VersionNumber),
-                new ColumnFormatter<Document>(nameof(Document.CoSignatureId), r => r.CoSignatureId),
                 new ColumnFormatter<Document>(nameof(Document.Name), r => r.Name),
                 new ColumnFormatter<Document>(nameof(Document.ConfidentialityClass), r => r.ConfidentialityClass),
                 new ColumnFormatter<Document>(nameof(Document.DocumentCategory), r => r.DocumentCategory),
