@@ -20,5 +20,6 @@ namespace SharePoint.Interfaces
         IEnumerable<VersionChangeLog> VersionChangeLogs();
         IEnumerable<CoSignatureCoSigner> CoSignatureCoSigners();
         IEnumerable<Document> Documents();
+        IEnumerable<RelatedOMItem> RelatedOMItems();
     }
 }

@@ -123,5 +123,12 @@ namespace SharePoint
                 Constants.Product.Lists.Documents.TITLE,
                 item => mapper.MapDocumentsToEntity(item));
         }
+
+        public IEnumerable<RelatedOMItem> RelatedOMItems()
+        {
+            return GetAllEntities(
+                Constants.Product.Lists.RelatedOMItems.TITLE,
+                item => mapper.MapRelatedOMItemsToEntity(item));
+        }
     }
 }

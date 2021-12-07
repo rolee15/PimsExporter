@@ -21,5 +21,6 @@ namespace PimsExporter.Services.OutputRepositories
         void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
         void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
         void SaveDocuments(IEnumerable<Document> omItemDocuments);
+        void SaveRelatedOMItems(IEnumerable<RelatedOMItem> omItemRelatedOMItems);
     }
 }

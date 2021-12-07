@@ -329,6 +329,15 @@ namespace SharePoint
             return document;
         }
 
+        internal RelatedOMItem MapRelatedOMItemsToEntity(ListItem item)
+        {
+            var relatedOMItem = new RelatedOMItem();
+            relatedOMItem.LinkType = Convert.ToString(item[ProductFields.LINKTYPE]);
+            relatedOMItem.ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]);
+            relatedOMItem.PimsLink = MapToUrl(item[ProductFields.PIMSLINK]);
+            return relatedOMItem;
+        }
+
         internal CoSignatureHeader JoinCoSignatures(CoSignatureHeader coSignature,
             CoSignatureHeader coSignatureWorkflow)
         {
@@ -358,6 +367,14 @@ namespace SharePoint
                 return null;
 
             return new User(fieldUserValue.LookupValue, fieldUserValue.Email);
+        }
+
+        private string MapToUrl(object input)
+        {
+            if (!(input is FieldUrlValue fieldUrlValue))
+                return null;
+
+            return fieldUrlValue.Url;
         }
 
         private User[] MapToUsers(object input)

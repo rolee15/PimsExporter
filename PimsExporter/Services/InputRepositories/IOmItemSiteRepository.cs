@@ -11,5 +11,6 @@ namespace PimsExporter.Services.InputRepositories
         IEnumerable<int> GetVersionNumbers();
         IEnumerable<Team> GetTeams();
         IEnumerable<Document> GetDocuments();
+        IEnumerable<RelatedOMItem> GetRelatedOMItems();
     }
 }

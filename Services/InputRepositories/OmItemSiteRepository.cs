@@ -42,5 +42,9 @@ namespace Services.InputRepositories
         {
             return _spAdapter.Documents();
         }
+        public IEnumerable<RelatedOMItem> GetRelatedOMItems()
+        {
+            return _spAdapter.RelatedOMItems();
+        }
     }
 }

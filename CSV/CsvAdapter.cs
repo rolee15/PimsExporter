@@ -23,6 +23,7 @@ namespace CSV
         private const string VersionMilestonesFileName = "VersionMilestones.csv";
         private const string CoSignatureCoSignersFileName = "CoSigners.csv";
         private const string DocumentsFileName = "Documents.csv";
+        private const string RelatedOMItemsFileName = "RelatedOMItems.csv";
 
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
@@ -41,6 +42,7 @@ namespace CSV
         private readonly CoSignatureCoSignerFormatter _coSignatureCoSignerFormatter;
         private readonly CoSignatureQualityFormatter _coSignatureQualityFormatter;
         private readonly DocumentCsvFormatter _documentsFormatter;
+        private readonly RelatedOMItemCsvFormatter _relatedOMItemFormatter;
 
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
@@ -61,6 +63,7 @@ namespace CSV
             _coSignatureCoSignerFormatter = new CoSignatureCoSignerFormatter();
             _coSignatureQualityFormatter = new CoSignatureQualityFormatter();
             _documentsFormatter = new DocumentCsvFormatter();
+            _relatedOMItemFormatter = new RelatedOMItemCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -270,6 +273,19 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        public void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs)
+        {
+            var path = Path.Combine(_settings.OutputDir, "omitems");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, RelatedOMItemsFileName);
+
+            var resultStream = _relatedOMItemFormatter.FormatStream(RelatedOMIs);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
     }
 
     public interface IOutputAdapter
@@ -290,5 +306,6 @@ namespace CSV
         void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
         void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
         void SaveDocuments(IEnumerable<Document> documents);
+        void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs);
     }
 }
