@@ -295,6 +295,18 @@ namespace SharePoint
             return cosigner;
         }
 
+        internal CoSignatureDocument MapCoSignatureDocumentsListToEntity(ListItem item)
+        {
+            var document = new CoSignatureDocument();
+            document.Name = Convert.ToString(item[ProductFields.NAME]);
+            document.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
+            document.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
+            document.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
+            document.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
+            document.CheckoutTo = MapToUser(item[ProductFields.CHECKOUT_TO]);
+            return document;
+        }
+
         internal CoSignatureHeader MapCoSignatureWorkflowToEntity(ListItem item)
         {
             var header = new CoSignatureHeader();

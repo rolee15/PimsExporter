@@ -175,6 +175,7 @@ namespace PimsExporter
             var coSignatureHeaders = new List<CoSignatureHeader>();
             var coSignatureCoSigners = new List<CoSignatureCoSigner>();
             var coSignatureQualities = new List<CoSignatureQuality>();
+            var coSignatureDocuments = new List<CoSignatureDocument>();
 
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
                 try
@@ -215,9 +216,16 @@ namespace PimsExporter
                                 cosigner.VersionNumber = versionNumber;
                             }
 
-                            
-
                             coSignatureCoSigners.AddRange(cosigners);
+
+                            var documents = versionRepository.GetCoSignatureDocuments().ToList();
+                            foreach (var document in documents)
+                            {
+                                document.OmItemNumber = omItemNumber;
+                                document.VersionNumber = versionNumber;
+                            }
+
+                            coSignatureDocuments.AddRange(documents);
                         }
                         catch (Exception ex)
                         {
@@ -232,6 +240,7 @@ namespace PimsExporter
             _outputRepository.SaveCoSignatureHeaders(coSignatureHeaders);
             _outputRepository.SaveCoSignatureCoSigners(coSignatureCoSigners);
             _outputRepository.SaveCoSignatureQualities(coSignatureQualities);
+            _outputRepository.SaveCoSignatureDocuments(coSignatureDocuments);
         }
 
         public void ExportRoot()

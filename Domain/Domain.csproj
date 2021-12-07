@@ -46,6 +46,7 @@
     <Compile Include="Entities\CoSignatureCoSigner.cs" />
     <Compile Include="Entities\CoSignatureHeader.cs" />
     <Compile Include="Entities\CoSignatureQuality.cs" />
+    <Compile Include="Entities\CoSignatureDocument.cs" />
     <Compile Include="Entities\Team.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\OlmPhase.cs" />

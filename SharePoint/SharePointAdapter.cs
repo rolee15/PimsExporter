@@ -123,5 +123,12 @@ namespace SharePoint
                 Constants.Product.Lists.Documents.TITLE,
                 item => mapper.MapDocumentsToEntity(item));
         }
+
+        public IEnumerable<CoSignatureDocument> CoSignatureDocuments()
+        {
+            return GetAllEntities(
+                Constants.Version.Lists.CoSignatureDocuments.TITLE,
+                item => mapper.MapCoSignatureDocumentsListToEntity(item));
+        }
     }
 }
