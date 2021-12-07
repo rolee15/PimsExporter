@@ -95,7 +95,7 @@
                     public static readonly string TITLE = "Product Documents";
                     public static readonly string ROOT_FOLDER_NAME = "Documents";
                 }
-
+              
                 public static class RelatedOMItems
                 {
                     public static readonly string TITLE = "Related Products";
@@ -253,7 +253,6 @@
                 public static readonly string UPDATED = "Updated";
                 public static readonly string LINKTYPE = "Link_x0020_Typ";
                 public static readonly string PIMSLINK = "PimsLink";
-
             }
         }
 

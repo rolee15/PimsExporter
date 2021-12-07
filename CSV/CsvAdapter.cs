@@ -273,7 +273,7 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
-
+        
         public void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
