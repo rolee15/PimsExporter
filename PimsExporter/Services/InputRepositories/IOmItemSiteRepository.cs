@@ -10,5 +10,6 @@ namespace PimsExporter.Services.InputRepositories
         IEnumerable<OlmPhase> GetOlmPhase();
         IEnumerable<int> GetVersionNumbers();
         IEnumerable<Team> GetTeams();
+        IEnumerable<Document> GetDocuments();
     }
 }

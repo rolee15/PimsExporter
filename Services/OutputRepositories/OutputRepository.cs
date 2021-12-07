@@ -88,5 +88,10 @@ namespace Services.OutputRepositories
         {
             _outputAdapter.SaveCoSignatureQualities(coSignatureQualities);
         }
+
+        public void SaveDocuments(IEnumerable<Document> omItemDocuments)
+        {
+            _outputAdapter.SaveDocuments(omItemDocuments);
+        }
     }
 }

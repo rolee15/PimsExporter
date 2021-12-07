@@ -20,5 +20,6 @@ namespace PimsExporter.Services.OutputRepositories
         void SaveVersionMilestones(IEnumerable<Milestone> versionMilestones);
         void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
         void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
+        void SaveDocuments(IEnumerable<Document> omItemDocuments);
     }
 }

@@ -34,6 +34,7 @@ namespace PimsExporter
             var omItemOlmPhases = new List<OlmPhase>();
             var omItemMilestones = new List<Milestone>();
             var omItemTeams = new List<Team>();
+            var omItemDocuments = new List<Document>();
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
                 try
                 {
@@ -57,6 +58,10 @@ namespace PimsExporter
                     var teams = siteRepository.GetTeams().ToList();
                     teams.ForEach(o => o.OmItemNumber = omItemNumber);
                     omItemTeams.AddRange(teams);
+                    
+                    var document = siteRepository.GetDocuments().ToList();
+                    document.ForEach(o => o.OmItemNumber = omItemNumber);
+                    omItemDocuments.AddRange(document);
                 }
                 catch (Exception ex)
                 {
@@ -67,6 +72,7 @@ namespace PimsExporter
             _outputRepository.SaveOlmPhases(omItemOlmPhases);
             _outputRepository.SaveMilestones(omItemMilestones);
             _outputRepository.SaveTeams(omItemTeams);
+            _outputRepository.SaveDocuments(omItemDocuments);
         }
 
         public void ExportVersions(int omItemNumberFrom, int omItemNumberTo)

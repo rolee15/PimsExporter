@@ -84,6 +84,7 @@
     <Compile Include="Formatters\AllOmItemCsvFormatter.cs" />
     <Compile Include="Formatters\MilestoneCsvFormatter.cs" />
     <Compile Include="Formatters\VersionChangeLogCsvFormatter.cs" />
+    <Compile Include="Formatters\DocumentCsvFormatter.cs" />
     <Compile Include="Formatters\VersionDocumentCsvFormatter.cs" />
     <Compile Include="Formatters\VersionTeamCsvFormatter.cs" />
     <Compile Include="Formatters\VersionBudgetCsvFormatter.cs" />
