@@ -47,6 +47,7 @@
     <Compile Include="Entities\CoSignatureHeader.cs" />
     <Compile Include="Entities\CoSignatureQuality.cs" />
     <Compile Include="Entities\CoSignatureDocument.cs" />
+    <Compile Include="Entities\DocumentBase.cs" />
     <Compile Include="Entities\Team.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\OlmPhase.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\VersionBudget.cs" />
     <Compile Include="Entities\VersionChangeLog.cs" />
-    <Compile Include="Entities\Document.cs" />
+    <Compile Include="Entities\OmItemDocument.cs" />
     <Compile Include="Entities\VersionDocument.cs" />
     <Compile Include="Entities\VersionHeader.cs" />
     <Compile Include="Entities\VersionTeam.cs" />

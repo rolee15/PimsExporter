@@ -89,7 +89,7 @@ namespace Services.OutputRepositories
             _outputAdapter.SaveCoSignatureQualities(coSignatureQualities);
         }
 
-        public void SaveDocuments(IEnumerable<Document> omItemDocuments)
+        public void SaveDocuments(IEnumerable<OmItemDocument> omItemDocuments)
         {
             _outputAdapter.SaveDocuments(omItemDocuments);
         }

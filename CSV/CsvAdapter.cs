@@ -261,7 +261,7 @@ namespace CSV
             }
         }
 
-        public void SaveDocuments(IEnumerable<Document> documents)
+        public void SaveDocuments(IEnumerable<OmItemDocument> documents)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
@@ -305,7 +305,7 @@ namespace CSV
         void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones);
         void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
         void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
-        void SaveDocuments(IEnumerable<Document> documents);
+        void SaveDocuments(IEnumerable<OmItemDocument> documents);
         void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments);
     }
 }

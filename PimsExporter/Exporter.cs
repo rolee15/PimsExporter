@@ -34,7 +34,7 @@ namespace PimsExporter
             var omItemOlmPhases = new List<OlmPhase>();
             var omItemMilestones = new List<Milestone>();
             var omItemTeams = new List<Team>();
-            var omItemDocuments = new List<Document>();
+            var omItemDocuments = new List<OmItemDocument>();
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
                 try
                 {

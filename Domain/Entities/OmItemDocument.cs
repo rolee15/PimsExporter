@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class VersionDocument : DocumentBase
+    public class OmItemDocument : DocumentBase
     {
-        public int VersionNumber { get; set; }
-        
     }
 }

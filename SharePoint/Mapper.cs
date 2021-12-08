@@ -329,9 +329,9 @@ namespace SharePoint
             return header;
         }        
         
-        internal Document MapDocumentsToEntity(ListItem item)
+        internal OmItemDocument MapDocumentsToEntity(ListItem item)
         {
-            var document = new Document();
+            var document = new OmItemDocument();
             document.Name = Convert.ToString(item[ProductFields.NAME]);
             document.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
             document.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);

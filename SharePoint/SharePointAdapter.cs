@@ -117,7 +117,7 @@ namespace SharePoint
                 item => mapper.MapCoSignatureCoSignersListToEntity(item));
         }
 
-        public IEnumerable<Document> Documents()
+        public IEnumerable<OmItemDocument> Documents()
         {
             return GetAllEntities(
                 Constants.Product.Lists.Documents.TITLE,
