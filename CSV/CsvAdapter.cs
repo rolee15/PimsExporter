@@ -321,7 +321,6 @@ namespace CSV
         void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones);
         void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
         void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
-        void SaveDocuments(IEnumerable<Document> documents);
         void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs);
         void SaveDocuments(IEnumerable<OmItemDocument> documents);
         void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments);
