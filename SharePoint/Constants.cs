@@ -95,6 +95,12 @@
                     public static readonly string TITLE = "Product Documents";
                     public static readonly string ROOT_FOLDER_NAME = "Documents";
                 }
+              
+                public static class RelatedOMItems
+                {
+                    public static readonly string TITLE = "Related Products";
+                    public static readonly string ROOT_FOLDER_NAME = "RelatedProducts";
+                }
             }
 
             public static class Fields
@@ -245,7 +251,8 @@
                 public static readonly string COSIGNDEPUTY = "CoSignDeputy";
                 public static readonly string COSIGNEDBY = "CoSignedBy";
                 public static readonly string UPDATED = "Updated";
-
+                public static readonly string LINKTYPE = "Link_x0020_Typ";
+                public static readonly string PIMSLINK = "PimsLink";
             }
         }
 

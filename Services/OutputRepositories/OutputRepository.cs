@@ -94,6 +94,11 @@ namespace Services.OutputRepositories
             _outputAdapter.SaveDocuments(omItemDocuments);
         }
 
+        public void SaveRelatedOMItems(IEnumerable<RelatedOMItem> omItemRelatedOMItems)
+        {
+            _outputAdapter.SaveRelatedOMItems(omItemRelatedOMItems);
+		}
+		
         public void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments)
         {
             _outputAdapter.SaveCoSignatureDocuments(coSignatureDocuments);

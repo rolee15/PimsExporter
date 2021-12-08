@@ -15,7 +15,6 @@ namespace Domain.Entities
         public User DocumentOwner { get; set; }
         public User CheckoutTo { get; set; }
         public  DateTime? Updated { get; set; }
-
         public int OmItemNumber { get; set; }
     }
 }
