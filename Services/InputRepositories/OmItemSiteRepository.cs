@@ -38,7 +38,7 @@ namespace Services.InputRepositories
         {
             return _spAdapter.Teams();
         }
-        public IEnumerable<Document> GetDocuments()
+        public IEnumerable<OmItemDocument> GetDocuments()
         {
             return _spAdapter.Documents();
         }

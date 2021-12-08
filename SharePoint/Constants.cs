@@ -305,6 +305,12 @@
                     public static readonly string TITLE = "Co Signers List";
                     public static readonly string ROOT_FOLDER_NAME = "CoSignersList";
                 }
+
+                public static class CoSignatureDocuments
+                {
+                    public static readonly string TITLE = "Co Signature Documents";
+                    public static readonly string ROOT_FOLDER_NAME = "CoSignatureDocuments";
+                }
             }
         }
     }
