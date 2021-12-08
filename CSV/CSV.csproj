@@ -78,6 +78,7 @@
     <Compile Include="CsvAdapter.cs" />
     <Compile Include="Formatters\CoSignatureQualityFormatter.cs" />
     <Compile Include="Formatters\RelatedOMItemCsvFormatter.cs" />
+    <Compile Include="Formatters\CoSignatureDocumentCsvFormatter.cs" />
     <Compile Include="Formatters\TeamCsvFormatter.cs" />
     <Compile Include="Formatters\OlmPhaseCsvFormatter.cs" />
     <Compile Include="Formatters\OmItemHeaderCsvFormatter.cs" />

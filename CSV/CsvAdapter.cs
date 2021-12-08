@@ -24,6 +24,7 @@ namespace CSV
         private const string CoSignatureCoSignersFileName = "CoSigners.csv";
         private const string DocumentsFileName = "Documents.csv";
         private const string RelatedOMItemsFileName = "RelatedOMItems.csv";
+        private const string CoSignatureDocumentsFileName = "Documents.csv";
 
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
@@ -43,6 +44,7 @@ namespace CSV
         private readonly CoSignatureQualityFormatter _coSignatureQualityFormatter;
         private readonly DocumentCsvFormatter _documentsFormatter;
         private readonly RelatedOMItemCsvFormatter _relatedOMItemFormatter;
+        private readonly CoSignatureDocumentCsvFormatter _coSignatureDocumentsFormatter;
 
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
@@ -64,6 +66,7 @@ namespace CSV
             _coSignatureQualityFormatter = new CoSignatureQualityFormatter();
             _documentsFormatter = new DocumentCsvFormatter();
             _relatedOMItemFormatter = new RelatedOMItemCsvFormatter();
+            _coSignatureDocumentsFormatter = new CoSignatureDocumentCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -261,7 +264,7 @@ namespace CSV
             }
         }
 
-        public void SaveDocuments(IEnumerable<Document> documents)
+        public void SaveDocuments(IEnumerable<OmItemDocument> documents)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
@@ -281,6 +284,19 @@ namespace CSV
             path = Path.Combine(path, RelatedOMItemsFileName);
 
             var resultStream = _relatedOMItemFormatter.FormatStream(RelatedOMIs);
+			using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
+
+        public void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments)
+        {
+            var path = Path.Combine(_settings.OutputDir, "cosignatures");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, CoSignatureDocumentsFileName);
+
+            var resultStream = _coSignatureDocumentsFormatter.FormatStream(coSignatureDocuments);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -307,5 +323,7 @@ namespace CSV
         void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
         void SaveDocuments(IEnumerable<Document> documents);
         void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs);
+        void SaveDocuments(IEnumerable<OmItemDocument> documents);
+        void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments);
     }
 }
