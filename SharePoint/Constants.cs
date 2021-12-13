@@ -119,6 +119,7 @@
                 public static readonly string MILESTONE_TYPE = "MST_Type";
                 public static readonly string OFFERING_CLUSTER = "Offering_x0020_Cluster";
                 public static readonly string OFFERING_MODULE = "Offering_x0020_Module";
+                public static readonly string OFFERING_MODULE_ID = "Offering_x0020_Module_x0020_ID";
                 public static readonly string OFFERING_NAME = "Offering_x0020_Name";
                 public static readonly string OFFERING_TYPE = "Classification";
                 public static readonly string PIMSIDOMITEM = "PIMSIDOMItem";

@@ -22,6 +22,7 @@ namespace CSV
         private const string VersionChangeLogsFileName = "VersionChangeLogs.csv";
         private const string VersionMilestonesFileName = "VersionMilestones.csv";
         private const string CoSignatureCoSignersFileName = "CoSigners.csv";
+        private const string CoSignatureQualitiesFileName = "CosignatureQualities.csv";
         private const string DocumentsFileName = "Documents.csv";
         private const string RelatedOMItemsFileName = "RelatedOMItems.csv";
         private const string CoSignatureDocumentsFileName = "Documents.csv";
@@ -31,6 +32,7 @@ namespace CSV
         private readonly AllVersionCsvFormatter _allVersionFormatter;
         private readonly CoSignatureHeaderFormatter _coSignatureHeaderFormatter;
         private readonly MilestoneCsvFormatter _milestonesFormatter;
+        private readonly VersionMilestoneCsvFormatter _versionMilestonesFormatter;
         private readonly OlmPhaseCsvFormatter _olmPhaseFormatter;
         private readonly OmItemHeaderCsvFormatter _omItemHeaderFormatter;
         private readonly CsvAdapterSettings _settings;
@@ -67,6 +69,7 @@ namespace CSV
             _documentsFormatter = new DocumentCsvFormatter();
             _relatedOMItemFormatter = new RelatedOMItemCsvFormatter();
             _coSignatureDocumentsFormatter = new CoSignatureDocumentCsvFormatter();
+            _versionMilestonesFormatter = new VersionMilestoneCsvFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions)
@@ -140,7 +143,7 @@ namespace CSV
             Directory.CreateDirectory(path);
             path = Path.Combine(path, VersionMilestonesFileName);
 
-            var resultStream = _milestonesFormatter.FormatStream(omIVersionMilestones);
+            var resultStream = _versionMilestonesFormatter.FormatStream(omIVersionMilestones);
             using (var fileStream = File.Create(path))
             {
                 resultStream.CopyTo(fileStream);
@@ -253,9 +256,9 @@ namespace CSV
 
         public void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities)
         {
-            var path = Path.Combine(_settings.OutputDir, "cosignaturequalities");
+            var path = Path.Combine(_settings.OutputDir, "cosignatures");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, CoSignatureCoSignersFileName);
+            path = Path.Combine(path, CoSignatureQualitiesFileName);
 
             var resultStream = _coSignatureQualityFormatter.FormatStream(coSignatureQualities);
             using (var fileStream = File.Create(path))

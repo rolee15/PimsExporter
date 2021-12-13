@@ -22,7 +22,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.DocumentCategory), r => r.DocumentCategory),
                 new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.DocumentTagging), r => r.DocumentTagging),
                 new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.DocumentOwner), r => r.DocumentOwner),
-                new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.CheckoutTo), r => r.CheckoutTo),
+                new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.OlmPhase), r => r.OlmPhase),
                 new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.Updated), r => r.Updated),
                 
             };
