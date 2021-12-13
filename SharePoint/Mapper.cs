@@ -274,7 +274,10 @@ namespace SharePoint
             header.Status = Convert.ToString(item[ProductFields.COSIGN_STATUS]);
             header.Result = Convert.ToString(item[ProductFields.COSIGNATURE_RESULT]);
             header.Remark = Convert.ToString(item[ProductFields.REMARK]);
-
+            header.CoSignatureSubmittedDate = item[ProductFields.COSIGNSUBMITTEDDATE] as DateTime?;
+            header.CoSignatureResultDate = item[ProductFields.COSIGNRESULTDATE] as DateTime?;
+            header.QualityIndex = Convert.ToDouble(item[ProductFields.QIDX_COSIGN]);
+            header.QualityIndexUpdated = item[ProductFields.QIDX_COSIGN_UPDATED] as DateTime?;
             return header;
         }
 
@@ -310,28 +313,6 @@ namespace SharePoint
             return document;
         }
 
-        internal CoSignatureHeader MapCoSignatureWorkflowToEntity(ListItem item)
-        {
-            var header = new CoSignatureHeader();
-
-            header.CoSignatureId = Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]);
-            header.Topic = Convert.ToString(item[ProductFields.SIGNATURE_NAME]);
-            header.OmItemName = Convert.ToString(item[ProductFields.PRODUCT_NAME]);
-            header.PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]);
-            header.OmItemVersion = Convert.ToString(item[ProductFields.OM_ITEM_VERSION]);
-            header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]);
-            header.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
-            header.OlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE]);
-            header.OlmMilestone = Convert.ToString(item[ProductFields.OLM_MILESTONE]);
-            header.CoSignatureDate = item[ProductFields.COSIGN_DATE] as DateTime?;
-            header.CoSignatureDueDate = item[ProductFields.COSIGN_DUE_DATE] as DateTime?;
-            header.Status = Convert.ToString(item[ProductFields.COSIGN_STATUS]);
-            header.Result = Convert.ToString(item[ProductFields.COSIGNATURE_RESULT]);
-            header.Remark = Convert.ToString(item[ProductFields.REMARK]);
-
-            return header;
-        }        
-        
         internal OmItemDocument MapDocumentsToEntity(ListItem item)
         {
             var document = new OmItemDocument();

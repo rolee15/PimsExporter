@@ -254,6 +254,10 @@
                 public static readonly string UPDATED = "Updated";
                 public static readonly string LINKTYPE = "Link_x0020_Typ";
                 public static readonly string PIMSLINK = "PimsLink";
+                public static readonly string COSIGNSUBMITTEDDATE = "Co_x0020_Sign_x0020_Submitted_x0";
+                public static readonly string COSIGNRESULTDATE = "Co_x0020_Sign_x0020_Result_x0020";
+                public static readonly string QIDX_COSIGN = "QIdxCoSign";
+                public static readonly string QIDX_COSIGN_UPDATED = "QIdxCoSignUpdated";
             }
         }
 

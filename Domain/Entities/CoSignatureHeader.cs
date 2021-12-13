@@ -18,6 +18,10 @@ namespace Domain.Entities
         public string Status { get; set; }
         public string Result { get; set; }
         public string Remark { get; set; }
+        public DateTime? CoSignatureSubmittedDate { get; set; }
+        public DateTime? CoSignatureResultDate { get; set; }
+        public double QualityIndex { get; set; }
+        public DateTime? QualityIndexUpdated { get; set; }
         public int OmItemNumber { get; set; }
         public int VersionNumber { get; set; }
         public int CoSignatureId { get; set; }
