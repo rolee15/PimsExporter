@@ -9,6 +9,7 @@ namespace Domain.Entities
         public string OmItemId { get; set; }
         public User OfferingManager { get; set; }
         public string PortfolioUnit { get; set; }
+        public string OfferingModuleId { get; set; }
         public string PimsId { get; set; }
         public string OfferingName { get; set; }
         public string OfferingModule { get; set; }
@@ -22,5 +23,6 @@ namespace Domain.Entities
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
         public int OmItemNumber { get; set; }
+        
     }
 }

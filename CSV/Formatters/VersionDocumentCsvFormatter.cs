@@ -21,7 +21,8 @@ namespace CSV.Formatters
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentCategory), r => r.DocumentCategory),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentTagging), r => r.DocumentTagging),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentOwner), r => r.DocumentOwner),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.CheckoutTo), r => r.CheckoutTo)
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.OlmPhase), r => r.OlmPhase),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Updated), r => r.Updated)
             };
         }
     }

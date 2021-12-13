@@ -13,7 +13,7 @@ namespace Domain.Entities
         public string DocumentCategory { get; set; }
         public IEnumerable<string> DocumentTagging { get; set; }
         public User DocumentOwner { get; set; }
-        public User CheckoutTo { get; set; }
+        public string OlmPhase { get; set; }
         public  DateTime? Updated { get; set; }
         public int OmItemNumber { get; set; }
     }

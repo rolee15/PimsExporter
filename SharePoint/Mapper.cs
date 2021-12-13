@@ -80,7 +80,8 @@ namespace SharePoint
             versionDocument.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
             versionDocument.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
             versionDocument.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
-            versionDocument.CheckoutTo = MapToUser(item[ProductFields.CHECKOUT_TO]);
+            versionDocument.OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]);
+            versionDocument.Updated = item[ProductFields.UPDATED] as DateTime?;
             
             return versionDocument;
         }
@@ -107,6 +108,7 @@ namespace SharePoint
                 OmItemId = Convert.ToString(item[ProductFields.PRODUCT_ID]),
                 OfferingManager = MapToUser(item[ProductFields.PRODUCT_MANAGER]),
                 PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]),
+                OfferingModuleId = Convert.ToString(item[ProductFields.OFFERING_MODULE_ID]),
                 PimsId = Convert.ToString(item[ProductFields.PIMSIDOMITEM]),
                 OfferingName = Convert.ToString(item[ProductFields.OFFERING_NAME]),
                 OfferingModule = Convert.ToString(item[ProductFields.OFFERING_MODULE]),
@@ -303,7 +305,8 @@ namespace SharePoint
             document.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
             document.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
             document.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
-            document.CheckoutTo = MapToUser(item[ProductFields.CHECKOUT_TO]);
+            document.OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]);
+            document.Updated = item[ProductFields.UPDATED] as DateTime?;
             return document;
         }
 
@@ -337,7 +340,8 @@ namespace SharePoint
             document.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
             document.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
             document.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
-            document.CheckoutTo = MapToUser(item[ProductFields.CHECKOUT_TO]);
+            document.OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]);
+            document.Updated = item[ProductFields.UPDATED] as DateTime?;
             return document;
         }
 
