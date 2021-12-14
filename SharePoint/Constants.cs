@@ -258,6 +258,8 @@
                 public static readonly string COSIGNRESULTDATE = "Co_x0020_Sign_x0020_Result_x0020";
                 public static readonly string QIDX_COSIGN = "QIdxCoSign";
                 public static readonly string QIDX_COSIGN_UPDATED = "QIdxCoSignUpdated";
+                public static readonly string OVERSIONBUDGETCOMMENT = "OMIVersionBudgetComment";
+
             }
         }
 

@@ -188,6 +188,7 @@ namespace SharePoint
             versionBudget.RnDBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.RNDBUDGETCAPEXPLAN]);
             versionBudget.RnDBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.RNDBUDGETOPEXAPPROVED]);
             versionBudget.RnDBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.RNDBUDGETCAPEXAPPROVED]);
+            versionBudget.Comment = Convert.ToString(item[ProductFields.OVERSIONBUDGETCOMMENT]);
             return versionBudget;
         }
 
