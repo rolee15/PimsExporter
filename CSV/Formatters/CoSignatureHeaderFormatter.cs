@@ -24,8 +24,12 @@ namespace CSV.Formatters
                 new ColumnFormatter<CoSignatureHeader>("CoSignatureDueDate", r => r.CoSignatureDueDate),
                 new ColumnFormatter<CoSignatureHeader>("Status", r => r.Status),
                 new ColumnFormatter<CoSignatureHeader>("Result", r => r.Result),
-                new ColumnFormatter<CoSignatureHeader>("Remark", r => r.Remark)
-            };
+                new ColumnFormatter<CoSignatureHeader>("Remark", r => r.Remark),
+                new ColumnFormatter<CoSignatureHeader>("CoSignatureSubmittedDate", r => r.CoSignatureSubmittedDate),
+                new ColumnFormatter<CoSignatureHeader>("CoSignatureResultDate", r => r.CoSignatureResultDate),
+                new ColumnFormatter<CoSignatureHeader>("QualityIndex", r => r.QualityIndex),
+                new ColumnFormatter<CoSignatureHeader>("QualityIndexUpdated", r => r.QualityIndexUpdated),
+    };
         }
     }
 }

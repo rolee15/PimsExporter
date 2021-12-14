@@ -86,7 +86,9 @@ namespace SharePoint
 
         public IEnumerable<CoSignatureHeader> CoSignatureHeaders()
         {
-            return GetAllCoSignatureEntities();
+            return GetAllEntities(
+                Constants.Version.Lists.CoSignaturesList.TITLE,
+                item => mapper.MapCoSignaturesListToEntity(item));
         }
 
         public IEnumerable<VersionDocument> VersionDocuments()

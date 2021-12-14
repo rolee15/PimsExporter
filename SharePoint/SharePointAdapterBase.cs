@@ -23,41 +23,6 @@ namespace SharePoint
         public Uri SharepointSiteUrl { get; }
         public NetworkCredential Credentials { get; }
 
-        protected IEnumerable<CoSignatureHeader> GetAllCoSignatureEntities()
-        {
-            using (_ctx = new ClientContext(SharepointSiteUrl))
-            {
-                _ctx.Credentials = Credentials;
-
-                var coSignatures = GetCoSignatures();
-                var workflows = GetWorkflows();
-
-                foreach (var coSignature in coSignatures)
-                {
-                    var workflow = workflows.FirstOrDefault(w => w.CoSignatureId == coSignature.CoSignatureId);
-                    if (workflow == null) continue;
-
-                    yield return mapper.JoinCoSignatures(coSignature, workflow);
-                }
-            }
-        }
-
-        private IEnumerable<CoSignatureHeader> GetWorkflows()
-        {
-            var list = GetList(Constants.Version.Lists.CoSignatureWorkflow.TITLE);
-            var listItems = GetAllItems(list);
-            foreach (var item in listItems)
-                yield return mapper.MapCoSignatureWorkflowToEntity(item);
-        }
-
-        private IEnumerable<CoSignatureHeader> GetCoSignatures()
-        {
-            var list = GetList(Constants.Version.Lists.CoSignaturesList.TITLE);
-            var listItems = GetAllItems(list);
-            foreach (var item in listItems)
-                yield return mapper.MapCoSignaturesListToEntity(item);
-        }
-
         protected IEnumerable<T> GetAllEntities<T>(string title, Func<ListItem, T> map)
         {
             using (_ctx = new ClientContext(SharepointSiteUrl))
