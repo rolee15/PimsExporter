@@ -21,8 +21,10 @@
         public double? RnDBudgetCapexPlan { get; set; }
         public double? RnDBudgetOpexApproved { get; set; }
         public double? RnDBudgetCapexApproved { get; set; }
+        public string Comment { get; set; }
 
         public int OmItemNumber { get; set; }
         public int VersionNumber { get; set; }
+        
     }
 }

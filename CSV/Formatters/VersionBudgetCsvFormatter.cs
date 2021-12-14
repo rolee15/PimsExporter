@@ -39,7 +39,9 @@ namespace CSV.Formatters
                 new ColumnFormatter<VersionBudget>(nameof(VersionBudget.RnDBudgetOpexApproved),
                     r => r.RnDBudgetOpexApproved),
                 new ColumnFormatter<VersionBudget>(nameof(VersionBudget.RnDBudgetCapexApproved),
-                    r => r.RnDBudgetCapexApproved)
+                    r => r.RnDBudgetCapexApproved),
+                 new ColumnFormatter<VersionBudget>(nameof(VersionBudget.Comment),
+                    r => r.Comment)
             };
         }
     }
