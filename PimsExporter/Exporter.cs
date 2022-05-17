@@ -45,7 +45,8 @@ namespace PimsExporter
                     var siteUri = new Uri(url);
                     var credentials = new NetworkCredential(_settings.UserName, Password);
                     var siteRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(siteUri, credentials);
-
+                    Console.WriteLine($"Export Om Item: {url}");
+                    
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = omItemNumber;
                     omItemHeaders.Add(header);
@@ -102,7 +103,7 @@ namespace PimsExporter
                     var credentials = new NetworkCredential(_settings.UserName, Password);
                     var omItemRepository =
                         _inputRepositoryFactory.Create<IOmItemSiteRepository>(omItemSiteUri, credentials);
-
+                                        
                     var versionNumbers = omItemRepository.GetVersionNumbers();
                     foreach (var versionNumber in versionNumbers)
                         try
@@ -111,6 +112,7 @@ namespace PimsExporter
                             var siteUri = new Uri(url);
                             var versionRepository =
                                 _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
+                            Console.WriteLine($"Export version: {url}");
 
                             var header = versionRepository.GetHeader();
                             header.OmItemNumber = omItemNumber;
@@ -206,7 +208,7 @@ namespace PimsExporter
                             var versionSiteUri = new Uri(versionUrl);
                             var versionRepository =
                                 _inputRepositoryFactory.Create<IVersionRepository>(versionSiteUri, credentials);
-
+                            
                             var apiUri = new Uri(_settings.ApiBaseUrl);
                             var coSignatureQualityRepository = _inputRepositoryFactory.Create<ICoSignatureQualityRepository>(apiUri, credentials);
                             var headers = versionRepository.GetCoSignatureHeaders().ToList();
@@ -214,7 +216,7 @@ namespace PimsExporter
                             {
                                 header.OmItemNumber = omItemNumber;
                                 header.VersionNumber = versionNumber;
-
+                                Console.WriteLine($"Export CoSignature OmItem Number: {omItemNumber} Version Number: {versionNumber} CoSignature Id: {header.CoSignatureId}");
                                 coSignatureQualities.AddRange(await coSignatureQualityRepository.GetCoSignatureQualitiesAsync(omItemNumber, versionNumber, header.CoSignatureId));
                             }
 
