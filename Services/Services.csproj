@@ -51,7 +51,6 @@
     <Compile Include="InputRepositories\VersionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InputRepositories\OmItemSiteRepository.cs" />
-    <Compile Include="OutputRepositories\OutputRepository.cs" />
     <Compile Include="InputRepositories\RootSiteRepository.cs" />
   </ItemGroup>
   <ItemGroup>

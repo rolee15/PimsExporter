@@ -5,25 +5,27 @@ using System.Linq;
 using System.Net;
 using System.Security;
 using System.Threading.Tasks;
+using CSV;
 using Domain.Entities;
 using Microsoft.Extensions.Options;
 using PimsExporter.Services.InputRepositories;
-using PimsExporter.Services.OutputRepositories;
 
 namespace PimsExporter
 {
     public class Exporter : IApplication
     {
         private readonly IInputRepositoryFactory _inputRepositoryFactory;
-        private readonly IOutputRepository _outputRepository;
+        private readonly IOutputAdapter _outputAdapter;
         private readonly ExporterSettings _settings;
 
-        public Exporter(IOptions<ExporterSettings> settings, IInputRepositoryFactory inputRepositoryFactory,
-            IOutputRepository outputRepository)
+        public Exporter(
+            IOptions<ExporterSettings> settings, 
+            IInputRepositoryFactory inputRepositoryFactory,
+            IOutputAdapter outputAdapter)
         {
             _settings = settings.Value;
             _inputRepositoryFactory = inputRepositoryFactory;
-            _outputRepository = outputRepository;
+            _outputAdapter = outputAdapter;
         }
 
         public SecureString Password { get; set; }
@@ -43,7 +45,8 @@ namespace PimsExporter
                     var siteUri = new Uri(url);
                     var credentials = new NetworkCredential(_settings.UserName, Password);
                     var siteRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(siteUri, credentials);
-
+                    Console.WriteLine($"Export Om Item: {url}");
+                    
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = omItemNumber;
                     omItemHeaders.Add(header);
@@ -75,12 +78,12 @@ namespace PimsExporter
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
 
-            _outputRepository.SaveOmItemHeaders(omItemHeaders);
-            _outputRepository.SaveOlmPhases(omItemOlmPhases);
-            _outputRepository.SaveMilestones(omItemMilestones);
-            _outputRepository.SaveTeams(omItemTeams);
-            _outputRepository.SaveDocuments(omItemDocuments);
-            _outputRepository.SaveRelatedOMItems(omItemRelatedOMItems);
+            _outputAdapter.SaveOmItemHeaders(omItemHeaders, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveOlmPhases(omItemOlmPhases, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveMilestones(omItemMilestones, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveTeams(omItemTeams, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveDocuments(omItemDocuments, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveRelatedOMItems(omItemRelatedOMItems, omItemNumberFrom, omItemNumberTo);
 
         }
 
@@ -100,7 +103,7 @@ namespace PimsExporter
                     var credentials = new NetworkCredential(_settings.UserName, Password);
                     var omItemRepository =
                         _inputRepositoryFactory.Create<IOmItemSiteRepository>(omItemSiteUri, credentials);
-
+                                        
                     var versionNumbers = omItemRepository.GetVersionNumbers();
                     foreach (var versionNumber in versionNumbers)
                         try
@@ -109,6 +112,7 @@ namespace PimsExporter
                             var siteUri = new Uri(url);
                             var versionRepository =
                                 _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
+                            Console.WriteLine($"Export version: {url}");
 
                             var header = versionRepository.GetHeader();
                             header.OmItemNumber = omItemNumber;
@@ -171,12 +175,12 @@ namespace PimsExporter
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
 
-            _outputRepository.SaveVersionHeaders(versionHeaders);
-            _outputRepository.SaveVersionBudgets(versionBudgets);
-            _outputRepository.SaveVersionTeams(versionTeams);
-            _outputRepository.SaveVersionDocuments(versionDocuments);
-            _outputRepository.SaveVersionChangeLogs(versionChangeLogs);
-            _outputRepository.SaveVersionMilestones(versionMilestones);
+            _outputAdapter.SaveVersionHeaders(versionHeaders, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveVersionBudgets(versionBudgets, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveVersionTeams(versionTeams, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveVersionDocuments(versionDocuments, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveVersionChangeLogs(versionChangeLogs, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveVersionMilestones(versionMilestones, omItemNumberFrom, omItemNumberTo);
         }
 
         public async Task ExportCoSignaturesAsync(int omItemNumberFrom, int omItemNumberTo)
@@ -204,7 +208,7 @@ namespace PimsExporter
                             var versionSiteUri = new Uri(versionUrl);
                             var versionRepository =
                                 _inputRepositoryFactory.Create<IVersionRepository>(versionSiteUri, credentials);
-
+                            
                             var apiUri = new Uri(_settings.ApiBaseUrl);
                             var coSignatureQualityRepository = _inputRepositoryFactory.Create<ICoSignatureQualityRepository>(apiUri, credentials);
                             var headers = versionRepository.GetCoSignatureHeaders().ToList();
@@ -212,7 +216,7 @@ namespace PimsExporter
                             {
                                 header.OmItemNumber = omItemNumber;
                                 header.VersionNumber = versionNumber;
-
+                                Console.WriteLine($"Export CoSignature OmItem Number: {omItemNumber} Version Number: {versionNumber} CoSignature Id: {header.CoSignatureId}");
                                 coSignatureQualities.AddRange(await coSignatureQualityRepository.GetCoSignatureQualitiesAsync(omItemNumber, versionNumber, header.CoSignatureId));
                             }
 
@@ -246,28 +250,28 @@ namespace PimsExporter
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
 
-            _outputRepository.SaveCoSignatureHeaders(coSignatureHeaders);
-            _outputRepository.SaveCoSignatureCoSigners(coSignatureCoSigners);
-            _outputRepository.SaveCoSignatureQualities(coSignatureQualities);
-            _outputRepository.SaveCoSignatureDocuments(coSignatureDocuments);
+            _outputAdapter.SaveCoSignatureHeaders(coSignatureHeaders, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveCoSignatureCoSigners(coSignatureCoSigners, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveCoSignatureQualities(coSignatureQualities, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveCoSignatureDocuments(coSignatureDocuments, omItemNumberFrom, omItemNumberTo);
         }
 
-        public void ExportRoot()
+        public void ExportRoot(int omItemNumberFrom, int omItemNumberTo)
         {
             var siteUri = new Uri(_settings.SharepointUrl);
             var credentials = new NetworkCredential(_settings.UserName, Password);
             var rootRepository = _inputRepositoryFactory.Create<IRootSiteRepository>(siteUri, credentials);
             var allOmItems = rootRepository.GetAllOmItems();
             var allVersions = rootRepository.GetAllVersions();
-            _outputRepository.SaveAllOmItems(allOmItems);
-            _outputRepository.SaveAllVersions(allVersions);
+            _outputAdapter.SaveAllOmItems(allOmItems.Where(item => omItemNumberFrom <= item.OmItemNumber && omItemNumberTo >= item.OmItemNumber), omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveAllVersions(allVersions.Where(item => omItemNumberFrom <= item.OmItemNumber && omItemNumberTo >= item.OmItemNumber), omItemNumberFrom, omItemNumberTo);
         }
     }
 
     public interface IApplication
     {
         SecureString Password { get; set; }
-        void ExportRoot();
+        void ExportRoot(int omItemNumberFrom, int omItemNumberTo);
         void ExportOmItems(int omItemNumberFrom, int omItemNumberTo);
         void ExportVersions(int omItemNumberFrom, int omItemNumberTo);
         Task ExportCoSignaturesAsync(int omItemNumberFrom, int omItemNumberTo);

@@ -7,9 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PimsExporter;
 using PimsExporter.Services.InputRepositories;
-using PimsExporter.Services.OutputRepositories;
 using Services.InputRepositories;
-using Services.OutputRepositories;
 
 namespace CLI
 {
@@ -29,7 +27,7 @@ namespace CLI
             exporter.Password = password;
 
             Console.WriteLine("Starting to export root...");
-            exporter.ExportRoot();
+            exporter.ExportRoot(from, to);
             Console.WriteLine("Done.");
 
             Console.WriteLine("Starting to export OM Items...");
@@ -78,7 +76,6 @@ namespace CLI
 
                     services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();
-                    services.AddSingleton<IOutputRepository, OutputRepository>();
                     services.AddSingleton<IApplication, Exporter>();
                 });
         }

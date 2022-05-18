@@ -8,24 +8,27 @@ namespace CSV
 {
     public class CsvAdapter : IOutputAdapter
     {
-        private const string OmItemsFileName = "OmItems.csv";
-        private const string AllVersionsFileName = "Versions.csv";
-        private const string OmItemHeadersFileName = "OmItemHeaders.csv";
-        private const string OlmPhasesFileName = "OlmPhases.csv";
-        private const string MilestonesFileName = "Milestones.csv";
-        private const string VersionHeadersFileName = "VersionHeaders.csv";
-        private const string VersionBudgetsFileName = "VersionBudgets.csv";
-        private const string TeamsFileName = "Teams.csv";
-        private const string VersionTeamsFileName = "VersionTeams.csv";
-        private const string CoSignatureHeadersFileName = "CoSignatureHeaders.csv";
-        private const string VersionDocumentsFileName = "VersionDocuments.csv";
-        private const string VersionChangeLogsFileName = "VersionChangeLogs.csv";
-        private const string VersionMilestonesFileName = "VersionMilestones.csv";
-        private const string CoSignatureCoSignersFileName = "CoSigners.csv";
-        private const string CoSignatureQualitiesFileName = "CosignatureQualities.csv";
-        private const string DocumentsFileName = "Documents.csv";
-        private const string RelatedOMItemsFileName = "RelatedOMItems.csv";
-        private const string CoSignatureDocumentsFileName = "Documents.csv";
+        private const string OmItemsFileName = "OmItems";
+        private const string AllVersionsFileName = "Versions";
+        
+        private const string OmItemHeadersFileName = "OMI_Headers";
+        private const string OlmPhasesFileName = "OMI_OlmPhases";
+        private const string MilestonesFileName = "OMI_Milestones";
+        private const string TeamsFileName = "OMI_Teams";
+        private const string DocumentsFileName = "OMI_Documents";
+        private const string RelatedOMItemsFileName = "OMI_RelatedOMItems";
+
+        private const string VersionHeadersFileName = "OMIV_Headers";
+        private const string VersionBudgetsFileName = "OMIV_Budgets";
+        private const string VersionTeamsFileName = "OMIV_Teams";
+        private const string VersionDocumentsFileName = "OMIV_Documents";
+        private const string VersionChangeLogsFileName = "OMIV_ChangeLogs";
+        private const string VersionMilestonesFileName = "OMIV_Milestones";
+
+        private const string CoSignatureHeadersFileName = "CoS_Headers";
+        private const string CoSignatureCoSignersFileName = "CoS_CoSigners";
+        private const string CoSignatureQualitiesFileName = "CoS_Qualities";
+        private const string CoSignatureDocumentsFileName = "CoS_Documents";
 
 
         private readonly AllOmItemCsvFormatter _allOmItemFormatter;
@@ -72,11 +75,11 @@ namespace CSV
             _versionMilestonesFormatter = new VersionMilestoneCsvFormatter();
         }
 
-        public void SaveAllVersions(IEnumerable<AllVersion> versions)
+        public void SaveAllVersions(IEnumerable<AllVersion> versions, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "root");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, AllVersionsFileName);
+            path = Path.Combine(path, CreateFileName(AllVersionsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _allVersionFormatter.FormatStream(versions);
             using (var fileStream = File.Create(path))
@@ -85,11 +88,11 @@ namespace CSV
             }
         }
 
-        public void SaveAllOmItems(IEnumerable<AllOmItem> omItems)
+        public void SaveAllOmItems(IEnumerable<AllOmItem> omItems, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "root");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, OmItemsFileName);
+            path = Path.Combine(path, CreateFileName(OmItemsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _allOmItemFormatter.FormatStream(omItems);
             using (var fileStream = File.Create(path))
@@ -98,11 +101,11 @@ namespace CSV
             }
         }
 
-        public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders)
+        public void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, OmItemHeadersFileName);
+            path = Path.Combine(path, CreateFileName(OmItemHeadersFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _omItemHeaderFormatter.FormatStream(omItemHeaders);
             using (var fileStream = File.Create(path))
@@ -111,11 +114,11 @@ namespace CSV
             }
         }
 
-        public void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases)
+        public void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, OlmPhasesFileName);
+            path = Path.Combine(path, CreateFileName(OlmPhasesFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _olmPhaseFormatter.FormatStream(olmPhases);
             using (var fileStream = File.Create(path))
@@ -124,11 +127,11 @@ namespace CSV
             }
         }
 
-        public void SaveMilestones(IEnumerable<Milestone> omItemMilestones)
+        public void SaveMilestones(IEnumerable<Milestone> omItemMilestones, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, MilestonesFileName);
+            path = Path.Combine(path, CreateFileName(MilestonesFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _milestonesFormatter.FormatStream(omItemMilestones);
             using (var fileStream = File.Create(path))
@@ -137,11 +140,11 @@ namespace CSV
             }
         }
 
-        public void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones)
+        public void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "versions");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, VersionMilestonesFileName);
+            path = Path.Combine(path, CreateFileName(VersionMilestonesFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _versionMilestonesFormatter.FormatStream(omIVersionMilestones);
             using (var fileStream = File.Create(path))
@@ -150,11 +153,11 @@ namespace CSV
             }
         }
 
-        public void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders)
+        public void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "versions");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, VersionHeadersFileName);
+            path = Path.Combine(path, CreateFileName(VersionHeadersFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _versionHeaderFormatter.FormatStream(versionHeaders);
             using (var fileStream = File.Create(path))
@@ -163,11 +166,11 @@ namespace CSV
             }
         }
 
-        public void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets)
+        public void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "versions");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, VersionBudgetsFileName);
+            path = Path.Combine(path, CreateFileName(VersionBudgetsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _versionBudgetFormatter.FormatStream(versionBudgets);
             using (var fileStream = File.Create(path))
@@ -176,11 +179,11 @@ namespace CSV
             }
         }
 
-        public void SaveTeams(IEnumerable<Team> teams)
+        public void SaveTeams(IEnumerable<Team> teams, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, TeamsFileName);
+            path = Path.Combine(path, CreateFileName(TeamsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _teamsFormatter.FormatStream(teams);
             using (var fileStream = File.Create(path))
@@ -189,11 +192,11 @@ namespace CSV
             }
         }
 
-        public void SaveVersionTeams(IEnumerable<VersionTeam> versionTeams)
+        public void SaveVersionTeams(IEnumerable<VersionTeam> versionTeams, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "versions");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, VersionTeamsFileName);
+            path = Path.Combine(path, CreateFileName(VersionTeamsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _versionTeamsFormatter.FormatStream(versionTeams);
             using (var fileStream = File.Create(path))
@@ -202,11 +205,11 @@ namespace CSV
             }
         }
 
-        public void SaveCoSignatureHeaders(IEnumerable<CoSignatureHeader> coSignatureHeaders)
+        public void SaveCoSignatureHeaders(IEnumerable<CoSignatureHeader> coSignatureHeaders, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "cosignatures");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, CoSignatureHeadersFileName);
+            path = Path.Combine(path, CreateFileName(CoSignatureHeadersFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _coSignatureHeaderFormatter.FormatStream(coSignatureHeaders);
             using (var fileStream = File.Create(path))
@@ -215,11 +218,11 @@ namespace CSV
             }
         }
 
-        public void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments)
+        public void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "versions");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, VersionDocumentsFileName);
+            path = Path.Combine(path, CreateFileName(VersionDocumentsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _versionDocumentsFormatter.FormatStream(versionDocuments);
             using (var fileStream = File.Create(path))
@@ -228,11 +231,11 @@ namespace CSV
             }
         }
 
-        public void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs)
+        public void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "versions");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, VersionChangeLogsFileName);
+            path = Path.Combine(path, CreateFileName(VersionChangeLogsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _versionChangeLogsFormatter.FormatStream(versionChangeLogs);
             using (var fileStream = File.Create(path))
@@ -241,11 +244,11 @@ namespace CSV
             }
         }
 
-        public void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners)
+        public void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "cosignatures");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, CoSignatureCoSignersFileName);
+            path = Path.Combine(path, CreateFileName(CoSignatureCoSignersFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _coSignatureCoSignerFormatter.FormatStream(coSignatureCoSigners);
             using (var fileStream = File.Create(path))
@@ -254,11 +257,11 @@ namespace CSV
             }
         }
 
-        public void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities)
+        public void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "cosignatures");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, CoSignatureQualitiesFileName);
+            path = Path.Combine(path, CreateFileName(CoSignatureQualitiesFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _coSignatureQualityFormatter.FormatStream(coSignatureQualities);
             using (var fileStream = File.Create(path))
@@ -267,11 +270,11 @@ namespace CSV
             }
         }
 
-        public void SaveDocuments(IEnumerable<OmItemDocument> documents)
+        public void SaveDocuments(IEnumerable<OmItemDocument> documents, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, DocumentsFileName);
+            path = Path.Combine(path, CreateFileName(DocumentsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _documentsFormatter.FormatStream(documents);
             using (var fileStream = File.Create(path))
@@ -280,11 +283,11 @@ namespace CSV
             }
         }
         
-        public void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs)
+        public void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, RelatedOMItemsFileName);
+            path = Path.Combine(path, CreateFileName(RelatedOMItemsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _relatedOMItemFormatter.FormatStream(RelatedOMIs);
 			using (var fileStream = File.Create(path))
@@ -293,11 +296,11 @@ namespace CSV
             }
         }
 
-        public void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments)
+        public void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "cosignatures");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, CoSignatureDocumentsFileName);
+            path = Path.Combine(path, CreateFileName(CoSignatureDocumentsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _coSignatureDocumentsFormatter.FormatStream(coSignatureDocuments);
             using (var fileStream = File.Create(path))
@@ -305,27 +308,32 @@ namespace CSV
                 resultStream.CopyTo(fileStream);
             }
         }
+
+        private static string CreateFileName(string fileName, int omItemNumberFrom, int omItemNumberTo)
+        {
+            return $"{fileName}_{omItemNumberFrom}-{omItemNumberTo}.csv";
+        }
     }
 
     public interface IOutputAdapter
     {
-        void SaveAllOmItems(IEnumerable<AllOmItem> omItems);
-        void SaveAllVersions(IEnumerable<AllVersion> versions);
-        void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders);
-        void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases);
-        void SaveMilestones(IEnumerable<Milestone> omItemMilestones);
-        void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders);
-        void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets);
-        void SaveTeams(IEnumerable<Team> teams);
-        void SaveVersionTeams(IEnumerable<VersionTeam> versionTeams);
-        void SaveCoSignatureHeaders(IEnumerable<CoSignatureHeader> coSignatureHeaders);
-        void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments);
-        void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs);
-        void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones);
-        void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners);
-        void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities);
-        void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs);
-        void SaveDocuments(IEnumerable<OmItemDocument> documents);
-        void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments);
+        void SaveAllOmItems(IEnumerable<AllOmItem> omItems, int omItemNumberFrom, int omItemNumberTo);
+        void SaveAllVersions(IEnumerable<AllVersion> versions, int omItemNumberFrom, int omItemNumberTo);
+        void SaveOmItemHeaders(IEnumerable<OmItemHeader> omItemHeaders, int omItemNumberFrom, int omItemNumberTo);
+        void SaveOlmPhases(IEnumerable<OlmPhase> olmPhases, int omItemNumberFrom, int omItemNumberTo);
+        void SaveMilestones(IEnumerable<Milestone> omItemMilestones, int omItemNumberFrom, int omItemNumberTo);
+        void SaveVersionHeaders(IEnumerable<VersionHeader> versionHeaders, int omItemNumberFrom, int omItemNumberTo);
+        void SaveVersionBudgets(IEnumerable<VersionBudget> versionBudgets, int omItemNumberFrom, int omItemNumberTo);
+        void SaveTeams(IEnumerable<Team> teams, int omItemNumberFrom, int omItemNumberTo);
+        void SaveVersionTeams(IEnumerable<VersionTeam> versionTeams, int omItemNumberFrom, int omItemNumberTo);
+        void SaveCoSignatureHeaders(IEnumerable<CoSignatureHeader> coSignatureHeaders, int omItemNumberFrom, int omItemNumberTo);
+        void SaveVersionDocuments(IEnumerable<VersionDocument> versionDocuments, int omItemNumberFrom, int omItemNumberTo);
+        void SaveVersionChangeLogs(IEnumerable<VersionChangeLog> versionChangeLogs, int omItemNumberFrom, int omItemNumberTo);
+        void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones, int omItemNumberFrom, int omItemNumberTo);
+        void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners, int omItemNumberFrom, int omItemNumberTo);
+        void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities, int omItemNumberFrom, int omItemNumberTo);
+        void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs, int omItemNumberFrom, int omItemNumberTo);
+        void SaveDocuments(IEnumerable<OmItemDocument> documents, int omItemNumberFrom, int omItemNumberTo);
+        void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments, int omItemNumberFrom, int omItemNumberTo);
     }
 }

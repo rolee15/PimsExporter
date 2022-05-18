@@ -73,7 +73,6 @@
     <Compile Include="Services\InputRepositories\IVersionRepository.cs" />
     <Compile Include="Services\InputRepositories\IInputRepositoryFactory.cs" />
     <Compile Include="Services\InputRepositories\IOmItemSiteRepository.cs" />
-    <Compile Include="Services\OutputRepositories\IOutputRepository.cs" />
     <Compile Include="Services\InputRepositories\IRootSiteRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
