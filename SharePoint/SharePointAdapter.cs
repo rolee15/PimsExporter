@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using Domain;
 using Domain.Entities;
 using SharePoint.Interfaces;
 
@@ -126,17 +127,24 @@ namespace SharePoint
                 item => mapper.MapDocumentsToEntity(item));
         }
 
-        public IEnumerable<RelatedOMItem> RelatedOMItems()
+        public IEnumerable<RelatedOmItem> RelatedOmItems()
         {
             return GetAllEntities(
                 Constants.Product.Lists.RelatedOMItems.TITLE,
-                item => mapper.MapRelatedOMItemsToEntity(item));
+                item => mapper.MapRelatedOmItemsToEntity(item));
 		}
         public IEnumerable<CoSignatureDocument> CoSignatureDocuments()
         {
             return GetAllEntities(
                 Constants.Version.Lists.CoSignatureDocuments.TITLE,
                 item => mapper.MapCoSignatureDocumentsListToEntity(item));
+        }
+
+        public IEnumerable<Lookup> Lookups()
+        {
+            return GetAllEntities(
+                Constants.Root.Lists.Lookups.TITLE,
+                item => mapper.MapLookupToEntity(item));
         }
     }
 }

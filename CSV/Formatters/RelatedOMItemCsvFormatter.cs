@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace CSV.Formatters
 {
-    class RelatedOMItemCsvFormatter : DocumentFormatterBase<RelatedOMItem>
+    class RelatedOMItemCsvFormatter : DocumentFormatterBase<RelatedOmItem>
     {
         public RelatedOMItemCsvFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
         {
             Columns = new[]
             {
-                new ColumnFormatter<RelatedOMItem>(nameof(RelatedOMItem.OmItemNumber), r => r.OmItemNumber),
-                new ColumnFormatter<RelatedOMItem>(nameof(RelatedOMItem.LinkType), r => r.LinkType),
-                new ColumnFormatter<RelatedOMItem>(nameof(RelatedOMItem.ShortDescription), r => r.ShortDescription),
-                new ColumnFormatter<RelatedOMItem>(nameof(RelatedOMItem.PimsLink), r => r.PimsLink),
+                new ColumnFormatter<RelatedOmItem>(nameof(RelatedOmItem.OmItemNumber), r => r.OmItemNumber),
+                new ColumnFormatter<RelatedOmItem>(nameof(RelatedOmItem.LinkType), r => r.LinkType),
+                new ColumnFormatter<RelatedOmItem>(nameof(RelatedOmItem.ShortDescription), r => r.ShortDescription),
+                new ColumnFormatter<RelatedOmItem>(nameof(RelatedOmItem.PimsLink), r => r.PimsLink),
             };
         }
     }

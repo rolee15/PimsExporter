@@ -34,22 +34,21 @@ namespace Services.InputRepositories
         }
         public async Task<IEnumerable<Domain.Entities.CoSignatureQuality>> GetCoSignatureQualitiesAsync(int omItemNumber, int versionNumber, int coSingnatureId)
         {
-            using (HttpClient client = new HttpClient(new HttpClientHandler { UseDefaultCredentials = true }))
+            using (var client = new HttpClient(new HttpClientHandler { UseDefaultCredentials = true }))
             {
                 var contentString = string.Empty;
 
-                SafeAccessTokenHandle safeAccessTokenHandle;
-                bool returnValue = LogonUser
+                var returnValue = LogonUser
                 (
                     _networkCredential.UserName,
                     _networkCredential.Domain,
                     _networkCredential.Password, LOGON32_LOGON_INTERACTIVE,
                     LOGON32_PROVIDER_DEFAULT,
-                    out safeAccessTokenHandle);
+                    out var safeAccessTokenHandle);
 
                 if (false == returnValue)
                 {
-                    int ret = Marshal.GetLastWin32Error();
+                    var ret = Marshal.GetLastWin32Error();
                     throw new System.ComponentModel.Win32Exception(ret);
                 }
 

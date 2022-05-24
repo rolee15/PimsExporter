@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Domain;
 using Domain.Entities;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
@@ -68,7 +69,7 @@ namespace SharePoint
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
-                    rowLimit: Constants.DEFAULT_QUERY_ROW_LIMIT)
+                    rowLimit: Constants.DefaultQueryRowLimit)
             };
         }
 

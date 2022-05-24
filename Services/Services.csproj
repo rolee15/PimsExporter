@@ -49,6 +49,7 @@
     <Compile Include="InputRepositories\CoSignatureQualityRepository.cs" />
     <Compile Include="InputRepositories\InputRepositoryFactory.cs" />
     <Compile Include="InputRepositories\VersionRepository.cs" />
+    <Compile Include="LookupService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InputRepositories\OmItemSiteRepository.cs" />
     <Compile Include="InputRepositories\RootSiteRepository.cs" />

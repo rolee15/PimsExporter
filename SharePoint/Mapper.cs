@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Domain.Entities;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using ProductFields = SharePoint.Constants.Product.Fields;
-using RootFields = SharePoint.Constants.Root.Fields;
+using ProductFields = Domain.Constants.Product.Fields;
+using RootFields = Domain.Constants.Root.Fields;
 using User = Domain.Entities.User;
 
 namespace SharePoint
@@ -37,7 +36,7 @@ namespace SharePoint
 
         internal AllOmItem MapAllOmItemToEntity(ListItem item)
         {
-            return new AllOmItem
+            var allOmItem = new AllOmItem
             {
                 PortfolioUnit = Convert.ToString(item[RootFields.PORTFOLIOUNIT]),
                 OfferingName = Convert.ToString(item[RootFields.OFFERING_NAME]),
@@ -54,6 +53,26 @@ namespace SharePoint
                 OlmPhaseEnd = Convert.ToString(item[RootFields.PLM_PHASE_PLANNED]),
                 OmItemNumber = Convert.ToInt32(item[RootFields.PRODUCTNUMBER])
             };
+
+            return allOmItem;
+        }
+        
+        public Lookup MapLookupToEntity(ListItem item)
+        {
+            var lookup = new Lookup();
+
+            lookup.ChoiceList = Convert.ToString(item[RootFields.CHOICE_LIST]);
+            lookup.Title = Convert.ToString(item[RootFields.TITLE]);
+            lookup.MainChoice = Convert.ToString(item[RootFields.MAIN_CHOICE]);
+            lookup.MainChoiceValue = Convert.ToString(item[RootFields.MAIN_CHOICE_VALUE]);
+            lookup.SecondaryChoice = Convert.ToString(item[RootFields.SECONDARY_CHOICE]);
+            lookup.SecondaryChoiceValue = Convert.ToString(item[RootFields.SECONDARY_CHOICE_VALUE]);
+            lookup.ValidFrom = Convert.ToDateTime(item[RootFields.VALID_FROM]);
+            lookup.ValidTo = Convert.ToDateTime(item[RootFields.VALID_TO]);
+            lookup.IsDefault = Convert.ToBoolean(item[RootFields.IS_DEFAULT]);
+            lookup.Value = Convert.ToString(item[RootFields.VALUE]);
+
+            return lookup;
         }
 
         internal VersionTeam MapVersionTeamsToEntity(ListItem item)
@@ -327,36 +346,13 @@ namespace SharePoint
             return document;
         }
 
-        internal RelatedOMItem MapRelatedOMItemsToEntity(ListItem item)
+        internal RelatedOmItem MapRelatedOmItemsToEntity(ListItem item)
         {
-            var relatedOMItem = new RelatedOMItem();
-            relatedOMItem.LinkType = Convert.ToString(item[ProductFields.LINKTYPE]);
-            relatedOMItem.ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]);
-            relatedOMItem.PimsLink = MapToUrl(item[ProductFields.PIMSLINK]);
-            return relatedOMItem;
-        }
-
-        internal CoSignatureHeader JoinCoSignatures(CoSignatureHeader coSignature,
-            CoSignatureHeader coSignatureWorkflow)
-        {
-            var header = new CoSignatureHeader();
-
-            header.CoSignatureId = coSignature.CoSignatureId;
-            header.Topic = coSignature.Topic;
-            header.Requestor = coSignature.Requestor;
-            header.PortfolioUnit = coSignature.PortfolioUnit;
-            header.OmItemVersion = coSignature.OmItemVersion;
-            header.OfferingCluster = coSignature.OfferingCluster;
-            header.ConfidentialityClass = coSignature.ConfidentialityClass;
-            header.OlmPhase = coSignature.OlmPhase;
-            header.OlmMilestone = coSignature.OlmMilestone;
-            header.CoSignatureDate = coSignature.CoSignatureDate;
-            header.CoSignatureDueDate = coSignature.CoSignatureDueDate;
-            header.Status = coSignature.Status;
-            header.Result = coSignature.Result;
-            header.Remark = coSignature.Remark;
-
-            return header;
+            var relatedOmItem = new RelatedOmItem();
+            relatedOmItem.LinkType = Convert.ToString(item[ProductFields.LINKTYPE]);
+            relatedOmItem.ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]);
+            relatedOmItem.PimsLink = MapToUrl(item[ProductFields.PIMSLINK]);
+            return relatedOmItem;
         }
 
         private User MapToUser(object input)
@@ -375,19 +371,7 @@ namespace SharePoint
             return fieldUrlValue.Url;
         }
 
-        private User[] MapToUsers(object input)
-        {
-            if (!(input is FieldUserValue[] fieldUserValues))
-                return null;
-            if (fieldUserValues.Length == 0)
-                return null;
-            List<User> users = new List<User>();
-            foreach (var u in fieldUserValues)
-                users.Add(new User(u.LookupValue, u.Email));
-            return users.ToArray();
-        }
-
-        private double? ConvertNullableDouble(object value)
+        private static double? ConvertNullableDouble(object value)
         {
             double? result = null;
             if (value != null) result = Convert.ToDouble(value, CultureInfo.InvariantCulture);

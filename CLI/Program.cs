@@ -6,7 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PimsExporter;
+using PimsExporter.Services;
 using PimsExporter.Services.InputRepositories;
+using Services;
 using Services.InputRepositories;
 
 namespace CLI
@@ -74,6 +76,7 @@ namespace CLI
                     services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)),
                         o => o.BindNonPublicProperties = true);
 
+                    services.AddSingleton<ILookupService, LookupService>();
                     services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();
                     services.AddSingleton<IApplication, Exporter>();

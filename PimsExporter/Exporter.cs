@@ -9,6 +9,7 @@ using CSV;
 using Domain.Entities;
 using Microsoft.Extensions.Options;
 using PimsExporter.Services.InputRepositories;
+using PimsExporter.Services;
 
 namespace PimsExporter
 {
@@ -17,15 +18,19 @@ namespace PimsExporter
         private readonly IInputRepositoryFactory _inputRepositoryFactory;
         private readonly IOutputAdapter _outputAdapter;
         private readonly ExporterSettings _settings;
+        private readonly ILookupService _lookupService;
+        private Dictionary<string, string> _sapIds;
 
         public Exporter(
             IOptions<ExporterSettings> settings, 
             IInputRepositoryFactory inputRepositoryFactory,
-            IOutputAdapter outputAdapter)
+            IOutputAdapter outputAdapter,
+            ILookupService lookupService)
         {
             _settings = settings.Value;
             _inputRepositoryFactory = inputRepositoryFactory;
             _outputAdapter = outputAdapter;
+            _lookupService = lookupService;
         }
 
         public SecureString Password { get; set; }
@@ -36,9 +41,11 @@ namespace PimsExporter
             var omItemOlmPhases = new List<OlmPhase>();
             var omItemMilestones = new List<Milestone>();
             var omItemTeams = new List<Team>();
-            var omItemRelatedOMItems = new List<RelatedOMItem>();
+            var omItemRelatedOmItems = new List<RelatedOmItem>();
             var omItemDocuments = new List<OmItemDocument>();
+            
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
+            {
                 try
                 {
                     var url = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}");
@@ -46,9 +53,13 @@ namespace PimsExporter
                     var credentials = new NetworkCredential(_settings.UserName, Password);
                     var siteRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(siteUri, credentials);
                     Console.WriteLine($"Export Om Item: {url}");
-                    
+
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = omItemNumber;
+                    header.OfferingClusterSapId = SafeGetSapId(header.OfferingCluster);
+                    header.OfferingModuleSapId = SafeGetSapId(header.OfferingModule);
+                    header.OfferingNameSapId = SafeGetSapId(header.OfferingName);
+                    header.PortfolioUnitSapId = SafeGetSapId(header.PortfolioUnit);
                     omItemHeaders.Add(header);
 
                     var olmPhases = siteRepository.GetOlmPhase().ToList();
@@ -62,29 +73,36 @@ namespace PimsExporter
                     var teams = siteRepository.GetTeams().ToList();
                     teams.ForEach(o => o.OmItemNumber = omItemNumber);
                     omItemTeams.AddRange(teams);
-                    
+
                     var document = siteRepository.GetDocuments().ToList();
                     document.ForEach(o => o.OmItemNumber = omItemNumber);
                     omItemDocuments.AddRange(document);
 
 
-                    var relatedOMItem = siteRepository.GetRelatedOMItems().ToList();
-                    relatedOMItem.ForEach(o => o.OmItemNumber = omItemNumber);
-                    omItemRelatedOMItems.AddRange(relatedOMItem);
+                    var relatedOmItem = siteRepository.GetRelatedOmItems().ToList();
+                    relatedOmItem.ForEach(o => o.OmItemNumber = omItemNumber);
+                    omItemRelatedOmItems.AddRange(relatedOmItem);
 
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
+            }
 
             _outputAdapter.SaveOmItemHeaders(omItemHeaders, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveOlmPhases(omItemOlmPhases, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveMilestones(omItemMilestones, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveTeams(omItemTeams, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveDocuments(omItemDocuments, omItemNumberFrom, omItemNumberTo);
-            _outputAdapter.SaveRelatedOMItems(omItemRelatedOMItems, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveRelatedOMItems(omItemRelatedOmItems, omItemNumberFrom, omItemNumberTo);
 
+        }
+
+        private string SafeGetSapId(string name)
+        {
+            var success = _sapIds.TryGetValue(name, out var value);
+            return success ? value : "";
         }
 
         public void ExportVersions(int omItemNumberFrom, int omItemNumberTo)
@@ -263,6 +281,8 @@ namespace PimsExporter
             var rootRepository = _inputRepositoryFactory.Create<IRootSiteRepository>(siteUri, credentials);
             var allOmItems = rootRepository.GetAllOmItems();
             var allVersions = rootRepository.GetAllVersions();
+            _sapIds = _lookupService.GetSapIds(rootRepository);
+            
             _outputAdapter.SaveAllOmItems(allOmItems.Where(item => omItemNumberFrom <= item.OmItemNumber && omItemNumberTo >= item.OmItemNumber), omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveAllVersions(allVersions.Where(item => omItemNumberFrom <= item.OmItemNumber && omItemNumberTo >= item.OmItemNumber), omItemNumberFrom, omItemNumberTo);
         }

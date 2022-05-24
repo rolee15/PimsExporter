@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class RelatedOMItem
+    public class RelatedOmItem
     {
         public int OmItemNumber { get; set; }
         public string LinkType { get; set; }

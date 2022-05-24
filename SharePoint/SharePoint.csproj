@@ -222,7 +222,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Interfaces\ISharePointAdapter.cs" />
     <Compile Include="Interfaces\ISharePointMapper.cs" />
     <Compile Include="Mapper.cs" />

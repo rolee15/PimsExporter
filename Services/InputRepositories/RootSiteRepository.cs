@@ -23,5 +23,10 @@ namespace Services.InputRepositories
         {
             return _spAdapter.AllOmItems();
         }
+
+        public IEnumerable<Lookup> GetLookups()
+        {
+            return _spAdapter.Lookups();
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace CSV
         private const string MilestonesFileName = "OMI_Milestones";
         private const string TeamsFileName = "OMI_Teams";
         private const string DocumentsFileName = "OMI_Documents";
-        private const string RelatedOMItemsFileName = "OMI_RelatedOMItems";
+        private const string RelatedOmItemsFileName = "OMI_RelatedOMItems";
 
         private const string VersionHeadersFileName = "OMIV_Headers";
         private const string VersionBudgetsFileName = "OMIV_Budgets";
@@ -283,11 +283,11 @@ namespace CSV
             }
         }
         
-        public void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs, int omItemNumberFrom, int omItemNumberTo)
+        public void SaveRelatedOMItems(IEnumerable<RelatedOmItem> RelatedOMIs, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
             Directory.CreateDirectory(path);
-            path = Path.Combine(path, CreateFileName(RelatedOMItemsFileName, omItemNumberFrom, omItemNumberTo));
+            path = Path.Combine(path, CreateFileName(RelatedOmItemsFileName, omItemNumberFrom, omItemNumberTo));
 
             var resultStream = _relatedOMItemFormatter.FormatStream(RelatedOMIs);
 			using (var fileStream = File.Create(path))
@@ -332,7 +332,7 @@ namespace CSV
         void SaveVersionMilestones(IEnumerable<Milestone> omIVersionMilestones, int omItemNumberFrom, int omItemNumberTo);
         void SaveCoSignatureCoSigners(IEnumerable<CoSignatureCoSigner> coSignatureCoSigners, int omItemNumberFrom, int omItemNumberTo);
         void SaveCoSignatureQualities(IEnumerable<CoSignatureQuality> coSignatureQualities, int omItemNumberFrom, int omItemNumberTo);
-        void SaveRelatedOMItems(IEnumerable<RelatedOMItem> RelatedOMIs, int omItemNumberFrom, int omItemNumberTo);
+        void SaveRelatedOMItems(IEnumerable<RelatedOmItem> RelatedOMIs, int omItemNumberFrom, int omItemNumberTo);
         void SaveDocuments(IEnumerable<OmItemDocument> documents, int omItemNumberFrom, int omItemNumberTo);
         void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments, int omItemNumberFrom, int omItemNumberTo);
     }

@@ -1,8 +1,18 @@
-﻿namespace SharePoint
+﻿using System.Collections.Generic;
+
+namespace Domain
 {
     public static class Constants
     {
-        public const int DEFAULT_QUERY_ROW_LIMIT = 100;
+        public const int DefaultQueryRowLimit = 100;
+
+        public static readonly List<string> SAP_RELATED_ITEMS = new List<string>
+        {
+            "Offering Cluster",
+            "Offering Module",
+            "Offering Name",
+            "Product Unit"
+        };
 
         public static class Root
         {
@@ -18,6 +28,12 @@
                 {
                     public static readonly string TITLE = "All Versions";
                     public static readonly string ROOT_FOLDER_NAME = "AllVersions";
+                }
+
+                public static class Lookups
+                {
+                    public static readonly string TITLE = "Lookups";
+                    public static readonly string ROOT_FOLDER_NAME = "Lookups";
                 }
             }
 
@@ -52,6 +68,21 @@
                 public static readonly string VERSION_NAME = "Version_x0020_Name";
                 public static readonly string VERSION_STATUS = "Version_x0020_Status";
                 public static readonly string VERSIONNUMBER = "VersionNumber";
+                public static readonly string TITLE = "Title";
+                public static readonly string CHOICE_LIST = "ChoiceList";
+                public static readonly string SORT_INDEX = "SortIndex";
+                public static readonly string VALID_FROM = "ValidFrom";
+                public static readonly string VALID_TO = "ValidTo";
+                public static readonly string IS_DEFAULT = "IsDefault";
+                public static readonly string MAIN_CHOICE = "MainChoice";
+                public static readonly string MAIN_CHOICE_VALUE = "MainChoiceValue";
+                public static readonly string SECONDARY_CHOICE = "SecondaryChoice";
+                public static readonly string SECONDARY_CHOICE_VALUE = "SecondaryValue";
+                public static readonly string VALUE = "Value";
+                public static readonly string MODIFIED = "Modified";
+                public static readonly string CREATED = "Created";
+                public static readonly string CREATED_BY = "CreatedBy";
+                public static readonly string MODIFIED_BY = "ModifiedBy";
             }
         }
 

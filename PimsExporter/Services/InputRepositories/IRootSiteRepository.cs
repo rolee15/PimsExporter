@@ -7,5 +7,6 @@ namespace PimsExporter.Services.InputRepositories
     {
         IEnumerable<AllOmItem> GetAllOmItems();
         IEnumerable<AllVersion> GetAllVersions();
+        IEnumerable<Lookup> GetLookups();
     }
 }

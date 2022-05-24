@@ -41,11 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Entities\AllOmItem.cs" />
     <Compile Include="Entities\AllVersion.cs" />
     <Compile Include="Entities\CoSignatureCoSigner.cs" />
     <Compile Include="Entities\CoSignatureHeader.cs" />
     <Compile Include="Entities\CoSignatureQuality.cs" />
+    <Compile Include="Entities\Lookup.cs" />
     <Compile Include="Entities\RelatedOmItem.cs" />
     <Compile Include="Entities\CoSignatureDocument.cs" />
     <Compile Include="Entities\DocumentBase.cs" />
