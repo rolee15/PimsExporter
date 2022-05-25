@@ -17,6 +17,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<CoSignatureHeader>("Requestor", r => r.Requestor),
                 new ColumnFormatter<CoSignatureHeader>("PortfolioUnit", r => r.PortfolioUnit),
                 new ColumnFormatter<CoSignatureHeader>("OmItemVersion", r => r.OmItemVersion),
+                new ColumnFormatter<CoSignatureHeader>("OfferingCluster", r => r.OfferingCluster),
                 new ColumnFormatter<CoSignatureHeader>("ConfidentialityClass", r => r.ConfidentialityClass),
                 new ColumnFormatter<CoSignatureHeader>("OlmPhase", r => r.OlmPhase),
                 new ColumnFormatter<CoSignatureHeader>("OlmMilestone", r => r.OlmMilestone),
@@ -28,8 +29,8 @@ namespace CSV.Formatters
                 new ColumnFormatter<CoSignatureHeader>("CoSignatureSubmittedDate", r => r.CoSignatureSubmittedDate),
                 new ColumnFormatter<CoSignatureHeader>("CoSignatureResultDate", r => r.CoSignatureResultDate),
                 new ColumnFormatter<CoSignatureHeader>("QualityIndex", r => r.QualityIndex),
-                new ColumnFormatter<CoSignatureHeader>("QualityIndexUpdated", r => r.QualityIndexUpdated),
-    };
+                new ColumnFormatter<CoSignatureHeader>("QualityIndexUpdated", r => r.QualityIndexUpdated)
+            };
         }
     }
 }

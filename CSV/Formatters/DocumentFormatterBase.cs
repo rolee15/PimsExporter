@@ -46,7 +46,7 @@ namespace CSV.Formatters
             writer.WriteLine(data);
         }
 
-        private string QuoteFields(string value)
+        private static string QuoteFields(string value)
         {
             if (value is null) return string.Empty;
             return value.Contains("\"") ? $"\"{value.Replace("\"", "\"\"")}\"" : $"\"{value}\"";
@@ -65,8 +65,7 @@ namespace CSV.Formatters
             public ColumnFormatter(string header, Func<TRow, string> getter)
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
-                if (getter is null) throw new ArgumentNullException(nameof(getter));
-                Formatter = getter;
+                Formatter = getter ?? throw new ArgumentNullException(nameof(getter));
             }
 
             public ColumnFormatter(string header, Func<TRow, bool> getter)
@@ -139,11 +138,11 @@ namespace CSV.Formatters
                 Formatter = r =>
                 {
                     var collection = getter(r);
-                    StringBuilder sb = new StringBuilder();
+                    var sb = new StringBuilder();
                     foreach (var item in collection)
                         sb.Append(item + "; ");
 
-                    if(sb.Length>0) sb.Length -= 1;
+                    if (sb.Length > 0) sb.Length -= 1;
                     return sb.ToString();
                 };
             }

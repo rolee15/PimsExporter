@@ -16,7 +16,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<Milestone>("DatePlan", r => r.DatePlan),
                 new ColumnFormatter<Milestone>("DateActual", r => r.DateActual),
                 new ColumnFormatter<Milestone>("MilestoneType", r => r.MilestoneType),
-                new ColumnFormatter<Milestone>("OLMPhase", r => r.OLMPhase),
+                new ColumnFormatter<Milestone>("OLMPhase", r => r.OlmPhase),
                 new ColumnFormatter<Milestone>("Default", r => r.Default),
                 new ColumnFormatter<Milestone>("ShortDescription", r => r.ShortDescription),
                 new ColumnFormatter<Milestone>("LongDescription", r => r.LongDescription)

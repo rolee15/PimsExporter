@@ -1,10 +1,5 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
+using Domain.Entities;
 
 namespace CSV.Formatters
 {
@@ -17,7 +12,8 @@ namespace CSV.Formatters
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.OmItemNumber), r => r.OmItemNumber),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.VersionNumber), r => r.VersionNumber),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Name), r => r.Name),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.ConfidentialityClass), r => r.ConfidentialityClass),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.ConfidentialityClass),
+                    r => r.ConfidentialityClass),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentCategory), r => r.DocumentCategory),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentTagging), r => r.DocumentTagging),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentOwner), r => r.DocumentOwner),

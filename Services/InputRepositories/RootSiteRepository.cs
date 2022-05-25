@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Domain;
 using Domain.Entities;
 using PimsExporter.Services.InputRepositories;
 using SharePoint.Interfaces;
@@ -24,9 +26,13 @@ namespace Services.InputRepositories
             return _spAdapter.AllOmItems();
         }
 
-        public IEnumerable<Lookup> GetLookups()
+        public Dictionary<string, string> GetSapIds()
         {
-            return _spAdapter.Lookups();
+            var lookups = _spAdapter.Lookups();
+
+            return lookups.Where(x => Constants.SAP_RELATED_ITEMS.Contains(x.ChoiceList))
+                .GroupBy(x => x.Title).Select(g => g.First())
+                .ToDictionary(x => x.Title, x => x.Value);
         }
     }
 }

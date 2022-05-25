@@ -1,14 +1,9 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
+using Domain.Entities;
 
 namespace CSV.Formatters
 {
-    class CoSignatureQualityFormatter : DocumentFormatterBase<CoSignatureQuality>
+    internal class CoSignatureQualityFormatter : DocumentFormatterBase<CoSignatureQuality>
     {
         public CoSignatureQualityFormatter() : base(CultureInfo.CurrentCulture.TextInfo.ListSeparator)
         {
@@ -23,7 +18,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<CoSignatureQuality>("ResultStatus", r => r.ResultStatus),
                 new ColumnFormatter<CoSignatureQuality>("Result", r => r.Result),
                 new ColumnFormatter<CoSignatureQuality>("IsOptOut", r => r.IsOptOut),
-                new ColumnFormatter<CoSignatureQuality>("OptOutRemark", r => r.OptOutRemark),
+                new ColumnFormatter<CoSignatureQuality>("OptOutRemark", r => r.OptOutRemark)
             };
         }
     }

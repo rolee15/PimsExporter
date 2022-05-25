@@ -9,7 +9,7 @@ namespace Domain.Entities
         public DateTime? DatePlan { get; set; }
         public DateTime? DateActual { get; set; }
         public string MilestoneType { get; set; }
-        public string OLMPhase { get; set; }
+        public string OlmPhase { get; set; }
         public string Default { get; set; }
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }

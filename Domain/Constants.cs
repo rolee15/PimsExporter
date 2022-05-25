@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+// ReSharper disable InconsistentNaming
+
 namespace Domain
 {
     public static class Constants
@@ -20,69 +22,69 @@ namespace Domain
             {
                 public static class AllProducts
                 {
-                    public static readonly string TITLE = "All Products";
-                    public static readonly string ROOT_FOLDER = "AllProducts";
+                    public const string TITLE = "All Products";
+                    public const string ROOT_FOLDER = "AllProducts";
                 }
 
                 public static class AllVersions
                 {
-                    public static readonly string TITLE = "All Versions";
-                    public static readonly string ROOT_FOLDER_NAME = "AllVersions";
+                    public const string TITLE = "All Versions";
+                    public const string ROOT_FOLDER_NAME = "AllVersions";
                 }
 
                 public static class Lookups
                 {
-                    public static readonly string TITLE = "Lookups";
-                    public static readonly string ROOT_FOLDER_NAME = "Lookups";
+                    public const string TITLE = "Lookups";
+                    public const string ROOT_FOLDER_NAME = "Lookups";
                 }
             }
 
             public static class Fields
             {
-                public static readonly string ACTIVE_STATUS = "Active_x0020_Status";
-                public static readonly string BSS_RELEASE_ASSIGNMENT = "BSS_x0020_Release_x0020_Assignme";
-                public static readonly string CLASSIFICATION = "Classification";
-                public static readonly string DD_RELEASE_ASSIGNMENT = "DD_x0020_Release_x0020_Assignmen";
-                public static readonly string FULL_VERSION_ID = "Full_x0020_Version_x0020_ID";
-                public static readonly string LONG_DESCRIPTION = "Long_x0020_Description";
-                public static readonly string OFFERING_TYPE = "OMItemOfferingType";
-                public static readonly string OFFERING_MODULE = "Offering_x0020_Module";
-                public static readonly string OFFERING_MODULE_ID = "Offering_x0020_Module_x0020_ID";
-                public static readonly string OFFERING_NAME = "Offering_x0020_Name";
-                public static readonly string OLM_PHASE_VERSION = "OLM_x0020_Phase_x0020_Version";
-                public static readonly string OSS_RELEASE_ASSIGNMENT = "OSS_x0020_Release_x0020_Assignme";
-                public static readonly string OMITEMID = "Product_x0020_ID";
-                public static readonly string OMITEMVERSION_COMMENT = "OMItemVersionComment";
-                public static readonly string PIMSIDOMITEM = "PIMSIDOMItem";
-                public static readonly string PIMSIDALLVERSION = "PIMSIDAllVersion";
-                public static readonly string PORTFOLIOUNIT = "Product_x0020_Unit";
-                public static readonly string PRODUCT_ALIAS = "Product_x0020_Alias";
-                public static readonly string PRODUCT_ID = "Product_x0020_ID";
-                public static readonly string PRODUCT_MANAGER = "Product_x0020_Manager";
-                public static readonly string PRODUCT_NAME = "Product_x0020_Name";
-                public static readonly string PRODUCTNUMBER = "ProductNumber";
-                public static readonly string PLM_DATE = "PLM_x0020_Date";
-                public static readonly string PLM_PHASE = "PLM_x0020_Phase";
-                public static readonly string PLM_PHASE_PLANNED = "PLM_x0020_phase_x0020_planned_x0";
-                public static readonly string SHORT_DESCRIPTION = "Short_x0020_Description";
-                public static readonly string VERSION_NAME = "Version_x0020_Name";
-                public static readonly string VERSION_STATUS = "Version_x0020_Status";
-                public static readonly string VERSIONNUMBER = "VersionNumber";
-                public static readonly string TITLE = "Title";
-                public static readonly string CHOICE_LIST = "ChoiceList";
-                public static readonly string SORT_INDEX = "SortIndex";
-                public static readonly string VALID_FROM = "ValidFrom";
-                public static readonly string VALID_TO = "ValidTo";
-                public static readonly string IS_DEFAULT = "IsDefault";
-                public static readonly string MAIN_CHOICE = "MainChoice";
-                public static readonly string MAIN_CHOICE_VALUE = "MainChoiceValue";
-                public static readonly string SECONDARY_CHOICE = "SecondaryChoice";
-                public static readonly string SECONDARY_CHOICE_VALUE = "SecondaryValue";
-                public static readonly string VALUE = "Value";
-                public static readonly string MODIFIED = "Modified";
-                public static readonly string CREATED = "Created";
-                public static readonly string CREATED_BY = "CreatedBy";
-                public static readonly string MODIFIED_BY = "ModifiedBy";
+                public const string ACTIVE_STATUS = "Active_x0020_Status";
+                public const string BSS_RELEASE_ASSIGNMENT = "BSS_x0020_Release_x0020_Assignme";
+                public const string CLASSIFICATION = "Classification";
+                public const string DD_RELEASE_ASSIGNMENT = "DD_x0020_Release_x0020_Assignmen";
+                public const string FULL_VERSION_ID = "Full_x0020_Version_x0020_ID";
+                public const string LONG_DESCRIPTION = "Long_x0020_Description";
+                public const string OFFERING_TYPE = "OMItemOfferingType";
+                public const string OFFERING_MODULE = "Offering_x0020_Module";
+                public const string OFFERING_MODULE_ID = "Offering_x0020_Module_x0020_ID";
+                public const string OFFERING_NAME = "Offering_x0020_Name";
+                public const string OLM_PHASE_VERSION = "OLM_x0020_Phase_x0020_Version";
+                public const string OSS_RELEASE_ASSIGNMENT = "OSS_x0020_Release_x0020_Assignme";
+                public const string OMITEMID = "Product_x0020_ID";
+                public const string OMITEMVERSION_COMMENT = "OMItemVersionComment";
+                public const string PIMSIDOMITEM = "PIMSIDOMItem";
+                public const string PIMSIDALLVERSION = "PIMSIDAllVersion";
+                public const string PORTFOLIOUNIT = "Product_x0020_Unit";
+                public const string PRODUCT_ALIAS = "Product_x0020_Alias";
+                public const string PRODUCT_ID = "Product_x0020_ID";
+                public const string PRODUCT_MANAGER = "Product_x0020_Manager";
+                public const string PRODUCT_NAME = "Product_x0020_Name";
+                public const string PRODUCTNUMBER = "ProductNumber";
+                public const string PLM_DATE = "PLM_x0020_Date";
+                public const string PLM_PHASE = "PLM_x0020_Phase";
+                public const string PLM_PHASE_PLANNED = "PLM_x0020_phase_x0020_planned_x0";
+                public const string SHORT_DESCRIPTION = "Short_x0020_Description";
+                public const string VERSION_NAME = "Version_x0020_Name";
+                public const string VERSION_STATUS = "Version_x0020_Status";
+                public const string VERSIONNUMBER = "VersionNumber";
+                public const string TITLE = "Title";
+                public const string CHOICE_LIST = "ChoiceList";
+                public const string SORT_INDEX = "SortIndex";
+                public const string VALID_FROM = "ValidFrom";
+                public const string VALID_TO = "ValidTo";
+                public const string IS_DEFAULT = "IsDefault";
+                public const string MAIN_CHOICE = "MainChoice";
+                public const string MAIN_CHOICE_VALUE = "MainChoiceValue";
+                public const string SECONDARY_CHOICE = "SecondaryChoice";
+                public const string SECONDARY_CHOICE_VALUE = "SecondaryValue";
+                public const string VALUE = "Value";
+                public const string MODIFIED = "Modified";
+                public const string CREATED = "Created";
+                public const string CREATED_BY = "CreatedBy";
+                public const string MODIFIED_BY = "ModifiedBy";
             }
         }
 
@@ -92,205 +94,204 @@ namespace Domain
             {
                 public static class ProductRecord
                 {
-                    public static readonly string TITLE = "Product Record";
-                    public static readonly string ROOT_FOLDER_NAME = "ProductRecord";
+                    public const string TITLE = "Product Record";
+                    public const string ROOT_FOLDER_NAME = "ProductRecord";
                 }
 
                 public static class OlmPhases
                 {
-                    public static readonly string TITLE = "PLM Phase";
-                    public static readonly string ROOT_FOLDER_NAME = "PLMPhase";
+                    public const string TITLE = "PLM Phase";
+                    public const string ROOT_FOLDER_NAME = "PLMPhase";
                 }
 
                 public static class Milestones
                 {
-                    public static readonly string TITLE = "Milestones";
-                    public static readonly string ROOT_FOLDER_NAME = "Milestones";
+                    public const string TITLE = "Milestones";
+                    public const string ROOT_FOLDER_NAME = "Milestones";
                 }
 
                 public static class Versions
                 {
-                    public static readonly string TITLE = "Versions";
-                    public static readonly string ROOT_FOLDER_NAME = "Versions";
+                    public const string TITLE = "Versions";
+                    public const string ROOT_FOLDER_NAME = "Versions";
                 }
 
 
                 public static class Team
                 {
-                    public static readonly string TITLE = "Team";
-                    public static readonly string ROOT_FOLDER_NAME = "Team";
+                    public const string TITLE = "Team";
+                    public const string ROOT_FOLDER_NAME = "Team";
                 }
 
                 public static class Documents
                 {
-                    public static readonly string TITLE = "Product Documents";
-                    public static readonly string ROOT_FOLDER_NAME = "Documents";
+                    public const string TITLE = "Product Documents";
+                    public const string ROOT_FOLDER_NAME = "Documents";
                 }
-              
+
                 public static class RelatedOMItems
                 {
-                    public static readonly string TITLE = "Related Products";
-                    public static readonly string ROOT_FOLDER_NAME = "RelatedProducts";
+                    public const string TITLE = "Related Products";
+                    public const string ROOT_FOLDER_NAME = "RelatedProducts";
                 }
             }
 
             public static class Fields
             {
-                public static readonly string ACTIVE_STATUS = "Active_x0020_Status";
-                public static readonly string OMITEMVERSION_COMMENT = "OMItemVersionComment";
-                public static readonly string COMMENT = "Comment1";
-                public static readonly string CONFIDENTIALITY_CLASS = "Confidentiality_x0020_Class";
-                public static readonly string CURRENT_PHASE = "Current_x0020_Phase";
-                public static readonly string DATE_ACTUAL = "Date_x0020_Actual";
-                public static readonly string DATE_BASIC_PLAN = "Date_x0020_Basic_x0020_Plan";
-                public static readonly string DATE_PLAN = "Date_x0020_Plan";
-                public static readonly string DEFAULT = "Default";
-                public static readonly string LONG_DESCRIPTION = "Long_x0020_Description";
-                public static readonly string MILESTONE_NAME = "MST_Name";
-                public static readonly string MILESTONE_TYPE = "MST_Type";
-                public static readonly string OFFERING_CLUSTER = "Offering_x0020_Cluster";
-                public static readonly string OFFERING_MODULE = "Offering_x0020_Module";
-                public static readonly string OFFERING_MODULE_ID = "Offering_x0020_Module_x0020_ID";
-                public static readonly string OFFERING_NAME = "Offering_x0020_Name";
-                public static readonly string OFFERING_TYPE = "Classification";
-                public static readonly string PIMSIDOMITEM = "PIMSIDOMItem";
-                public static readonly string PLM_DATE = "PLM_x0020_Date";
-                public static readonly string PLM_PHASE = "PLM_x0020_Phase";
-                public static readonly string PLM_PHASE_PLANNED = "PLM_x0020_phase_x0020_planned_x0";
-                public static readonly string PRODUCT_ALIAS = "Product_x0020_Alias";
-                public static readonly string PRODUCT_ID = "Product_x0020_ID";
-                public static readonly string PRODUCT_MANAGER = "Product_x0020_Manager";
-                public static readonly string PRODUCT_NAME = "Product_x0020_Name";
-                public static readonly string PRODUCT_UNIT = "Product_x0020_Unit";
-                public static readonly string SHORT_DESCRIPTION = "Short_x0020_Description";
-                public static readonly string PHASE_START_APPROVAL_DATE = "Phase_x0020_Start_x0020_Approval";
-                public static readonly string PHASE_START_DATE = "Phase_x0020_Start_x0020_Date";
-                public static readonly string PHASE_PLANNED_END_DATE = "Phase_x0020_Planned_x0020_End_x0";
-                public static readonly string PHASE_DURATION = "Phase_x0020_Duration";
-                public static readonly string ARTICLE_NUMBER = "Article_x0020_Number";
-                public static readonly string BSS_BUDGET_APPROVED = "BSS_x0020_Budget_x0020_Approved";
-                public static readonly string BSS_BUDGET_CAPEX_PLAN = "BSS_x0020_Budget_x0020_Capex_x00";
-                public static readonly string BSS_BUDGET_OPEX_PLAN = "BSS_x0020_Budget_x0020_Opex_x002";
-                public static readonly string BSS_RELEASE_ASSIGNMENT = "BSS_x0020_Release_x0020_Assignme";
-                public static readonly string CLASSIFICATION = "Classification";
-                public static readonly string CREATED = "Created";
-                public static readonly string DD_RELEASE_ASSIGNMENT = "DD_x0020_Release_x0020_Assignmen";
-                public static readonly string F_E_BUDGET_APPROVED = "F_x0026_E_x0020_Budget_x0020_App";
-                public static readonly string F_E_BUDGET_CAPEX_PLAN = "F_x0026_E_x0020_Budget_x0020_Cap";
-                public static readonly string F_E_BUDGET_OPEX_PLAN = "F_x0026_E_x0020_Budget_x0020_Ope";
-                public static readonly string FULL_VERSION_ID = "Full_x0020_Version_x0020_ID";
-                public static readonly string MODIFIED = "Modified";
-                public static readonly string ONBOARDING_DUE_DATE = "Onboarding_x0020_Due_x0020_Date";
-                public static readonly string OSS_BUDGET_APPROVED = "OSS_x0020_Budget_x0020_Approved";
-                public static readonly string OSS_BUDGET_CAPEX_PLAN = "OSS_x0020_Budget_x0020_Capex_x00";
-                public static readonly string OSS_BUDGET_OPEX_PLAN = "OSS_x0020_Budget_x0020_Opex_x002";
-                public static readonly string OSS_RELEASE_ASSIGNMENT = "OSS_x0020_Release_x0020_Assignme";
-                public static readonly string REQUESTED_ONBOARDING = "Planned_x0020_Onboarding";
-                public static readonly string VERSION_ALIAS = "Version_x0020_Alias";
-                public static readonly string VERSION_ID = "Version_x0020_ID";
-                public static readonly string VERSION_MANAGER = "Version_x0020_Manager";
-                public static readonly string VERSION_NAME = "Version_x0020_Name";
-                public static readonly string VERSION_STATUS = "Version_x0020_Status";
-                public static readonly string CREATED_BY = "Author";
-                public static readonly string MODIFIED_BY = "Editor";
-                public static readonly string OLM_PHASE_VERSION = "OLM_x0020_Phase_x0020_Version";
-                public static readonly string TSIPORTFOLIOVERSION = "TSIPortfolioVersion";
-                public static readonly string CUSTOMERVALUESALESBENEFITLONG = "CustomerValueSalesBenefitLong";
-                public static readonly string CUSTOMERVALUESALESBENEFITSHORT = "CustomerValueSalesBenefitShort";
-                public static readonly string DTAGINNOVATIONBMSTRUCTURE = "DTAGInnovationBMStructure";
-                public static readonly string DTAGINNOVATIONCATEGORY = "DTAGInnovationCategory";
-                public static readonly string FOCUSOFMEASURE = "FocusofMeasure";
-                public static readonly string INIPF = "IniPF";
-                public static readonly string INNOVATIONTOPIC = "InnovationTopic";
-                public static readonly string INPIB = "InPIB";
-                public static readonly string ID = "ID";
-                public static readonly string INTERNATIONALRELEVANCE = "InternationalRelevance";
-                public static readonly string PRIMARYFUNDING = "PrimaryFunding";
-                public static readonly string RISKMITIGATION = "RiskMitigation";
-                public static readonly string SECONDARYFUNDING = "SecondaryFunding";
-                public static readonly string SUPPORTEDMARKETINGMEASURE = "SupportedMarketingMeasure";
-                public static readonly string TARGETAUDIENCE = "TargetAudience";
-                public static readonly string MEASUREPRIORITY = "MeasurePriority";
-                public static readonly string MEASURESTATUS = "MeasureStatus";
-                public static readonly string URLLINK = "UrlLink";
-                public static readonly string QIDXBASIC = "QIdxBasic";
-                public static readonly string QIDXBUDGET = "QIdxBudget";
-                public static readonly string QIDXMILESTONES = "QIdxMilestones";
-                public static readonly string QIDXMEASURES = "QIdxMeasures";
-                public static readonly string QIDXOVERALL = "QIdxOverall";
-                public static readonly string LASTIDXUPDATE = "LastIdxUpdate";
-                public static readonly string VERSION_PIMSID = "PIMSIDAllVersion";
-                public static readonly string USEDINTSIFORCE = "AllowUsageInTSIForce";
-                public static readonly string YEAR = "Year";
-                public static readonly string DELTAREVENUEPLAN = "Delta_x0020_Revenue_x0020_Plan";
-                public static readonly string DELTAOEPLAN = "Delta_x0020_OE_x0020_Plan";
-                public static readonly string BSSBUDGETOPEXPLAN = "BSS_x0020_Budget_x0020_Opex_x002";
-                public static readonly string BSSBUDGETCAPEXPLAN = "BSS_x0020_Budget_x0020_Capex_x00";
-                public static readonly string BSSBUDGETOPEXAPPROVED = "BSS_x0020_Budget_x0020_Opex_x0020";
-                public static readonly string BSSBUDGETCAPEXAPPROVED = "BSS_x0020_Budget_x0020_Capex_x000";
-                public static readonly string OSSBUDGETOPEXPLAN = "OSS_x0020_Budget_x0020_Opex_x002";
-                public static readonly string OSSBUDGETCAPEXPLAN = "OSS_x0020_Budget_x0020_Capex_x00";
-                public static readonly string OSSBUDGETOPEXAPPROVED = "OSS_x0020_Budget_x0020_Opex_x0020";
-                public static readonly string OSSBUDGETCAPEXAPPROVED = "OSS_x0020_Budget_x0020_Capex_x000";
-                public static readonly string OTHERBUDGETOPEXPLAN = "Other_x0020_Budget_x0020_Opex_x0";
-                public static readonly string OTHERBUDGETCAPEXPLAN = "Other_x0020_Budget_x0020_Capex_x";
-                public static readonly string OTHERBUDGETOPEXAPPROVED = "Other_x0020_Budget_x0020_Opex_x00";
-                public static readonly string OTHERBUDGETCAPEXAPPROVED = "Other_x0020_Budget_x0020_Capex_x0";
-                public static readonly string RNDBUDGETOPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Ope";
-                public static readonly string RNDBUDGETCAPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Cap";
-                public static readonly string RNDBUDGETOPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Ope0";
-                public static readonly string RNDBUDGETCAPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Cap0";
-                public static readonly string SIGNATURE_NAME = "SignatureName";
-                public static readonly string OM_ITEM_VERSION = "OM_x0020_Item_x0020_Version";
-                public static readonly string REQUESTOR = "Requestor";
-                public static readonly string COSIGN_DATE = "Co_x0020_Sign_x0020_Date";
-                public static readonly string COSIGN_DUE_DATE = "Co_x0020_Sign_x0020_Due_x0020_Da";
-                public static readonly string OLM_PHASE = "OLM_x0020_Phase";
-                public static readonly string OLM_MILESTONE = "OLM_x0020_Milestone";
-                public static readonly string COSIGN_STATUS = "Co_x0020_Sign_x0020_Status";
-                public static readonly string COSIGNER_LIST = "Co_x0020_Signer_x0020_List";
-                public static readonly string TOPIC = "Topic";
-                public static readonly string REMARK = "Remark";
-                public static readonly string COSIGN_SUBMITTED_DATE = "Co_x0020_Sign_x0020_Submitted_x0";
-                public static readonly string COSIGN_RESULT_DATE = "Co_x0020_Sign_x0020_Result_x0020";
-                public static readonly string COSIGNATURE_RESULT = "Co_x0020_Signature_x0020_Result";
-                public static readonly string IS_SUBMITTED = "isSubmitted";
-                public static readonly string IS_CANCELLED = "isCancelled";
-                public static readonly string IS_DONE = "isDone";
-                public static readonly string COSIGN_VOTES = "CoSignVotes";
-                public static readonly string TOTAL_COSIGN_VOTES = "TotalCoSignVotes";
-                public static readonly string COSIGNATURE_ID = "CoSignatureID";
-                public static readonly string VALID_FROM = "Valid_x0020_From";
-                public static readonly string VALID_TO = "Valid_x0020_To";
-                public static readonly string TEAM_ROLE = "Team_x0020_Role";
-                public static readonly string ROLE_COMMENT = "RoleComment";
-                public static readonly string MEMBER1 = "Member1";
-                public static readonly string DEPUTY_OF = "Deputy_x0020_Of";
-                public static readonly string ISCOSIGNER = "Co_x002d_Signer";
-                public static readonly string ROLECOMMENT = "RoleComment";
-                public static readonly string DOCUMENT_CATEGORY = "Document_x0020_Category";
-                public static readonly string DOCUMENT_OWNER = "Document_x0020_Owner";
-                public static readonly string DOCUMENT_TAGGING = "Document_x0020_Tagging";
-                public static readonly string CHECKOUT_TO = "CheckoutUser";
-                public static readonly string NAME = "FileLeafRef";
-                public static readonly string EVENT = "Title";
-                public static readonly string DATE_AND_TIME_OF_CHANGE = "Date_x0020_and_x0020_time_x0020_";
-                public static readonly string USER = "Executor";
-                public static readonly string TYPE_OF_CHANGE = "TypeOfChange";
-                public static readonly string CHANGE_SECTION = "ChangeSection";
-                public static readonly string COSIGNERDATE = "Co_x0020_Signer_x0020_Date";
-                public static readonly string COSIGNERRESULT = "Co_x0020_Signer_x0020_Result";
-                public static readonly string COSIGNDEPUTY = "CoSignDeputy";
-                public static readonly string COSIGNEDBY = "CoSignedBy";
-                public static readonly string UPDATED = "Updated";
-                public static readonly string LINKTYPE = "Link_x0020_Typ";
-                public static readonly string PIMSLINK = "PimsLink";
-                public static readonly string COSIGNSUBMITTEDDATE = "Co_x0020_Sign_x0020_Submitted_x0";
-                public static readonly string COSIGNRESULTDATE = "Co_x0020_Sign_x0020_Result_x0020";
-                public static readonly string QIDX_COSIGN = "QIdxCoSign";
-                public static readonly string QIDX_COSIGN_UPDATED = "QIdxCoSignUpdated";
-                public static readonly string OVERSIONBUDGETCOMMENT = "OMIVersionBudgetComment";
-
+                public const string ACTIVE_STATUS = "Active_x0020_Status";
+                public const string OMITEMVERSION_COMMENT = "OMItemVersionComment";
+                public const string COMMENT = "Comment1";
+                public const string CONFIDENTIALITY_CLASS = "Confidentiality_x0020_Class";
+                public const string CURRENT_PHASE = "Current_x0020_Phase";
+                public const string DATE_ACTUAL = "Date_x0020_Actual";
+                public const string DATE_BASIC_PLAN = "Date_x0020_Basic_x0020_Plan";
+                public const string DATE_PLAN = "Date_x0020_Plan";
+                public const string DEFAULT = "Default";
+                public const string LONG_DESCRIPTION = "Long_x0020_Description";
+                public const string MILESTONE_NAME = "MST_Name";
+                public const string MILESTONE_TYPE = "MST_Type";
+                public const string OFFERING_CLUSTER = "Offering_x0020_Cluster";
+                public const string OFFERING_MODULE = "Offering_x0020_Module";
+                public const string OFFERING_MODULE_ID = "Offering_x0020_Module_x0020_ID";
+                public const string OFFERING_NAME = "Offering_x0020_Name";
+                public const string OFFERING_TYPE = "Classification";
+                public const string PIMSIDOMITEM = "PIMSIDOMItem";
+                public const string PLM_DATE = "PLM_x0020_Date";
+                public const string PLM_PHASE = "PLM_x0020_Phase";
+                public const string PLM_PHASE_PLANNED = "PLM_x0020_phase_x0020_planned_x0";
+                public const string PRODUCT_ALIAS = "Product_x0020_Alias";
+                public const string PRODUCT_ID = "Product_x0020_ID";
+                public const string PRODUCT_MANAGER = "Product_x0020_Manager";
+                public const string PRODUCT_NAME = "Product_x0020_Name";
+                public const string PRODUCT_UNIT = "Product_x0020_Unit";
+                public const string SHORT_DESCRIPTION = "Short_x0020_Description";
+                public const string PHASE_START_APPROVAL_DATE = "Phase_x0020_Start_x0020_Approval";
+                public const string PHASE_START_DATE = "Phase_x0020_Start_x0020_Date";
+                public const string PHASE_PLANNED_END_DATE = "Phase_x0020_Planned_x0020_End_x0";
+                public const string PHASE_DURATION = "Phase_x0020_Duration";
+                public const string ARTICLE_NUMBER = "Article_x0020_Number";
+                public const string BSS_BUDGET_APPROVED = "BSS_x0020_Budget_x0020_Approved";
+                public const string BSS_BUDGET_CAPEX_PLAN = "BSS_x0020_Budget_x0020_Capex_x00";
+                public const string BSS_BUDGET_OPEX_PLAN = "BSS_x0020_Budget_x0020_Opex_x002";
+                public const string BSS_RELEASE_ASSIGNMENT = "BSS_x0020_Release_x0020_Assignme";
+                public const string CLASSIFICATION = "Classification";
+                public const string CREATED = "Created";
+                public const string DD_RELEASE_ASSIGNMENT = "DD_x0020_Release_x0020_Assignmen";
+                public const string F_E_BUDGET_APPROVED = "F_x0026_E_x0020_Budget_x0020_App";
+                public const string F_E_BUDGET_CAPEX_PLAN = "F_x0026_E_x0020_Budget_x0020_Cap";
+                public const string F_E_BUDGET_OPEX_PLAN = "F_x0026_E_x0020_Budget_x0020_Ope";
+                public const string FULL_VERSION_ID = "Full_x0020_Version_x0020_ID";
+                public const string MODIFIED = "Modified";
+                public const string ONBOARDING_DUE_DATE = "Onboarding_x0020_Due_x0020_Date";
+                public const string OSS_BUDGET_APPROVED = "OSS_x0020_Budget_x0020_Approved";
+                public const string OSS_BUDGET_CAPEX_PLAN = "OSS_x0020_Budget_x0020_Capex_x00";
+                public const string OSS_BUDGET_OPEX_PLAN = "OSS_x0020_Budget_x0020_Opex_x002";
+                public const string OSS_RELEASE_ASSIGNMENT = "OSS_x0020_Release_x0020_Assignme";
+                public const string REQUESTED_ONBOARDING = "Planned_x0020_Onboarding";
+                public const string VERSION_ALIAS = "Version_x0020_Alias";
+                public const string VERSION_ID = "Version_x0020_ID";
+                public const string VERSION_MANAGER = "Version_x0020_Manager";
+                public const string VERSION_NAME = "Version_x0020_Name";
+                public const string VERSION_STATUS = "Version_x0020_Status";
+                public const string CREATED_BY = "Author";
+                public const string MODIFIED_BY = "Editor";
+                public const string OLM_PHASE_VERSION = "OLM_x0020_Phase_x0020_Version";
+                public const string TSIPORTFOLIOVERSION = "TSIPortfolioVersion";
+                public const string CUSTOMERVALUESALESBENEFITLONG = "CustomerValueSalesBenefitLong";
+                public const string CUSTOMERVALUESALESBENEFITSHORT = "CustomerValueSalesBenefitShort";
+                public const string DTAGINNOVATIONBMSTRUCTURE = "DTAGInnovationBMStructure";
+                public const string DTAGINNOVATIONCATEGORY = "DTAGInnovationCategory";
+                public const string FOCUSOFMEASURE = "FocusofMeasure";
+                public const string INIPF = "IniPF";
+                public const string INNOVATIONTOPIC = "InnovationTopic";
+                public const string INPIB = "InPIB";
+                public const string ID = "ID";
+                public const string INTERNATIONALRELEVANCE = "InternationalRelevance";
+                public const string PRIMARYFUNDING = "PrimaryFunding";
+                public const string RISKMITIGATION = "RiskMitigation";
+                public const string SECONDARYFUNDING = "SecondaryFunding";
+                public const string SUPPORTEDMARKETINGMEASURE = "SupportedMarketingMeasure";
+                public const string TARGETAUDIENCE = "TargetAudience";
+                public const string MEASUREPRIORITY = "MeasurePriority";
+                public const string MEASURESTATUS = "MeasureStatus";
+                public const string URLLINK = "UrlLink";
+                public const string QIDXBASIC = "QIdxBasic";
+                public const string QIDXBUDGET = "QIdxBudget";
+                public const string QIDXMILESTONES = "QIdxMilestones";
+                public const string QIDXMEASURES = "QIdxMeasures";
+                public const string QIDXOVERALL = "QIdxOverall";
+                public const string LASTIDXUPDATE = "LastIdxUpdate";
+                public const string VERSION_PIMSID = "PIMSIDAllVersion";
+                public const string USEDINTSIFORCE = "AllowUsageInTSIForce";
+                public const string YEAR = "Year";
+                public const string DELTAREVENUEPLAN = "Delta_x0020_Revenue_x0020_Plan";
+                public const string DELTAOEPLAN = "Delta_x0020_OE_x0020_Plan";
+                public const string BSSBUDGETOPEXPLAN = "BSS_x0020_Budget_x0020_Opex_x002";
+                public const string BSSBUDGETCAPEXPLAN = "BSS_x0020_Budget_x0020_Capex_x00";
+                public const string BSSBUDGETOPEXAPPROVED = "BSS_x0020_Budget_x0020_Opex_x0020";
+                public const string BSSBUDGETCAPEXAPPROVED = "BSS_x0020_Budget_x0020_Capex_x000";
+                public const string OSSBUDGETOPEXPLAN = "OSS_x0020_Budget_x0020_Opex_x002";
+                public const string OSSBUDGETCAPEXPLAN = "OSS_x0020_Budget_x0020_Capex_x00";
+                public const string OSSBUDGETOPEXAPPROVED = "OSS_x0020_Budget_x0020_Opex_x0020";
+                public const string OSSBUDGETCAPEXAPPROVED = "OSS_x0020_Budget_x0020_Capex_x000";
+                public const string OTHERBUDGETOPEXPLAN = "Other_x0020_Budget_x0020_Opex_x0";
+                public const string OTHERBUDGETCAPEXPLAN = "Other_x0020_Budget_x0020_Capex_x";
+                public const string OTHERBUDGETOPEXAPPROVED = "Other_x0020_Budget_x0020_Opex_x00";
+                public const string OTHERBUDGETCAPEXAPPROVED = "Other_x0020_Budget_x0020_Capex_x0";
+                public const string RNDBUDGETOPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Ope";
+                public const string RNDBUDGETCAPEXPLAN = "R_x0026_D_x0020_Budget_x0020_Cap";
+                public const string RNDBUDGETOPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Ope0";
+                public const string RNDBUDGETCAPEXAPPROVED = "R_x0026_D_x0020_Budget_x0020_Cap0";
+                public const string SIGNATURE_NAME = "SignatureName";
+                public const string OM_ITEM_VERSION = "OM_x0020_Item_x0020_Version";
+                public const string REQUESTOR = "Requestor";
+                public const string COSIGN_DATE = "Co_x0020_Sign_x0020_Date";
+                public const string COSIGN_DUE_DATE = "Co_x0020_Sign_x0020_Due_x0020_Da";
+                public const string OLM_PHASE = "OLM_x0020_Phase";
+                public const string OLM_MILESTONE = "OLM_x0020_Milestone";
+                public const string COSIGN_STATUS = "Co_x0020_Sign_x0020_Status";
+                public const string COSIGNER_LIST = "Co_x0020_Signer_x0020_List";
+                public const string TOPIC = "Topic";
+                public const string REMARK = "Remark";
+                public const string COSIGN_SUBMITTED_DATE = "Co_x0020_Sign_x0020_Submitted_x0";
+                public const string COSIGN_RESULT_DATE = "Co_x0020_Sign_x0020_Result_x0020";
+                public const string COSIGNATURE_RESULT = "Co_x0020_Signature_x0020_Result";
+                public const string IS_SUBMITTED = "isSubmitted";
+                public const string IS_CANCELLED = "isCancelled";
+                public const string IS_DONE = "isDone";
+                public const string COSIGN_VOTES = "CoSignVotes";
+                public const string TOTAL_COSIGN_VOTES = "TotalCoSignVotes";
+                public const string COSIGNATURE_ID = "CoSignatureID";
+                public const string VALID_FROM = "Valid_x0020_From";
+                public const string VALID_TO = "Valid_x0020_To";
+                public const string TEAM_ROLE = "Team_x0020_Role";
+                public const string ROLE_COMMENT = "RoleComment";
+                public const string MEMBER1 = "Member1";
+                public const string DEPUTY_OF = "Deputy_x0020_Of";
+                public const string ISCOSIGNER = "Co_x002d_Signer";
+                public const string ROLECOMMENT = "RoleComment";
+                public const string DOCUMENT_CATEGORY = "Document_x0020_Category";
+                public const string DOCUMENT_OWNER = "Document_x0020_Owner";
+                public const string DOCUMENT_TAGGING = "Document_x0020_Tagging";
+                public const string CHECKOUT_TO = "CheckoutUser";
+                public const string NAME = "FileLeafRef";
+                public const string EVENT = "Title";
+                public const string DATE_AND_TIME_OF_CHANGE = "Date_x0020_and_x0020_time_x0020_";
+                public const string USER = "Executor";
+                public const string TYPE_OF_CHANGE = "TypeOfChange";
+                public const string CHANGE_SECTION = "ChangeSection";
+                public const string COSIGNERDATE = "Co_x0020_Signer_x0020_Date";
+                public const string COSIGNERRESULT = "Co_x0020_Signer_x0020_Result";
+                public const string COSIGNDEPUTY = "CoSignDeputy";
+                public const string COSIGNEDBY = "CoSignedBy";
+                public const string UPDATED = "Updated";
+                public const string LINKTYPE = "Link_x0020_Typ";
+                public const string PIMSLINK = "PimsLink";
+                public const string COSIGNSUBMITTEDDATE = "Co_x0020_Sign_x0020_Submitted_x0";
+                public const string COSIGNRESULTDATE = "Co_x0020_Sign_x0020_Result_x0020";
+                public const string QIDX_COSIGN = "QIdxCoSign";
+                public const string QIDX_COSIGN_UPDATED = "QIdxCoSignUpdated";
+                public const string OVERSIONBUDGETCOMMENT = "OMIVersionBudgetComment";
             }
         }
 
@@ -306,55 +307,56 @@ namespace Domain
 
                 public static class VersionBudget
                 {
-                    public static readonly string TITLE = "Version Budgets";
-                    public static readonly string ROOT_FOLDER_NAME = "VersionBudgets";
+                    public const string TITLE = "Version Budgets";
+                    public const string ROOT_FOLDER_NAME = "VersionBudgets";
                 }
 
                 public static class VersionTeam
                 {
-                    public static readonly string TITLE = "Team";
-                    public static readonly string ROOT_FOLDER_NAME = "Team";
+                    public const string TITLE = "Team";
+                    public const string ROOT_FOLDER_NAME = "Team";
                 }
 
                 public static class CoSignaturesList
                 {
-                    public static readonly string TITLE = "Co Signatures List";
-                    public static readonly string ROOT_FOLDER_NAME = "CoSignaturesList";
+                    public const string TITLE = "Co Signatures List";
+                    public const string ROOT_FOLDER_NAME = "CoSignaturesList";
                 }
 
                 public static class CoSignatureWorkflow
                 {
-                    public static readonly string TITLE = "CoSignatureWorkflow";
-                    public static readonly string ROOT_FOLDER_NAME = "CoSignatureWorkflow";
+                    public const string TITLE = "CoSignatureWorkflow";
+                    public const string ROOT_FOLDER_NAME = "CoSignatureWorkflow";
                 }
 
                 public static class VersionDocument
                 {
-                    public static readonly string TITLE = "Version Documents";
-                    public static readonly string ROOT_FOLDER_NAME = "VersionDocuments";
+                    public const string TITLE = "Version Documents";
+                    public const string ROOT_FOLDER_NAME = "VersionDocuments";
                 }
 
                 public static class VersionChangeLog
                 {
-                    public static readonly string TITLE = "ChangeLog";
-                    public static readonly string ROOT_FOLDER_NAME = "ChangeLog";
+                    public const string TITLE = "ChangeLog";
+                    public const string ROOT_FOLDER_NAME = "ChangeLog";
                 }
 
                 public static class VersionMilestone
                 {
-                    public static readonly string TITLE = "Milestones";
-                    public static readonly string ROOT_FOLDER_NAME = "Milestones";
+                    public const string TITLE = "Milestones";
+                    public const string ROOT_FOLDER_NAME = "Milestones";
                 }
+
                 public static class CoSigners
                 {
-                    public static readonly string TITLE = "Co Signers List";
-                    public static readonly string ROOT_FOLDER_NAME = "CoSignersList";
+                    public const string TITLE = "Co Signers List";
+                    public const string ROOT_FOLDER_NAME = "CoSignersList";
                 }
 
                 public static class CoSignatureDocuments
                 {
-                    public static readonly string TITLE = "Co Signature Documents";
-                    public static readonly string ROOT_FOLDER_NAME = "CoSignatureDocuments";
+                    public const string TITLE = "Co Signature Documents";
+                    public const string ROOT_FOLDER_NAME = "CoSignatureDocuments";
                 }
             }
         }

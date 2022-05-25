@@ -6,9 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PimsExporter;
-using PimsExporter.Services;
 using PimsExporter.Services.InputRepositories;
-using Services;
 using Services.InputRepositories;
 
 namespace CLI
@@ -76,7 +74,6 @@ namespace CLI
                     services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)),
                         o => o.BindNonPublicProperties = true);
 
-                    services.AddSingleton<ILookupService, LookupService>();
                     services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();
                     services.AddSingleton<IApplication, Exporter>();
@@ -96,7 +93,7 @@ namespace CLI
                     if (pwd.Length > 0) pwd.RemoveAt(pwd.Length - 1);
                 }
                 else if (i.KeyChar != '\u0000'
-                ) // KeyChar == '\u0000' if the key pressed does not correspond to a printable character, e.g. F1, Pause-Break, etc
+                        ) // KeyChar == '\u0000' if the key pressed does not correspond to a printable character, e.g. F1, Pause-Break, etc
                 {
                     pwd.AppendChar(i.KeyChar);
                 }

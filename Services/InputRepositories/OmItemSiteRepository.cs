@@ -38,10 +38,12 @@ namespace Services.InputRepositories
         {
             return _spAdapter.Teams();
         }
+
         public IEnumerable<OmItemDocument> GetDocuments()
         {
             return _spAdapter.Documents();
         }
+
         public IEnumerable<RelatedOmItem> GetRelatedOmItems()
         {
             return _spAdapter.RelatedOmItems();

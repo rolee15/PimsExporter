@@ -48,7 +48,7 @@ namespace Services.InputRepositories
         {
             return _spAdapter.Milestones();
         }
-        
+
         public IEnumerable<CoSignatureCoSigner> GetCoSignatureCoSigners()
         {
             return _spAdapter.CoSignatureCoSigners();

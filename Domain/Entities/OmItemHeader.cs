@@ -27,6 +27,5 @@ namespace Domain.Entities
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
         public int OmItemNumber { get; set; }
-        
     }
 }
