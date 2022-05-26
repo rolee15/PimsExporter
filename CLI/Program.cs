@@ -93,7 +93,7 @@ namespace CLI
                     if (pwd.Length > 0) pwd.RemoveAt(pwd.Length - 1);
                 }
                 else if (i.KeyChar != '\u0000'
-                ) // KeyChar == '\u0000' if the key pressed does not correspond to a printable character, e.g. F1, Pause-Break, etc
+                        ) // KeyChar == '\u0000' if the key pressed does not correspond to a printable character, e.g. F1, Pause-Break, etc
                 {
                     pwd.AppendChar(i.KeyChar);
                 }

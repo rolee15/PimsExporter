@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using Domain.Entities;
+using Domain;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 
@@ -10,18 +9,18 @@ namespace SharePoint
 {
     public class SharePointAdapterBase
     {
-        protected readonly Mapper mapper;
-        protected ClientContext _ctx;
+        private protected readonly Mapper Mapper;
+        private ClientContext _ctx;
 
         protected SharePointAdapterBase(Uri sharepointSiteUrl, NetworkCredential credentials)
         {
             SharepointSiteUrl = sharepointSiteUrl;
             Credentials = credentials;
-            mapper = new Mapper();
+            Mapper = new Mapper();
         }
 
-        public Uri SharepointSiteUrl { get; }
-        public NetworkCredential Credentials { get; }
+        private Uri SharepointSiteUrl { get; }
+        private NetworkCredential Credentials { get; }
 
         protected IEnumerable<T> GetAllEntities<T>(string title, Func<ListItem, T> map)
         {
@@ -68,11 +67,11 @@ namespace SharePoint
             {
                 ViewXml = CAML.ViewQuery(
                     ViewScope.DefaultValue,
-                    rowLimit: Constants.DEFAULT_QUERY_ROW_LIMIT)
+                    rowLimit: Constants.DefaultQueryRowLimit)
             };
         }
 
-        protected ListItem GetFirstItem(List list)
+        private ListItem GetFirstItem(List list)
         {
             var query = new CamlQuery
             {

@@ -4,15 +4,15 @@
     {
         public int Year { get; set; }
         public double? DeltaRevenuePlan { get; set; }
-        public double? DeltaOEPlan { get; set; }
-        public double? BSSBudgetOpexPlan { get; set; }
-        public double? BSSBudgetCapexPlan { get; set; }
-        public double? BSSBudgetOpexApproved { get; set; }
-        public double? BSSBudgetCapexApproved { get; set; }
-        public double? OSSBudgetOpexPlan { get; set; }
-        public double? OSSBudgetCapexPlan { get; set; }
-        public double? OSSBudgetOpexApproved { get; set; }
-        public double? OSSBudgetCapexApproved { get; set; }
+        public double? DeltaOePlan { get; set; }
+        public double? BssBudgetOpexPlan { get; set; }
+        public double? BssBudgetCapexPlan { get; set; }
+        public double? BssBudgetOpexApproved { get; set; }
+        public double? BssBudgetCapexApproved { get; set; }
+        public double? OssBudgetOpexPlan { get; set; }
+        public double? OssBudgetCapexPlan { get; set; }
+        public double? OssBudgetOpexApproved { get; set; }
+        public double? OssBudgetCapexApproved { get; set; }
         public double? OtherBudgetOpexPlan { get; set; }
         public double? OtherBudgetCapexPlan { get; set; }
         public double? OtherBudgetOpexApproved { get; set; }
@@ -25,6 +25,5 @@
 
         public int OmItemNumber { get; set; }
         public int VersionNumber { get; set; }
-        
     }
 }

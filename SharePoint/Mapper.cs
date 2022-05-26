@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Domain.Entities;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Taxonomy;
-using ProductFields = SharePoint.Constants.Product.Fields;
-using RootFields = SharePoint.Constants.Root.Fields;
+using ProductFields = Domain.Constants.Product.Fields;
+using RootFields = Domain.Constants.Root.Fields;
 using User = Domain.Entities.User;
 
 namespace SharePoint
 {
-    public class Mapper
+    internal class Mapper
     {
-
         internal AllVersion MapAllVersionToEntity(ListItem item)
         {
             return new AllVersion
@@ -37,7 +33,7 @@ namespace SharePoint
 
         internal AllOmItem MapAllOmItemToEntity(ListItem item)
         {
-            return new AllOmItem
+            var allOmItem = new AllOmItem
             {
                 PortfolioUnit = Convert.ToString(item[RootFields.PORTFOLIOUNIT]),
                 OfferingName = Convert.ToString(item[RootFields.OFFERING_NAME]),
@@ -54,47 +50,66 @@ namespace SharePoint
                 OlmPhaseEnd = Convert.ToString(item[RootFields.PLM_PHASE_PLANNED]),
                 OmItemNumber = Convert.ToInt32(item[RootFields.PRODUCTNUMBER])
             };
+
+            return allOmItem;
+        }
+
+        public Lookup MapLookupToEntity(ListItem item)
+        {
+            var lookup = new Lookup
+            {
+                ChoiceList = Convert.ToString(item[RootFields.CHOICE_LIST]),
+                Title = Convert.ToString(item[RootFields.TITLE]),
+                ValidFrom = Convert.ToDateTime(item[RootFields.VALID_FROM]),
+                ValidTo = Convert.ToDateTime(item[RootFields.VALID_TO]),
+                Value = Convert.ToString(item[RootFields.VALUE])
+            };
+
+            return lookup;
         }
 
         internal VersionTeam MapVersionTeamsToEntity(ListItem item)
         {
-            var versionTeam = new VersionTeam();
-
-            versionTeam.ValidFrom = item[ProductFields.VALID_FROM] as DateTime?;
-            versionTeam.ValidTo = item[ProductFields.VALID_TO] as DateTime?;
-            versionTeam.TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]);
-            versionTeam.RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]);
-            versionTeam.Member = MapToUser(item[ProductFields.MEMBER1]);
-            versionTeam.DeputyOf = MapToUser(item[ProductFields.DEPUTY_OF]);
-            versionTeam.CoSigner = Convert.ToBoolean(item[ProductFields.ISCOSIGNER]);
+            var versionTeam = new VersionTeam
+            {
+                ValidFrom = item[ProductFields.VALID_FROM] as DateTime?,
+                ValidTo = item[ProductFields.VALID_TO] as DateTime?,
+                TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]),
+                RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]),
+                Member = MapToUser(item[ProductFields.MEMBER1]),
+                DeputyOf = MapToUser(item[ProductFields.DEPUTY_OF]),
+                CoSigner = Convert.ToBoolean(item[ProductFields.ISCOSIGNER])
+            };
 
             return versionTeam;
         }
 
         internal VersionDocument MapVersionDocumentsToEntity(ListItem item)
         {
-            var versionDocument = new VersionDocument();
+            var versionDocument = new VersionDocument
+            {
+                Name = Convert.ToString(item[ProductFields.NAME]),
+                ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
+                DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]),
+                DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]),
+                DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]),
+                OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
+                Updated = item[ProductFields.UPDATED] as DateTime?
+            };
 
-            versionDocument.Name = Convert.ToString(item[ProductFields.NAME]);
-            versionDocument.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
-            versionDocument.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
-            versionDocument.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
-            versionDocument.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
-            versionDocument.OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]);
-            versionDocument.Updated = item[ProductFields.UPDATED] as DateTime?;
-            
             return versionDocument;
         }
 
         internal VersionChangeLog MapVersionChangeLogToEntity(ListItem item)
         {
-            var versionChangeLog = new VersionChangeLog();
-
-            versionChangeLog.Event = Convert.ToString(item[ProductFields.EVENT]);
-            versionChangeLog.DateAndTimeOfChange = item[ProductFields.DATE_AND_TIME_OF_CHANGE] as DateTime?;
-            versionChangeLog.User = MapToUser(item[ProductFields.USER]);
-            versionChangeLog.TypeOfChange = Convert.ToString(item[ProductFields.TYPE_OF_CHANGE]);
-            versionChangeLog.ChangeSection = Convert.ToString(item[ProductFields.CHANGE_SECTION]);
+            var versionChangeLog = new VersionChangeLog
+            {
+                Event = Convert.ToString(item[ProductFields.EVENT]),
+                DateAndTimeOfChange = item[ProductFields.DATE_AND_TIME_OF_CHANGE] as DateTime?,
+                User = MapToUser(item[ProductFields.USER]),
+                TypeOfChange = Convert.ToString(item[ProductFields.TYPE_OF_CHANGE]),
+                ChangeSection = Convert.ToString(item[ProductFields.CHANGE_SECTION])
+            };
 
             return versionChangeLog;
         }
@@ -152,7 +167,7 @@ namespace SharePoint
                 DatePlan = item[ProductFields.DATE_PLAN] as DateTime?,
                 DateActual = item[ProductFields.DATE_ACTUAL] as DateTime?,
                 MilestoneType = Convert.ToString(item[ProductFields.MILESTONE_TYPE]),
-                OLMPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
+                OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
                 Default = Convert.ToString(item[ProductFields.DEFAULT]),
                 ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
                 LongDescription = Convert.ToString(item[ProductFields.COMMENT])
@@ -167,28 +182,29 @@ namespace SharePoint
 
         internal VersionBudget MapVersionBudgetToEntity(ListItem item)
         {
-            var versionBudget = new VersionBudget();
-            versionBudget.Year = Convert.ToInt32(item[ProductFields.YEAR]);
-            versionBudget.DeltaRevenuePlan = ConvertNullableDouble(item[ProductFields.DELTAREVENUEPLAN]);
-            versionBudget.DeltaOEPlan = ConvertNullableDouble(item[ProductFields.DELTAOEPLAN]);
-            versionBudget.BSSBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.BSSBUDGETOPEXPLAN]);
-            versionBudget.BSSBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.BSSBUDGETCAPEXPLAN]);
-            versionBudget.BSSBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.BSSBUDGETOPEXAPPROVED]);
-            versionBudget.BSSBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.BSSBUDGETCAPEXAPPROVED]);
-            versionBudget.OSSBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.OSSBUDGETOPEXPLAN]);
-            versionBudget.OSSBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.OSSBUDGETCAPEXPLAN]);
-            versionBudget.OSSBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.OSSBUDGETOPEXAPPROVED]);
-            versionBudget.OSSBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.OSSBUDGETCAPEXAPPROVED]);
-            versionBudget.OtherBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.OTHERBUDGETOPEXPLAN]);
-            versionBudget.OtherBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.OTHERBUDGETCAPEXPLAN]);
-            versionBudget.OtherBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.OTHERBUDGETOPEXAPPROVED]);
-            versionBudget.OtherBudgetCapexApproved =
-                ConvertNullableDouble(item[ProductFields.OTHERBUDGETCAPEXAPPROVED]);
-            versionBudget.RnDBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.RNDBUDGETOPEXPLAN]);
-            versionBudget.RnDBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.RNDBUDGETCAPEXPLAN]);
-            versionBudget.RnDBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.RNDBUDGETOPEXAPPROVED]);
-            versionBudget.RnDBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.RNDBUDGETCAPEXAPPROVED]);
-            versionBudget.Comment = Convert.ToString(item[ProductFields.OVERSIONBUDGETCOMMENT]);
+            var versionBudget = new VersionBudget
+            {
+                Year = Convert.ToInt32(item[ProductFields.YEAR]),
+                DeltaRevenuePlan = ConvertNullableDouble(item[ProductFields.DELTAREVENUEPLAN]),
+                DeltaOePlan = ConvertNullableDouble(item[ProductFields.DELTAOEPLAN]),
+                BssBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.BSSBUDGETOPEXPLAN]),
+                BssBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.BSSBUDGETCAPEXPLAN]),
+                BssBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.BSSBUDGETOPEXAPPROVED]),
+                BssBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.BSSBUDGETCAPEXAPPROVED]),
+                OssBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.OSSBUDGETOPEXPLAN]),
+                OssBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.OSSBUDGETCAPEXPLAN]),
+                OssBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.OSSBUDGETOPEXAPPROVED]),
+                OssBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.OSSBUDGETCAPEXAPPROVED]),
+                OtherBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.OTHERBUDGETOPEXPLAN]),
+                OtherBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.OTHERBUDGETCAPEXPLAN]),
+                OtherBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.OTHERBUDGETOPEXAPPROVED]),
+                OtherBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.OTHERBUDGETCAPEXAPPROVED]),
+                RnDBudgetOpexPlan = ConvertNullableDouble(item[ProductFields.RNDBUDGETOPEXPLAN]),
+                RnDBudgetCapexPlan = ConvertNullableDouble(item[ProductFields.RNDBUDGETCAPEXPLAN]),
+                RnDBudgetOpexApproved = ConvertNullableDouble(item[ProductFields.RNDBUDGETOPEXAPPROVED]),
+                RnDBudgetCapexApproved = ConvertNullableDouble(item[ProductFields.RNDBUDGETCAPEXAPPROVED]),
+                Comment = Convert.ToString(item[ProductFields.OVERSIONBUDGETCOMMENT])
+            };
             return versionBudget;
         }
 
@@ -237,15 +253,16 @@ namespace SharePoint
 
         internal Team MapTeamsToEntity(ListItem item)
         {
-            var team = new Team();
-
-            team.ValidFrom = item[ProductFields.VALID_FROM] as DateTime?;
-            team.ValidTo = item[ProductFields.VALID_TO] as DateTime?;
-            team.TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]);
-            team.RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]);
-            team.Member = MapToUser(item[ProductFields.MEMBER1]);
-            team.DeputyOf = MapToUser(item[ProductFields.DEPUTY_OF]);
-            team.CoSigner = Convert.ToBoolean(item[ProductFields.ISCOSIGNER]);
+            var team = new Team
+            {
+                ValidFrom = item[ProductFields.VALID_FROM] as DateTime?,
+                ValidTo = item[ProductFields.VALID_TO] as DateTime?,
+                TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]),
+                RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]),
+                Member = MapToUser(item[ProductFields.MEMBER1]),
+                DeputyOf = MapToUser(item[ProductFields.DEPUTY_OF]),
+                CoSigner = Convert.ToBoolean(item[ProductFields.ISCOSIGNER])
+            };
 
 
             return team;
@@ -258,43 +275,47 @@ namespace SharePoint
 
         internal CoSignatureHeader MapCoSignaturesListToEntity(ListItem item)
         {
-            var header = new CoSignatureHeader();
+            var header = new CoSignatureHeader
+            {
+                CoSignatureId = Convert.ToInt32(item[ProductFields.ID]),
+                Requestor = MapToUser(item[ProductFields.REQUESTOR]),
+                Topic = Convert.ToString(item[ProductFields.TOPIC]),
+                OmItemName = Convert.ToString(item[ProductFields.PRODUCT_NAME]),
+                PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]),
+                OmItemVersion = Convert.ToString(item[ProductFields.OM_ITEM_VERSION]),
+                OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
+                ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
+                OlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE]),
+                OlmMilestone = Convert.ToString(item[ProductFields.OLM_MILESTONE]),
+                CoSignatureDate = item[ProductFields.COSIGN_DATE] as DateTime?,
+                CoSignatureDueDate = item[ProductFields.COSIGN_DUE_DATE] as DateTime?,
+                Status = Convert.ToString(item[ProductFields.COSIGN_STATUS]),
+                Result = Convert.ToString(item[ProductFields.COSIGNATURE_RESULT]),
+                Remark = Convert.ToString(item[ProductFields.REMARK]),
+                CoSignatureSubmittedDate = item[ProductFields.COSIGNSUBMITTEDDATE] as DateTime?,
+                CoSignatureResultDate = item[ProductFields.COSIGNRESULTDATE] as DateTime?,
+                QualityIndex = Convert.ToDouble(item[ProductFields.QIDX_COSIGN]),
+                QualityIndexUpdated = item[ProductFields.QIDX_COSIGN_UPDATED] as DateTime?
+            };
 
-            header.CoSignatureId = Convert.ToInt32(item[ProductFields.ID]);
-            header.Requestor = MapToUser(item[ProductFields.REQUESTOR]);
-            header.Topic = Convert.ToString(item[ProductFields.TOPIC]);
-            header.OmItemName = Convert.ToString(item[ProductFields.PRODUCT_NAME]);
-            header.PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]);
-            header.OmItemVersion = Convert.ToString(item[ProductFields.OM_ITEM_VERSION]);
-            header.OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]);
-            header.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
-            header.OlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE]);
-            header.OlmMilestone = Convert.ToString(item[ProductFields.OLM_MILESTONE]);
-            header.CoSignatureDate = item[ProductFields.COSIGN_DATE] as DateTime?;
-            header.CoSignatureDueDate = item[ProductFields.COSIGN_DUE_DATE] as DateTime?;
-            header.Status = Convert.ToString(item[ProductFields.COSIGN_STATUS]);
-            header.Result = Convert.ToString(item[ProductFields.COSIGNATURE_RESULT]);
-            header.Remark = Convert.ToString(item[ProductFields.REMARK]);
-            header.CoSignatureSubmittedDate = item[ProductFields.COSIGNSUBMITTEDDATE] as DateTime?;
-            header.CoSignatureResultDate = item[ProductFields.COSIGNRESULTDATE] as DateTime?;
-            header.QualityIndex = Convert.ToDouble(item[ProductFields.QIDX_COSIGN]);
-            header.QualityIndexUpdated = item[ProductFields.QIDX_COSIGN_UPDATED] as DateTime?;
             return header;
         }
 
         internal CoSignatureCoSigner MapCoSignatureCoSignersListToEntity(ListItem item)
         {
-            var cosigner = new CoSignatureCoSigner();
+            var cosigner = new CoSignatureCoSigner
+            {
+                CoSignatureId = Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]),
+                Member = MapToUser(item[ProductFields.MEMBER1]),
+                Deputy = MapToUser(item[ProductFields.COSIGNDEPUTY]),
+                TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]),
+                CoSignedBy = MapToUser(item[ProductFields.COSIGNEDBY]),
+                RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]),
+                CoSignerDate = item[ProductFields.COSIGNERDATE] as DateTime?,
+                CoSignerResult = Convert.ToString(item[ProductFields.COSIGNERRESULT])
+            };
 
-            cosigner.CoSignatureId = Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]);
-            cosigner.Member = MapToUser(item[ProductFields.MEMBER1]);
-            cosigner.Deputy = MapToUser(item[ProductFields.COSIGNDEPUTY]);
-            cosigner.TeamRole = Convert.ToString(item[ProductFields.TEAM_ROLE]);
             cosigner.CoSignedBy = MapToUser(item[ProductFields.COSIGNEDBY]);
-            cosigner.RoleComment = Convert.ToString(item[ProductFields.ROLE_COMMENT]);
-            cosigner.CoSignerDate = item[ProductFields.COSIGNERDATE] as DateTime?;
-            cosigner.CoSignerResult = Convert.ToString(item[ProductFields.COSIGNERRESULT]);
-            cosigner.CoSignedBy =  MapToUser(item[ProductFields.COSIGNEDBY]);
             cosigner.Remark = Convert.ToString(item[ProductFields.REMARK]);
 
 
@@ -303,63 +324,46 @@ namespace SharePoint
 
         internal CoSignatureDocument MapCoSignatureDocumentsListToEntity(ListItem item)
         {
-            var document = new CoSignatureDocument();
-            document.Name = Convert.ToString(item[ProductFields.NAME]);
-            document.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
-            document.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
-            document.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
-            document.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
-            document.OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]);
-            document.Updated = item[ProductFields.UPDATED] as DateTime?;
+            var document = new CoSignatureDocument
+            {
+                Name = Convert.ToString(item[ProductFields.NAME]),
+                ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
+                DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]),
+                DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]),
+                DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]),
+                OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
+                Updated = item[ProductFields.UPDATED] as DateTime?
+            };
             return document;
         }
 
         internal OmItemDocument MapDocumentsToEntity(ListItem item)
         {
-            var document = new OmItemDocument();
-            document.Name = Convert.ToString(item[ProductFields.NAME]);
-            document.ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]);
-            document.DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]);
-            document.DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]);
-            document.DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]);
-            document.OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]);
-            document.Updated = item[ProductFields.UPDATED] as DateTime?;
+            var document = new OmItemDocument
+            {
+                Name = Convert.ToString(item[ProductFields.NAME]),
+                ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
+                DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]),
+                DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]),
+                DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]),
+                OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
+                Updated = item[ProductFields.UPDATED] as DateTime?
+            };
             return document;
         }
 
-        internal RelatedOMItem MapRelatedOMItemsToEntity(ListItem item)
+        internal RelatedOmItem MapRelatedOmItemsToEntity(ListItem item)
         {
-            var relatedOMItem = new RelatedOMItem();
-            relatedOMItem.LinkType = Convert.ToString(item[ProductFields.LINKTYPE]);
-            relatedOMItem.ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]);
-            relatedOMItem.PimsLink = MapToUrl(item[ProductFields.PIMSLINK]);
-            return relatedOMItem;
+            var relatedOmItem = new RelatedOmItem
+            {
+                LinkType = Convert.ToString(item[ProductFields.LINKTYPE]),
+                ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
+                PimsLink = MapToUrl(item[ProductFields.PIMSLINK])
+            };
+            return relatedOmItem;
         }
 
-        internal CoSignatureHeader JoinCoSignatures(CoSignatureHeader coSignature,
-            CoSignatureHeader coSignatureWorkflow)
-        {
-            var header = new CoSignatureHeader();
-
-            header.CoSignatureId = coSignature.CoSignatureId;
-            header.Topic = coSignature.Topic;
-            header.Requestor = coSignature.Requestor;
-            header.PortfolioUnit = coSignature.PortfolioUnit;
-            header.OmItemVersion = coSignature.OmItemVersion;
-            header.OfferingCluster = coSignature.OfferingCluster;
-            header.ConfidentialityClass = coSignature.ConfidentialityClass;
-            header.OlmPhase = coSignature.OlmPhase;
-            header.OlmMilestone = coSignature.OlmMilestone;
-            header.CoSignatureDate = coSignature.CoSignatureDate;
-            header.CoSignatureDueDate = coSignature.CoSignatureDueDate;
-            header.Status = coSignature.Status;
-            header.Result = coSignature.Result;
-            header.Remark = coSignature.Remark;
-
-            return header;
-        }
-
-        private User MapToUser(object input)
+        private static User MapToUser(object input)
         {
             if (!(input is FieldUserValue fieldUserValue))
                 return null;
@@ -367,7 +371,7 @@ namespace SharePoint
             return new User(fieldUserValue.LookupValue, fieldUserValue.Email);
         }
 
-        private string MapToUrl(object input)
+        private static string MapToUrl(object input)
         {
             if (!(input is FieldUrlValue fieldUrlValue))
                 return null;
@@ -375,19 +379,7 @@ namespace SharePoint
             return fieldUrlValue.Url;
         }
 
-        private User[] MapToUsers(object input)
-        {
-            if (!(input is FieldUserValue[] fieldUserValues))
-                return null;
-            if (fieldUserValues.Length == 0)
-                return null;
-            List<User> users = new List<User>();
-            foreach (var u in fieldUserValues)
-                users.Add(new User(u.LookupValue, u.Email));
-            return users.ToArray();
-        }
-
-        private double? ConvertNullableDouble(object value)
+        private static double? ConvertNullableDouble(object value)
         {
             double? result = null;
             if (value != null) result = Convert.ToDouble(value, CultureInfo.InvariantCulture);

@@ -1,8 +1,7 @@
 ﻿using System.Globalization;
-using CSV.Formatters;
 using Domain.Entities;
 
-namespace CSV
+namespace CSV.Formatters
 {
     internal class TeamCsvFormatter : DocumentFormatterBase<Team>
     {
