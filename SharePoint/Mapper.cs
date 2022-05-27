@@ -283,7 +283,6 @@ namespace SharePoint
                 OmItemName = Convert.ToString(item[ProductFields.PRODUCT_NAME]),
                 PortfolioUnit = Convert.ToString(item[ProductFields.PRODUCT_UNIT]),
                 OmItemVersion = Convert.ToString(item[ProductFields.OM_ITEM_VERSION]),
-                OfferingCluster = Convert.ToString(item[ProductFields.OFFERING_CLUSTER]),
                 ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
                 OlmPhase = Convert.ToString(item[ProductFields.OLM_PHASE]),
                 OlmMilestone = Convert.ToString(item[ProductFields.OLM_MILESTONE]),
