@@ -9,7 +9,6 @@ namespace Domain.Entities
         public User Requestor { get; set; }
         public string PortfolioUnit { get; set; }
         public string OmItemVersion { get; set; }
-        public string OfferingCluster { get; set; }
         public string ConfidentialityClass { get; set; }
         public string OlmPhase { get; set; }
         public string OlmMilestone { get; set; }
