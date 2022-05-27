@@ -297,7 +297,7 @@ namespace SharePoint
                 QualityIndex = Convert.ToDouble(item[ProductFields.QIDX_COSIGN]),
                 QualityIndexUpdated = item[ProductFields.QIDX_COSIGN_UPDATED] as DateTime?
             };
-
+            
             return header;
         }
 
@@ -326,6 +326,7 @@ namespace SharePoint
         {
             var document = new CoSignatureDocument
             {
+                CoSignatureId = Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]),
                 Name = Convert.ToString(item[ProductFields.NAME]),
                 ConfidentialityClass = Convert.ToString(item[ProductFields.CONFIDENTIALITY_CLASS]),
                 DocumentCategory = Convert.ToString(item[ProductFields.DOCUMENT_CATEGORY]),
