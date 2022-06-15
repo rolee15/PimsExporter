@@ -98,6 +98,7 @@ namespace PimsExporter
             var versionBudgets = new List<VersionBudget>();
             var versionTeams = new List<VersionTeam>();
             var versionMilestones = new List<Milestone>();
+            var versionRelatedOmItems = new List<VersionRelatedOmItem>();
             var versionDocuments = new List<VersionDocument>();
             var versionChangeLogs = new List<VersionChangeLog>();
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
@@ -142,6 +143,15 @@ namespace PimsExporter
 
                             versionTeams.AddRange(tempVersionTeams);
 
+                            var tempVersionRelatedOmItems = versionRepository.GetVersionRelatedOmItems().ToList();
+                            foreach (var item in tempVersionRelatedOmItems)
+                            {
+                                item.OmItemNumber = omItemNumber;
+                                item.VersionNumber = versionNumber;
+                            }
+
+                            versionRelatedOmItems.AddRange(tempVersionRelatedOmItems);
+
                             var tempVersionDocuments = versionRepository.GetVersionDocuments().ToList();
                             foreach (var item in tempVersionDocuments)
                             {
@@ -183,6 +193,7 @@ namespace PimsExporter
             _outputAdapter.SaveVersionHeaders(versionHeaders, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveVersionBudgets(versionBudgets, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveVersionTeams(versionTeams, omItemNumberFrom, omItemNumberTo);
+            _outputAdapter.SaveVersionRelatedOmItems(versionRelatedOmItems, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveVersionDocuments(versionDocuments, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveVersionChangeLogs(versionChangeLogs, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveVersionMilestones(versionMilestones, omItemNumberFrom, omItemNumberTo);

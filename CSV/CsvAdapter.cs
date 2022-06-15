@@ -21,6 +21,7 @@ namespace CSV
         private const string VersionHeadersFileName = "OMIV_Headers";
         private const string VersionBudgetsFileName = "OMIV_Budgets";
         private const string VersionTeamsFileName = "OMIV_Teams";
+        private const string VersionRelatedOmItemsFileName = "OMIV_RelatedOmItems";
         private const string VersionDocumentsFileName = "OMIV_Documents";
         private const string VersionChangeLogsFileName = "OMIV_ChangeLogs";
         private const string VersionMilestonesFileName = "OMIV_Milestones";
@@ -50,6 +51,7 @@ namespace CSV
         private readonly VersionHeaderCsvFormatter _versionHeaderFormatter;
         private readonly VersionMilestoneCsvFormatter _versionMilestonesFormatter;
         private readonly VersionTeamCsvFormatter _versionTeamsFormatter;
+        private readonly VersionRelatedOmItemFormatter _versionRelatedOmItemFormatter;
 
 
         public CsvAdapter(IOptions<CsvAdapterSettings> settings)
@@ -73,6 +75,7 @@ namespace CSV
             _relatedOmItemFormatter = new RelatedOmItemCsvFormatter();
             _coSignatureDocumentsFormatter = new CoSignatureDocumentCsvFormatter();
             _versionMilestonesFormatter = new VersionMilestoneCsvFormatter();
+            _versionRelatedOmItemFormatter = new VersionRelatedOmItemFormatter();
         }
 
         public void SaveAllVersions(IEnumerable<AllVersion> versions, int omItemNumberFrom, int omItemNumberTo)
@@ -278,6 +281,19 @@ namespace CSV
             }
         }
 
+        public void SaveVersionRelatedOmItems(List<VersionRelatedOmItem> versionRelatedOmItems, int omItemNumberFrom, int omItemNumberTo)
+        {
+            var path = Path.Combine(_settings.OutputDir, "versions");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, CreateFileName(VersionRelatedOmItemsFileName, omItemNumberFrom, omItemNumberTo));
+
+            var resultStream = _versionRelatedOmItemFormatter.FormatStream(versionRelatedOmItems);
+            using (var fileStream = File.Create(path))
+            {
+                resultStream.CopyTo(fileStream);
+            }
+        }
+
         public void SaveDocuments(IEnumerable<OmItemDocument> documents, int omItemNumberFrom, int omItemNumberTo)
         {
             var path = Path.Combine(_settings.OutputDir, "omitems");
@@ -356,9 +372,13 @@ namespace CSV
             int omItemNumberTo);
 
         void SaveRelatedOmItems(IEnumerable<RelatedOmItem> relatedOmItems, int omItemNumberFrom, int omItemNumberTo);
+        
+        void SaveVersionRelatedOmItems(List<VersionRelatedOmItem> versionRelatedOmItems, int omItemNumberFrom, int omItemNumberTo);
+        
         void SaveDocuments(IEnumerable<OmItemDocument> documents, int omItemNumberFrom, int omItemNumberTo);
 
         void SaveCoSignatureDocuments(IEnumerable<CoSignatureDocument> coSignatureDocuments, int omItemNumberFrom,
             int omItemNumberTo);
+
     }
 }

@@ -113,6 +113,13 @@ namespace SharePoint
                 item => Mapper.MapCoSignatureCoSignersListToEntity(item));
         }
 
+        public IEnumerable<VersionRelatedOmItem> VersionRelatedOmItems()
+        {
+            return GetAllEntities(
+                Constants.Version.Lists.RelatedOmItems.TITLE,
+                item => Mapper.MapVersionRelatedOmItemsToEntity(item));
+        }
+
         public IEnumerable<OmItemDocument> Documents()
         {
             return GetAllEntities(
