@@ -268,11 +268,6 @@ namespace SharePoint
             return team;
         }
 
-        internal int MapCoSignatureToInt(ListItem item)
-        {
-            return Convert.ToInt32(item[ProductFields.COSIGNATURE_ID]);
-        }
-
         internal CoSignatureHeader MapCoSignaturesListToEntity(ListItem item)
         {
             var header = new CoSignatureHeader
@@ -355,6 +350,17 @@ namespace SharePoint
         internal RelatedOmItem MapRelatedOmItemsToEntity(ListItem item)
         {
             var relatedOmItem = new RelatedOmItem
+            {
+                LinkType = Convert.ToString(item[ProductFields.LINKTYPE]),
+                ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),
+                PimsLink = MapToUrl(item[ProductFields.PIMSLINK])
+            };
+            return relatedOmItem;
+        }
+        
+        internal VersionRelatedOmItem MapVersionRelatedOmItemsToEntity(ListItem item)
+        {
+            var relatedOmItem = new VersionRelatedOmItem
             {
                 LinkType = Convert.ToString(item[ProductFields.LINKTYPE]),
                 ShortDescription = Convert.ToString(item[ProductFields.SHORT_DESCRIPTION]),

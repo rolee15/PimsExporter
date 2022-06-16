@@ -353,6 +353,12 @@ namespace Domain
                     public const string ROOT_FOLDER_NAME = "CoSignersList";
                 }
 
+                public static class RelatedOmItems
+                {
+                    public const string TITLE = "Related Products";
+                    public const string ROOT_FOLDER_NAME = "RelatedProducts";
+                }
+
                 public static class CoSignatureDocuments
                 {
                     public const string TITLE = "Co Signature Documents";

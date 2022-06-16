@@ -54,6 +54,11 @@ namespace Services.InputRepositories
             return _spAdapter.CoSignatureCoSigners();
         }
 
+        public IEnumerable<VersionRelatedOmItem> GetVersionRelatedOmItems()
+        {
+            return _spAdapter.VersionRelatedOmItems();
+        }
+
         public IEnumerable<CoSignatureDocument> GetCoSignatureDocuments()
         {
             return _spAdapter.CoSignatureDocuments();
