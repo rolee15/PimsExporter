@@ -1,0 +1,43 @@
+﻿using Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CSV.Parsers
+{
+    public class OmItemHeaderParser : DocumentParser<OmItemHeader>
+    {
+        public OmItemHeaderParser()
+        {
+            Parsers = new Action<OmItemHeader, string>[]
+            {
+                (r, value) => r.OmItemNumber = int.Parse(value),
+                (r, value) => r.OmItemName = value,
+                (r, value) => r.OmItemAlias = value,
+                (r, value) => r.OmItemId = value,
+                (r, value) => r.OfferingManager = new User(value, ""),
+                (r, value) => r.PortfolioUnit = value,
+                (r, value) => r.PortfolioUnitSapId = value,
+                (r, value) => r.OfferingModuleId = value,
+                (r, value) => r.PimsId = value,
+                (r, value) => r.OfferingName = value,
+                (r, value) => r.OfferingNameSapId = value,
+                (r, value) => r.OfferingModule = value,
+                (r, value) => r.OfferingModuleSapId = value,
+                (r, value) => r.ActiveStatus = value,
+                (r, value) => r.OlmCurrentPhase = value,
+                (r, value) => r.ConfidentialityClass = value,
+                (r, value) => r.OfferingType = value,
+                (r, value) => r.CurrentStart = ParseDate(value),
+                (r, value) => r.CurrentEnd = ParseDate(value),
+                (r, value) => r.OfferingCluster = value,
+                (r, value) => r.OfferingClusterSapId = value,
+                (r, value) => r.ShortDescription = value,
+                (r, value) => r.LongDescription = value
+
+            };
+        }
+    }
+}

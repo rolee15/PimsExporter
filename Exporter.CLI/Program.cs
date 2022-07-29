@@ -9,7 +9,7 @@ using PimsExporter;
 using PimsExporter.Services.InputRepositories;
 using Services.InputRepositories;
 
-namespace CLI
+namespace ExporterCLI
 {
     internal class Program
     {
