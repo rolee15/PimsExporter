@@ -33,7 +33,7 @@ namespace SharePoint
                 var items = GetAllItems(list);
                 foreach (var item in items)
                 {
-                    foreach (var fieldUserValue in item.FieldValues.Where(value => value.Value as FieldUserValue != null).Select(value => value.Value as FieldUserValue))
+                    foreach (var fieldUserValue in item.FieldValues.Where(value => value.Key == Constants.Product.Fields.MEMBER1 && value.Value as FieldUserValue != null).Select(value => value.Value as FieldUserValue))
                     {
                         try
                         {
