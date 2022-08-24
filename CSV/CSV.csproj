@@ -72,6 +72,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Parsers\CoSignatureCoSignerParser.cs" />
+    <Compile Include="Parsers\CoSignatureDocumentParser.cs" />
+    <Compile Include="Parsers\CoSignatureHeaderParser.cs" />
+    <Compile Include="Parsers\CoSignatureQualityParser.cs" />
     <Compile Include="Formatters\CoSignatureCoSignerCsvFormatter.cs" />
     <Compile Include="Formatters\CoSignatureHeaderFormatter.cs" />
     <Compile Include="CsvAdapterSettings.cs" />
@@ -93,10 +97,22 @@
     <Compile Include="Formatters\VersionRelatedOmItemFormatter.cs" />
     <Compile Include="Formatters\VersionTeamCsvFormatter.cs" />
     <Compile Include="Formatters\VersionBudgetCsvFormatter.cs" />
-    <Compile Include="Parsers\DocumentParser.cs" />
+    <Compile Include="Parsers\OmItemDocumentParser.cs" />
+    <Compile Include="Parsers\RelatedOmItemParser.cs" />
+    <Compile Include="Parsers\TeamParser.cs" />
+    <Compile Include="Parsers\MilestoneParser.cs" />
+    <Compile Include="Parsers\OlmPhaseParser.cs" />
+    <Compile Include="Parsers\CsvParser.cs" />
     <Compile Include="Parsers\OmItemHeaderParser.cs" />
+    <Compile Include="Parsers\VersionHeaderParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Formatters\VersionHeaderCsvFormatter.cs" />
+    <Compile Include="Parsers\VersionBudgetParser.cs" />
+    <Compile Include="Parsers\VersionChangeLogParser.cs" />
+    <Compile Include="Parsers\VersionDocumentParser.cs" />
+    <Compile Include="Parsers\VersionMilestoneParser.cs" />
+    <Compile Include="Parsers\VersionRelatedOmItemParser.cs" />
+    <Compile Include="Parsers\VersionTeamParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

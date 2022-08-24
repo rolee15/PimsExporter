@@ -1,15 +1,11 @@
 ﻿using Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSV.Parsers
 {
-    public class OmItemHeaderParser : DocumentParser<OmItemHeader>
+    public class OmItemHeaderParser : CsvParser<OmItemHeader>
     {
-        public OmItemHeaderParser()
+        internal OmItemHeaderParser()
         {
             Parsers = new Action<OmItemHeader, string>[]
             {
@@ -30,8 +26,8 @@ namespace CSV.Parsers
                 (r, value) => r.OlmCurrentPhase = value,
                 (r, value) => r.ConfidentialityClass = value,
                 (r, value) => r.OfferingType = value,
-                (r, value) => r.CurrentStart = ParseDate(value),
-                (r, value) => r.CurrentEnd = ParseDate(value),
+                (r, value) => r.CurrentStart = ParseNullableDate(value),
+                (r, value) => r.CurrentEnd = ParseNullableDate(value),
                 (r, value) => r.OfferingCluster = value,
                 (r, value) => r.OfferingClusterSapId = value,
                 (r, value) => r.ShortDescription = value,

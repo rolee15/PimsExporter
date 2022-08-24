@@ -17,13 +17,21 @@ namespace TransformerCLI
         {
             var host = CreateDefaultBuilder().Build();
 
+            //Console.Write("Location of the export folder: ");
+            //var path = Console.ReadLine();
+            var path = @"C:\PIMSExport\PRODexport_20220811";
+            
             Console.Write("Starting to filter active items...");
+            
             var transformer = host.Services.GetRequiredService<Transformer>();
 
-            transformer.TransformOmItems();
+            transformer.TransformOmItems(path);
+            Console.WriteLine("Om Items finished.");
+            transformer.TransformVersionsAndCoSignatures(path);
+            Console.WriteLine("Versions and CoSignatures finished.");
 
-            Console.WriteLine();
-
+            Console.WriteLine("Finished...");
+            Console.Read();
         }
 
         private static IHostBuilder CreateDefaultBuilder()
