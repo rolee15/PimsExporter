@@ -13,7 +13,7 @@ namespace CSV.Parsers
                 (r, value) => r.OmItemName = value,
                 (r, value) => r.OmItemAlias = value,
                 (r, value) => r.OmItemId = value,
-                (r, value) => r.OfferingManager = new User(value, ""),
+                (r, value) => r.OfferingManager = ParseUser(value),
                 (r, value) => r.PortfolioUnit = value,
                 (r, value) => r.PortfolioUnitSapId = value,
                 (r, value) => r.OfferingModuleId = value,

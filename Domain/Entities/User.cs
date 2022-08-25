@@ -2,6 +2,12 @@
 {
     public class User
     {
+        public User(string name)
+        {
+            Name = name;
+            Email = "";
+        }
+
         public User(string name, string email)
         {
             Name = name;
