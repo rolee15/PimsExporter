@@ -11,7 +11,6 @@ namespace CSV.Parsers
             {
                 (r, value) => r.OmItemNumber = int.Parse(value),
                 (r, value) => r.Member = ParseUser(value),
-                (r, value) => r.Member = new User(r.Member.Name, value),
                 (r, value) => r.TeamRole = value,
                 (r, value) => r.RoleComment = value,
                 (r, value) => r.ValidFrom = ParseNullableDate(value),

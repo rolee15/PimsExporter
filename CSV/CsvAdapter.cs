@@ -581,7 +581,7 @@ namespace CSV
         private List<string[]> ReadCsv(FileInfo file)
         {
             var result = new List<string[]>();
-            using (TextFieldParser parser = new TextFieldParser(file.FullName))
+            using (var parser = new TextFieldParser(file.FullName))
             {
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(CultureInfo.CurrentCulture.TextInfo.ListSeparator);

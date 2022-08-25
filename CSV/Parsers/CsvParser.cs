@@ -7,12 +7,15 @@ namespace CSV.Parsers
 {
     public class CsvParser<T> where T : class, new()
     {
-        CultureInfo culture = CultureInfo.CreateSpecificCulture("de-DE");
+        private readonly CultureInfo culture = CultureInfo.CreateSpecificCulture("de-DE");
 
         public Action<T, string>[] Parsers { get; set; }
 
         public T ParseFields(string[] fields)
         {
+            if (fields.Length != Parsers.Length)
+                throw new ArgumentException("Number of columns doesn't match number of parsers!");
+
             var entity = new T();
             for (int i = 0; i < fields.Length; i++)
             {
