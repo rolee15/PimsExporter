@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Domain.Entities;
+using Microsoft.VisualBasic.FileIO;
 
 namespace CSV.Formatters
 {
@@ -66,6 +67,13 @@ namespace CSV.Formatters
             {
                 Header = header ?? throw new ArgumentNullException(nameof(header));
                 Formatter = getter ?? throw new ArgumentNullException(nameof(getter));
+            }
+
+            public ColumnFormatter(string header, Func<TRow, string> getter, Func<string, TRow> setter)
+            {
+                Header = header ?? throw new ArgumentNullException(nameof(header));
+                Formatter = getter ?? throw new ArgumentNullException(nameof(getter));
+                Parser = setter ?? throw new ArgumentNullException(nameof(setter));
             }
 
             public ColumnFormatter(string header, Func<TRow, bool> getter)
@@ -149,6 +157,7 @@ namespace CSV.Formatters
 
             public string Header { get; }
             public Func<TRow, string> Formatter { get; }
+            public Func<string, TRow> Parser { get; }
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Domain.Entities
         public int OmItemNumber { get; set; }
         public int VersionNumber { get; set; }
         public int CoSignatureId { get; set; }
-        public DateTime LastCheckTime { get; set; }
+        public DateTime? LastCheckTime { get; set; }
         public string MandatoryDocumentOrRole { get; set; }
         public string Result { get; set; }
         public bool ResultStatus { get; set; }
