@@ -53,6 +53,15 @@ namespace CSV.Formatters
             return value.Contains("\"") ? $"\"{value.Replace("\"", "\"\"")}\"" : $"\"{value}\"";
         }
 
+        protected static string FormatUser(User user)
+        {
+            if (user == null) return "";
+            
+            string result = user.Name;
+            if (!string.IsNullOrEmpty(user.Email)) result += $" <{user.Email}>";
+            
+            return result;
+        }
 
         protected sealed class ColumnFormatter<TRow> where TRow : T
         {

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Domain;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
+using SharePoint.Extensions;
 
 namespace SharePoint
 {
@@ -29,7 +31,27 @@ namespace SharePoint
                 _ctx.Credentials = Credentials;
                 var list = GetList(title);
                 var items = GetAllItems(list);
-                foreach (var item in items) yield return map(item);
+                foreach (var item in items)
+                {
+                    foreach (var fieldUserValue in item.FieldValues.Where(value => value.Key == Constants.Product.Fields.MEMBER1 && value.Value as FieldUserValue != null).Select(value => value.Value as FieldUserValue))
+                    {
+                        try
+                        {
+                            var user = _ctx.Web.EnsureUser(fieldUserValue.LookupValue);
+                            _ctx.Load(user);
+                            _ctx.ExecuteQuery();
+                            if (!string.IsNullOrEmpty(user.Email))
+                            {
+                                fieldUserValue.SetEmail(user.Email);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Failed to load user {fieldUserValue.LookupValue}: {ex.Message}");
+                        }
+                    }
+                    yield return map(item);
+                }
             }
         }
 

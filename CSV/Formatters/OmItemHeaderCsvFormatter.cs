@@ -13,7 +13,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<OmItemHeader>("OmItemName", r => r.OmItemName),
                 new ColumnFormatter<OmItemHeader>("OmItemAlias", r => r.OmItemAlias),
                 new ColumnFormatter<OmItemHeader>("OmItemId", r => r.OmItemId),
-                new ColumnFormatter<OmItemHeader>("OfferingManager", r => r.OfferingManager),
+                new ColumnFormatter<OmItemHeader>("OfferingManager", r => FormatUser(r.OfferingManager)),
                 new ColumnFormatter<OmItemHeader>("PortfolioUnit", r => r.PortfolioUnit),
                 new ColumnFormatter<OmItemHeader>("PortfolioUnitSapId", r => r.PortfolioUnitSapId),
                 new ColumnFormatter<OmItemHeader>("OfferingModuleId", r => r.OfferingModuleId),

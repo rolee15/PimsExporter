@@ -14,7 +14,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<CoSignatureHeader>("CoSignatureId", r => r.CoSignatureId),
                 new ColumnFormatter<CoSignatureHeader>("Topic", r => r.Topic),
                 new ColumnFormatter<CoSignatureHeader>("OmItemName", r => r.OmItemName),
-                new ColumnFormatter<CoSignatureHeader>("Requestor", r => r.Requestor),
+                new ColumnFormatter<CoSignatureHeader>("Requestor", r => FormatUser(r.Requestor)),
                 new ColumnFormatter<CoSignatureHeader>("PortfolioUnit", r => r.PortfolioUnit),
                 new ColumnFormatter<CoSignatureHeader>("OmItemVersion", r => r.OmItemVersion),
                 new ColumnFormatter<CoSignatureHeader>("ConfidentialityClass", r => r.ConfidentialityClass),

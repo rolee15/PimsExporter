@@ -16,7 +16,7 @@ namespace CSV.Formatters
                     r => r.ConfidentialityClass),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentCategory), r => r.DocumentCategory),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentTagging), r => r.DocumentTagging),
-                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentOwner), r => r.DocumentOwner),
+                new ColumnFormatter<VersionDocument>(nameof(VersionDocument.DocumentOwner), r => FormatUser(r.DocumentOwner)),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.OlmPhase), r => r.OlmPhase),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Updated), r => r.Updated)
             };
