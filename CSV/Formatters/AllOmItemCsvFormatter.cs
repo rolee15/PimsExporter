@@ -16,7 +16,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<AllOmItem>("PimsId", r => r.PimsId),
                 new ColumnFormatter<AllOmItem>("OmItemName", r => r.OmItemName),
                 new ColumnFormatter<AllOmItem>("OfferingType", r => r.OfferingType),
-                new ColumnFormatter<AllOmItem>("OfferingManager", r => r.OfferingManager),
+                new ColumnFormatter<AllOmItem>("OfferingManager", r => FormatUser(r.OfferingManager)),
                 new ColumnFormatter<AllOmItem>("OmItemAlias", r => r.OmItemAlias),
                 new ColumnFormatter<AllOmItem>("OmItemId", r => r.OmItemId),
                 new ColumnFormatter<AllOmItem>("OlmCurrentPhase", r => r.OlmCurrentPhase),

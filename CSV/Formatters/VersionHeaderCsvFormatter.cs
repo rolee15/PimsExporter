@@ -14,7 +14,7 @@ namespace CSV.Formatters
                 new ColumnFormatter<VersionHeader>("VersionName", r => r.VersionName),
                 new ColumnFormatter<VersionHeader>("VersionAlias", r => r.VersionAlias),
                 new ColumnFormatter<VersionHeader>("FullVersionId", r => r.FullVersionId),
-                new ColumnFormatter<VersionHeader>("VersionManager", r => r.VersionManager),
+                new ColumnFormatter<VersionHeader>("VersionManager", r => FormatUser(r.VersionManager)),
                 new ColumnFormatter<VersionHeader>("CurrentOlmPhase", r => r.CurrentOlmPhase),
                 new ColumnFormatter<VersionHeader>("PimsId", r => r.PimsId),
                 new ColumnFormatter<VersionHeader>("ArticleNumber", r => r.ArticleNumber),
