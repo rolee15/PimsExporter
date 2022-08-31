@@ -225,21 +225,7 @@ namespace PimsExporter
                             var versionRepository =
                                 _inputRepositoryFactory.Create<IVersionRepository>(versionSiteUri, credentials);
 
-                            var apiUri = new Uri(_settings.ApiBaseUrl);
-                            var coSignatureQualityRepository =
-                                _inputRepositoryFactory.Create<ICoSignatureQualityRepository>(apiUri, credentials);
                             var headers = versionRepository.GetCoSignatureHeaders().ToList();
-                            foreach (var header in headers)
-                            {
-                                header.OmItemNumber = omItemNumber;
-                                header.VersionNumber = versionNumber;
-                                Console.WriteLine(
-                                    $"Export CoSignature OmItem Number: {omItemNumber} Version Number: {versionNumber} CoSignature Id: {header.CoSignatureId}");
-                                coSignatureQualities.AddRange(
-                                    await coSignatureQualityRepository.GetCoSignatureQualitiesAsync(omItemNumber,
-                                        versionNumber, header.CoSignatureId));
-                            }
-
                             coSignatureHeaders.AddRange(headers);
 
                             var cosigners = versionRepository.GetCoSignatureCoSigners().ToList();
@@ -259,6 +245,20 @@ namespace PimsExporter
                             }
 
                             coSignatureDocuments.AddRange(documents);
+                            
+                            var apiUri = new Uri(_settings.ApiBaseUrl);
+                            var coSignatureQualityRepository =
+                                _inputRepositoryFactory.Create<ICoSignatureQualityRepository>(apiUri, credentials);
+                            foreach (var header in headers)
+                            {
+                                header.OmItemNumber = omItemNumber;
+                                header.VersionNumber = versionNumber;
+                                Console.WriteLine(
+                                    $"Export CoSignature OmItem Number: {omItemNumber} Version Number: {versionNumber} CoSignature Id: {header.CoSignatureId}");
+                                var qualities = await coSignatureQualityRepository.GetCoSignatureQualitiesAsync(omItemNumber,
+                                        versionNumber, header.CoSignatureId);
+                                coSignatureQualities.AddRange(coSignatureQualities);
+                            }
                         }
                         catch (Exception ex)
                         {

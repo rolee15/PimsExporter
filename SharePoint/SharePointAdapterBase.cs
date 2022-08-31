@@ -11,47 +11,32 @@ namespace SharePoint
 {
     public class SharePointAdapterBase
     {
-        private protected readonly Mapper Mapper;
+        private protected readonly Mapper Mapper = new Mapper();
         private ClientContext _ctx;
 
-        protected SharePointAdapterBase(Uri sharepointSiteUrl, NetworkCredential credentials)
+        private static Uri SharepointSiteUrl { get; set; }
+        private static NetworkCredential Credentials { get; set; }
+
+        private readonly HashSet<string> _ensuredUserNames = new HashSet<string>();
+
+        protected SharePointAdapterBase()
         {
-            SharepointSiteUrl = sharepointSiteUrl;
-            Credentials = credentials;
-            Mapper = new Mapper();
         }
 
-        private Uri SharepointSiteUrl { get; }
-        private NetworkCredential Credentials { get; }
+        protected static void SetUrlAndCredentials(Uri uri, NetworkCredential credentials)
+        {
+            SharepointSiteUrl = uri ?? throw new ArgumentNullException(nameof(uri));
+            Credentials = credentials ?? throw new ArgumentNullException(nameof(credentials));
+        }
 
         protected IEnumerable<T> GetAllEntities<T>(string title, Func<ListItem, T> map)
         {
             using (_ctx = new ClientContext(SharepointSiteUrl))
             {
-                _ctx.Credentials = Credentials;
+                _ctx.Credentials = Credentials ?? throw new ArgumentNullException(nameof(Credentials));
                 var list = GetList(title);
                 var items = GetAllItems(list);
-                foreach (var item in items)
-                {
-                    foreach (var fieldUserValue in item.FieldValues.Where(value => value.Key == Constants.Product.Fields.MEMBER1 && value.Value as FieldUserValue != null).Select(value => value.Value as FieldUserValue))
-                    {
-                        try
-                        {
-                            var user = _ctx.Web.EnsureUser(fieldUserValue.LookupValue);
-                            _ctx.Load(user);
-                            _ctx.ExecuteQuery();
-                            if (!string.IsNullOrEmpty(user.Email))
-                            {
-                                fieldUserValue.SetEmail(user.Email);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Failed to load user {fieldUserValue.LookupValue}: {ex.Message}");
-                        }
-                    }
-                    yield return map(item);
-                }
+                return items.Select(x => SetEmailAndMap(x, map));
             }
         }
 
@@ -59,9 +44,10 @@ namespace SharePoint
         {
             using (_ctx = new ClientContext(SharepointSiteUrl))
             {
-                _ctx.Credentials = Credentials;
+                _ctx.Credentials = Credentials ?? throw new ArgumentNullException(nameof(Credentials));
                 var list = GetList(title);
                 var item = GetFirstItem(list);
+                EnsureEmail(item);
                 return map(item);
             }
         }
@@ -69,6 +55,8 @@ namespace SharePoint
         private IEnumerable<ListItem> GetAllItems(List list)
         {
             var query = DefaultQuery();
+            var result = new List<ListItem>();
+
             ListItemCollectionPosition position = null;
             do
             {
@@ -77,20 +65,12 @@ namespace SharePoint
                 var items = list.GetItems(query);
                 _ctx.Load(items);
                 _ctx.ExecuteQuery();
-                foreach (var item in items) yield return item;
+                foreach (var item in items) result.Add(item);
 
                 position = items.ListItemCollectionPosition;
             } while (position != null);
-        }
 
-        private static CamlQuery DefaultQuery()
-        {
-            return new CamlQuery
-            {
-                ViewXml = CAML.ViewQuery(
-                    ViewScope.DefaultValue,
-                    rowLimit: Constants.DefaultQueryRowLimit)
-            };
+            return result;
         }
 
         private ListItem GetFirstItem(List list)
@@ -107,6 +87,16 @@ namespace SharePoint
             return items[0];
         }
 
+        private static CamlQuery DefaultQuery()
+        {
+            return new CamlQuery
+            {
+                ViewXml = CAML.ViewQuery(
+                    ViewScope.DefaultValue,
+                    rowLimit: Constants.DefaultQueryRowLimit)
+            };
+        }
+
         private List GetList(string title)
         {
             var web = _ctx.Web;
@@ -114,6 +104,48 @@ namespace SharePoint
             _ctx.Load(list);
             _ctx.ExecuteQuery();
             return list;
+        }
+
+        private T SetEmailAndMap<T>(ListItem item, Func<ListItem, T> map)
+        {
+            EnsureEmail(item);
+            return map(item);
+        }
+
+        private void EnsureEmail(ListItem item)
+        {
+            var userFields = item.FieldValues
+                .Where(value => value.Value as FieldUserValue != null)
+                .Select(value => value.Value as FieldUserValue);
+
+            foreach (var fieldUserValue in userFields)
+            {
+                var username = fieldUserValue.LookupValue;
+                if (_ensuredUserNames.Contains(username)) continue;
+                _ensuredUserNames.Add(username);
+
+                TrySetEmail(fieldUserValue, username);
+            }
+        }
+
+        private void TrySetEmail(FieldUserValue fieldUserValue, string username)
+        {
+            try
+            {
+                var user = _ctx.Web.EnsureUser(username);
+                _ctx.Load(user);
+                _ctx.ExecuteQuery();
+
+                var email = user.Email;
+                if (!string.IsNullOrEmpty(email))
+                {
+                    fieldUserValue.SetEmail(email);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load user {username}: {ex.Message}");
+            }
         }
     }
 }

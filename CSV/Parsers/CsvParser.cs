@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace CSV.Parsers
 {
@@ -49,7 +50,16 @@ namespace CSV.Parsers
 
         protected User ParseUser(string raw)
         {
-            return new User(raw, "");
+            var pattern = @"(\w+,( \w+)+)( <(.*)>)?";
+            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            var match = regex.Match(raw);
+            
+            if (!match.Success) return null;
+
+            var name = match.Groups[1].Value;
+            var email = match.Groups[4].Value;
+            
+            return new User(name, email);
         }
 
         protected DateTime? ParseNullableDate(string raw)
