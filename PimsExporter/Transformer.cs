@@ -25,7 +25,7 @@ namespace PimsExporter
             var activeHeaders = new List<OmItemHeader>();
             foreach (var header in headers)
             {
-                if (header.ActiveStatus == "True")
+                if (header.ActiveStatus.ToUpper().Equals("TRUE"))
                 {
                     activeOmItemNumbers.Add(header.OmItemNumber);
                     activeHeaders.Add(header);
