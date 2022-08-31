@@ -228,23 +228,23 @@ namespace PimsExporter
                             var headers = versionRepository.GetCoSignatureHeaders().ToList();
                             coSignatureHeaders.AddRange(headers);
 
-                            var cosigners = versionRepository.GetCoSignatureCoSigners().ToList();
-                            foreach (var cosigner in cosigners)
-                            {
-                                cosigner.OmItemNumber = omItemNumber;
-                                cosigner.VersionNumber = versionNumber;
-                            }
+                            //var cosigners = versionRepository.GetCoSignatureCoSigners().ToList();
+                            //foreach (var cosigner in cosigners)
+                            //{
+                            //    cosigner.OmItemNumber = omItemNumber;
+                            //    cosigner.VersionNumber = versionNumber;
+                            //}
 
-                            coSignatureCoSigners.AddRange(cosigners);
+                            //coSignatureCoSigners.AddRange(cosigners);
 
-                            var documents = versionRepository.GetCoSignatureDocuments().ToList();
-                            foreach (var document in documents)
-                            {
-                                document.OmItemNumber = omItemNumber;
-                                document.VersionNumber = versionNumber;
-                            }
+                            //var documents = versionRepository.GetCoSignatureDocuments().ToList();
+                            //foreach (var document in documents)
+                            //{
+                            //    document.OmItemNumber = omItemNumber;
+                            //    document.VersionNumber = versionNumber;
+                            //}
 
-                            coSignatureDocuments.AddRange(documents);
+                            //coSignatureDocuments.AddRange(documents);
                             
                             var apiUri = new Uri(_settings.ApiBaseUrl);
                             var coSignatureQualityRepository =
@@ -257,7 +257,7 @@ namespace PimsExporter
                                     $"Export CoSignature OmItem Number: {omItemNumber} Version Number: {versionNumber} CoSignature Id: {header.CoSignatureId}");
                                 var qualities = await coSignatureQualityRepository.GetCoSignatureQualitiesAsync(omItemNumber,
                                         versionNumber, header.CoSignatureId);
-                                coSignatureQualities.AddRange(coSignatureQualities);
+                                coSignatureQualities.AddRange(qualities);
                             }
                         }
                         catch (Exception ex)

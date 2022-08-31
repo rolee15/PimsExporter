@@ -27,7 +27,7 @@ namespace CSV.Parsers
 
         protected bool ParseBool(string raw)
         {
-            return raw == "True" || raw == "1";
+            return raw.ToUpper().Equals("TRUE");
         }
 
         protected double ParseDouble(string raw)

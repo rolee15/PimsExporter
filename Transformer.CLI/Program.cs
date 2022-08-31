@@ -20,12 +20,13 @@ namespace TransformerCLI
             Console.Write("Location of the export folder: ");
             var path = Console.ReadLine();
 
-            Console.WriteLine("Starting to filter active items...");
-            
             var transformer = host.Services.GetRequiredService<Transformer>();
 
+            Console.WriteLine("Starting to filter active items...");
             transformer.TransformOmItems(path);
             Console.WriteLine("Om Items finished.");
+
+            Console.WriteLine("Starting to filter active versions and cosignatures...");
             transformer.TransformVersionsAndCoSignatures(path);
             Console.WriteLine("Versions and CoSignatures finished.");
 
