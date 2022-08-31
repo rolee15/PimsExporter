@@ -9,10 +9,17 @@ namespace SharePoint
 {
     public sealed class SharePointAdapter : SharePointAdapterBase, ISharePointAdapter
     {
-        public SharePointAdapter(
-            Uri sharepointSiteUrl, NetworkCredential credentials)
-            : base(sharepointSiteUrl, credentials)
+        private static SharePointAdapter _instance = null;
+        
+        private SharePointAdapter()
         {
+        }
+
+        public static ISharePointAdapter GetInstance(Uri uri, NetworkCredential credentials)
+        {
+            if (_instance is null) _instance = new SharePointAdapter();
+            SetUrlAndCredentials(uri, credentials);
+            return _instance;
         }
 
         public IEnumerable<AllVersion> AllVersions()

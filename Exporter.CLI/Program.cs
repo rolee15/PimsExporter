@@ -26,17 +26,17 @@ namespace ExporterCLI
             var exporter = host.Services.GetRequiredService<IApplication>();
             exporter.Password = password;
 
-            Console.WriteLine("Starting to export root...");
-            exporter.ExportRoot(from, to);
-            Console.WriteLine("Done.");
+            //Console.WriteLine("Starting to export root...");
+            //exporter.ExportRoot(from, to);
+            //Console.WriteLine("Done.");
 
-            Console.WriteLine("Starting to export OM Items...");
-            exporter.ExportOmItems(from, to);
-            Console.WriteLine("Done.");
+            //Console.WriteLine("Starting to export OM Items...");
+            //exporter.ExportOmItems(from, to);
+            //Console.WriteLine("Done.");
 
-            Console.WriteLine("Starting to export Versions...");
-            exporter.ExportVersions(from, to);
-            Console.WriteLine("Done.");
+            //Console.WriteLine("Starting to export Versions...");
+            //exporter.ExportVersions(from, to);
+            //Console.WriteLine("Done.");
 
             Console.WriteLine("Starting to export Co-Signatures...");
             await exporter.ExportCoSignaturesAsync(from, to);

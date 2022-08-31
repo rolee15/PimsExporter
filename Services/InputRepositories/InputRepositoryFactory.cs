@@ -9,7 +9,7 @@ namespace Services.InputRepositories
     {
         public T Create<T>(Uri uri, NetworkCredential credentials) where T : class
         {
-            var sp = new SharePointAdapter(uri, credentials);
+            var sp = SharePointAdapter.GetInstance(uri, credentials);
             switch (typeof(T).Name)
             {
                 case "IRootSiteRepository":
