@@ -5,6 +5,7 @@ using System.Net;
 using Domain;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
+using PimsExporter.Domain.Logging;
 using SharePoint.Extensions;
 
 namespace SharePoint
@@ -18,9 +19,11 @@ namespace SharePoint
         private static NetworkCredential Credentials { get; set; }
 
         private readonly Dictionary<string, string> _ensuredEmails = new Dictionary<string, string>();
+        private readonly PimsLogger pimsLogger = new PimsLogger();
 
         protected SharePointAdapterBase()
         {
+            
         }
 
         protected static void SetUrlAndCredentials(Uri uri, NetworkCredential credentials)
@@ -149,6 +152,8 @@ namespace SharePoint
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to load user {username}: {ex.Message}");
+                pimsLogger.LogError($"Failed to load user {username}: {ex.Message}");
+                
             }
         }
     }

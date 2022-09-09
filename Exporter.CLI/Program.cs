@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PimsExporter;
+using PimsExporter.Domain.Logging;
 using PimsExporter.Services.InputRepositories;
 using Services.InputRepositories;
 
@@ -13,9 +14,11 @@ namespace ExporterCLI
 {
     internal class Program
     {
+        
         private static async Task Main(string[] args)
         {
             var host = CreateDefaultBuilder().Build();
+            PimsLogger logger = new PimsLogger();
 
             Console.Write("Password: ");
             var password = GetPassword();
@@ -27,23 +30,32 @@ namespace ExporterCLI
             exporter.Password = password;
 
             Console.WriteLine("Starting to export root...");
+            logger.LogInfo("Starting to export root...");
             exporter.ExportRoot(from, to);
             Console.WriteLine("Done.");
+            logger.LogInfo("Done.");
 
             Console.WriteLine("Starting to export OM Items...");
+            logger.LogInfo("Starting to export OM Items...");
             exporter.ExportOmItems(from, to);
             Console.WriteLine("Done.");
+            logger.LogInfo("Done.");
 
             Console.WriteLine("Starting to export Versions...");
+            logger.LogInfo("Starting to export Versions...");
             exporter.ExportVersions(from, to);
             Console.WriteLine("Done.");
+            logger.LogInfo("Done.");
 
             Console.WriteLine("Starting to export Co-Signatures...");
+            logger.LogInfo("Starting to export Co-Signatures...");
             await exporter.ExportCoSignaturesAsync(from, to);
             Console.WriteLine("Done.");
+            logger.LogInfo("Done.");
 
             Console.WriteLine();
             Console.WriteLine("Finished.");
+            logger.LogInfo("Finished.");
             Console.ReadLine();
         }
 

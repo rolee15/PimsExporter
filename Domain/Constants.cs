@@ -8,6 +8,11 @@ namespace Domain
     {
         public const int DefaultQueryRowLimit = 100;
 
+        public static class LogOutputDir
+        {
+            public const string dirPath = "c:\\somogyit\\work\\pimsout\\";
+
+        }
         public static readonly List<string> SAP_RELATED_ITEMS = new List<string>
         {
             "Offering Cluster",
