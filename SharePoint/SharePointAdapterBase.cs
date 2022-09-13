@@ -17,7 +17,7 @@ namespace SharePoint
         private static Uri SharepointSiteUrl { get; set; }
         private static NetworkCredential Credentials { get; set; }
 
-        private readonly HashSet<string> _ensuredUserNames = new HashSet<string>();
+        private readonly Dictionary<string, string> _ensuredEmails = new Dictionary<string, string>();
 
         protected SharePointAdapterBase()
         {
@@ -121,14 +121,18 @@ namespace SharePoint
             foreach (var fieldUserValue in userFields)
             {
                 var username = fieldUserValue.LookupValue;
-                if (_ensuredUserNames.Contains(username)) continue;
-                _ensuredUserNames.Add(username);
-
-                TrySetEmail(fieldUserValue, username);
+                if (_ensuredEmails.ContainsKey(username))
+                {
+                    fieldUserValue.SetEmail(_ensuredEmails[username]);
+                    continue;
+                }
+                
+                QueryEmail(fieldUserValue, username);
+                _ensuredEmails.Add(username, fieldUserValue.Email);
             }
         }
 
-        private void TrySetEmail(FieldUserValue fieldUserValue, string username)
+        private void QueryEmail(FieldUserValue fieldUserValue, string username)
         {
             try
             {
