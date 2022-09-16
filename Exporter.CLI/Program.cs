@@ -2,24 +2,26 @@
 using System.Security;
 using System.Threading.Tasks;
 using CSV;
+using CSV.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using PimsExporter;
-using PimsExporter.Domain.Logging;
 using PimsExporter.Services.InputRepositories;
 using Services.InputRepositories;
+using static Domain.Constants;
 
 namespace ExporterCLI
 {
     internal class Program
     {
-        
+
         private static async Task Main(string[] args)
         {
             var host = CreateDefaultBuilder().Build();
-            PimsLogger logger = new PimsLogger();
-
+            var logger = host.Services.GetRequiredService<IPimsLogger>();
+          
             Console.Write("Password: ");
             var password = GetPassword();
             Console.WriteLine();
@@ -84,9 +86,14 @@ namespace ExporterCLI
                     services.Configure<ExporterSettings>(ctx.Configuration.GetSection(nameof(ExporterSettings)),
                         o => o.BindNonPublicProperties = true);
                     services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)),
-                        o => o.BindNonPublicProperties = true);
+                         o => o.BindNonPublicProperties = true);
 
+                    var csvAdapterSettings = new CsvAdapterSettings();
+                    ctx.Configuration.GetSection(nameof(CsvAdapterSettings)).Bind(csvAdapterSettings);
+
+                    services.AddSingleton<CsvAdapterSettings>(csvAdapterSettings);
                     services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
+                    services.AddSingleton<IPimsLogger, PimsLogger>();
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();
                     services.AddSingleton<IApplication, Exporter>();
                 });

@@ -10,7 +10,8 @@ namespace Domain
 
         public static class LogOutputDir
         {
-            public const string dirPath = "c:\\somogyit\\work\\pimsout\\";
+            //public string dirPath = "c:\\somogyit\\work\\pimsout\\";
+            public static string dirPath { get; set; }
 
         }
         public static readonly List<string> SAP_RELATED_ITEMS = new List<string>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PimsExporter.Domain.Logging
+namespace CSV.Logging
 {
     public interface IPimsLogger
     {

@@ -7,18 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using static Domain.Constants;
 
-namespace PimsExporter.Domain.Logging
+namespace CSV.Logging
 {
    
     public class PimsLogger : IPimsLogger
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        public PimsLogger()
+        public PimsLogger(CsvAdapterSettings settings)
         {
             var config = new NLog.Config.LoggingConfiguration();
 
             // Targets where to log to: File and Console
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = Path.Combine(LogOutputDir.dirPath, "log.txt") };
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = Path.Combine(settings.OutputDir, "log.txt") };
 
             // Rules for mapping loggers to targets            
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);

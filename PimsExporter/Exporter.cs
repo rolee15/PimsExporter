@@ -6,10 +6,10 @@ using System.Net;
 using System.Security;
 using System.Threading.Tasks;
 using CSV;
+using CSV.Logging;
 using Domain;
 using Domain.Entities;
 using Microsoft.Extensions.Options;
-using PimsExporter.Domain.Logging;
 using PimsExporter.Services.InputRepositories;
 
 namespace PimsExporter
@@ -19,7 +19,6 @@ namespace PimsExporter
         private readonly IInputRepositoryFactory _inputRepositoryFactory;
         private readonly IOutputAdapter _outputAdapter;
         private readonly ExporterSettings _settings;
-        private readonly CsvAdapterSettings _csvAdaptersettings;
         private Dictionary<string, string> _sapIds;
         private readonly PimsLogger _logger;
 
@@ -32,8 +31,7 @@ namespace PimsExporter
             _settings = settings.Value;
             _inputRepositoryFactory = inputRepositoryFactory;
             _outputAdapter = outputAdapter;
-            _csvAdaptersettings = csvAdaptersettings.Value;
-            _logger = new PimsLogger();
+            _logger = new PimsLogger(csvAdaptersettings.Value);
         }
 
         public SecureString Password { get; set; }

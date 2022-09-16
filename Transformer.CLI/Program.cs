@@ -5,10 +5,11 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using CSV;
+using CSV.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PimsExporter;
-using PimsExporter.Domain.Logging;
 
 namespace TransformerCLI
 {
@@ -17,7 +18,7 @@ namespace TransformerCLI
         static void Main(string[] args)
         {
             var host = CreateDefaultBuilder().Build();
-            PimsLogger logger = new PimsLogger();
+            var logger = host.Services.GetRequiredService<IPimsLogger>();
 
             Console.Write("Location of the export folder: ");
             logger.LogInfo("Location of the export folder: ");
@@ -49,6 +50,13 @@ namespace TransformerCLI
                 {
                     services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)),
                         o => o.BindNonPublicProperties = true);
+
+                    var csvAdapterSettings = new CsvAdapterSettings();
+                    ctx.Configuration.GetSection(nameof(CsvAdapterSettings)).Bind(csvAdapterSettings);
+
+                    services.AddSingleton<CsvAdapterSettings>(csvAdapterSettings);
+
+                    services.AddSingleton<IPimsLogger, PimsLogger>();
 
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();
                     services.AddSingleton<Transformer>();

@@ -231,14 +231,18 @@
     <Compile Include="TaxonomyHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj">
-      <Project>{D27FB912-DA2D-4E94-A753-31185BC9D563}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSV\CSV.csproj">
+      <Project>{81f42a72-691e-4a01-ba76-9c338ee92a4b}</Project>
+      <Name>CSV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{d27fb912-da2d-4e94-a753-31185bc9d563}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
