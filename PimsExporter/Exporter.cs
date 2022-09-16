@@ -42,6 +42,10 @@ namespace PimsExporter
             var omItemDocuments = new List<OmItemDocument>();
 
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
+            {
+                // Skip Schulungsprodukt
+                if (omItemNumber == 542) continue;
+
                 try
                 {
                     var url = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}");
@@ -83,6 +87,7 @@ namespace PimsExporter
                 {
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
+            }
 
             _outputAdapter.SaveOmItemHeaders(omItemHeaders, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveOlmPhases(omItemOlmPhases, omItemNumberFrom, omItemNumberTo);
@@ -101,7 +106,12 @@ namespace PimsExporter
             var versionRelatedOmItems = new List<VersionRelatedOmItem>();
             var versionDocuments = new List<VersionDocument>();
             var versionChangeLogs = new List<VersionChangeLog>();
+
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
+            {
+                // Skip Schulungsprodukt
+                if (omItemNumber == 542) continue;
+
                 try
                 {
                     var omItemUrl = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}");
@@ -189,6 +199,7 @@ namespace PimsExporter
                 {
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
+            }
 
             _outputAdapter.SaveVersionHeaders(versionHeaders, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveVersionBudgets(versionBudgets, omItemNumberFrom, omItemNumberTo);
@@ -207,6 +218,10 @@ namespace PimsExporter
             var coSignatureDocuments = new List<CoSignatureDocument>();
 
             for (var omItemNumber = omItemNumberFrom; omItemNumber <= omItemNumberTo; omItemNumber++)
+            {
+                // Skip Schulungsprodukt
+                if (omItemNumber == 542) continue;
+
                 try
                 {
                     var omItemUrl = Path.Combine(_settings.SharepointUrl, $"products/{omItemNumber}");
@@ -228,24 +243,24 @@ namespace PimsExporter
                             var headers = versionRepository.GetCoSignatureHeaders().ToList();
                             coSignatureHeaders.AddRange(headers);
 
-                            //var cosigners = versionRepository.GetCoSignatureCoSigners().ToList();
-                            //foreach (var cosigner in cosigners)
-                            //{
-                            //    cosigner.OmItemNumber = omItemNumber;
-                            //    cosigner.VersionNumber = versionNumber;
-                            //}
+                            var cosigners = versionRepository.GetCoSignatureCoSigners().ToList();
+                            foreach (var cosigner in cosigners)
+                            {
+                                cosigner.OmItemNumber = omItemNumber;
+                                cosigner.VersionNumber = versionNumber;
+                            }
 
-                            //coSignatureCoSigners.AddRange(cosigners);
+                            coSignatureCoSigners.AddRange(cosigners);
 
-                            //var documents = versionRepository.GetCoSignatureDocuments().ToList();
-                            //foreach (var document in documents)
-                            //{
-                            //    document.OmItemNumber = omItemNumber;
-                            //    document.VersionNumber = versionNumber;
-                            //}
+                            var documents = versionRepository.GetCoSignatureDocuments().ToList();
+                            foreach (var document in documents)
+                            {
+                                document.OmItemNumber = omItemNumber;
+                                document.VersionNumber = versionNumber;
+                            }
 
-                            //coSignatureDocuments.AddRange(documents);
-                            
+                            coSignatureDocuments.AddRange(documents);
+
                             var apiUri = new Uri(_settings.ApiBaseUrl);
                             var coSignatureQualityRepository =
                                 _inputRepositoryFactory.Create<ICoSignatureQualityRepository>(apiUri, credentials);
@@ -269,6 +284,7 @@ namespace PimsExporter
                 {
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
                 }
+            }
 
             _outputAdapter.SaveCoSignatureHeaders(coSignatureHeaders, omItemNumberFrom, omItemNumberTo);
             _outputAdapter.SaveCoSignatureCoSigners(coSignatureCoSigners, omItemNumberFrom, omItemNumberTo);
