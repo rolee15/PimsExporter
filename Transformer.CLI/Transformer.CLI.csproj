@@ -196,10 +196,6 @@
       <Project>{81F42A72-691E-4A01-BA76-9C338EE92A4B}</Project>
       <Name>CSV</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Domain\Domain.csproj">
-      <Project>{d27fb912-da2d-4e94-a753-31185bc9d563}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PimsExporter\PimsExporter.csproj">
       <Project>{fab8f011-f86c-4d07-8b9f-33dbb5b85bd5}</Project>
       <Name>PimsExporter</Name>
