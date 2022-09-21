@@ -6,6 +6,7 @@ using System.Net;
 using System.Security;
 using System.Threading.Tasks;
 using CSV;
+using CSV.Logging;
 using Domain;
 using Domain.Entities;
 using Microsoft.Extensions.Options;
@@ -19,15 +20,18 @@ namespace PimsExporter
         private readonly IOutputAdapter _outputAdapter;
         private readonly ExporterSettings _settings;
         private Dictionary<string, string> _sapIds;
+        private readonly PimsLogger _logger;
 
         public Exporter(
             IOptions<ExporterSettings> settings,
+            IOptions<CsvAdapterSettings> csvAdaptersettings,
             IInputRepositoryFactory inputRepositoryFactory,
             IOutputAdapter outputAdapter)
         {
             _settings = settings.Value;
             _inputRepositoryFactory = inputRepositoryFactory;
             _outputAdapter = outputAdapter;
+            _logger = new PimsLogger(csvAdaptersettings.Value);
         }
 
         public SecureString Password { get; set; }
@@ -53,6 +57,7 @@ namespace PimsExporter
                     var credentials = new NetworkCredential(_settings.UserName, Password);
                     var siteRepository = _inputRepositoryFactory.Create<IOmItemSiteRepository>(siteUri, credentials);
                     Console.WriteLine($"Export Om Item: {url}");
+                    _logger.LogInfo($"Export Om Item: {url}");
 
                     var header = siteRepository.GetHeader();
                     header.OmItemNumber = omItemNumber;
@@ -86,6 +91,7 @@ namespace PimsExporter
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
+                    _logger.LogError($"Error at {omItemNumber}: {ex.Message}");
                 }
             }
 
@@ -129,6 +135,7 @@ namespace PimsExporter
                             var versionRepository =
                                 _inputRepositoryFactory.Create<IVersionRepository>(siteUri, credentials);
                             Console.WriteLine($"Export version: {url}");
+                            _logger.LogInfo($"Export version: {url}");
 
                             var header = versionRepository.GetHeader();
                             header.OmItemNumber = omItemNumber;
@@ -193,11 +200,13 @@ namespace PimsExporter
                         catch (Exception ex)
                         {
                             Console.WriteLine("Error at {0}/{1}: {2}", omItemNumber, versionNumber, ex.Message);
+                            _logger.LogError($"Error at {omItemNumber}/{versionNumber}: {ex.Message}");
                         }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
+                    _logger.LogError($"Error at {omItemNumber}: {ex.Message}");
                 }
             }
 
@@ -270,6 +279,9 @@ namespace PimsExporter
                                 header.VersionNumber = versionNumber;
                                 Console.WriteLine(
                                     $"Export CoSignature OmItem Number: {omItemNumber} Version Number: {versionNumber} CoSignature Id: {header.CoSignatureId}");
+                                _logger.LogInfo(
+                                   $"Export CoSignature OmItem Number: {omItemNumber} Version Number: {versionNumber} CoSignature Id: {header.CoSignatureId}");
+
                                 var qualities = await coSignatureQualityRepository.GetCoSignatureQualitiesAsync(omItemNumber,
                                         versionNumber, header.CoSignatureId);
                                 coSignatureQualities.AddRange(qualities);
@@ -278,11 +290,13 @@ namespace PimsExporter
                         catch (Exception ex)
                         {
                             Console.WriteLine("Error at {0}/{1}: {2}", omItemNumber, versionNumber, ex.Message);
+                            _logger.LogError($"Error at {omItemNumber}/{versionNumber}: {ex.Message}");
                         }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error at {0}: {1}", omItemNumber, ex.Message);
+                    _logger.LogError($"Error at {omItemNumber}: {ex.Message}");
                 }
             }
 

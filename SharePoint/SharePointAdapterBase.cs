@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using CSV.Logging;
 using Domain;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
@@ -18,11 +19,14 @@ namespace SharePoint
         private static NetworkCredential Credentials { get; set; }
 
         private readonly Dictionary<string, string> _ensuredEmails = new Dictionary<string, string>();
+        private readonly IPimsLogger _logger;
 
-        protected SharePointAdapterBase()
+
+        protected SharePointAdapterBase(IPimsLogger logger)
         {
+            _logger = logger;
         }
-
+        
         protected static void SetUrlAndCredentials(Uri uri, NetworkCredential credentials)
         {
             SharepointSiteUrl = uri ?? throw new ArgumentNullException(nameof(uri));
@@ -149,6 +153,8 @@ namespace SharePoint
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to load user {username}: {ex.Message}");
+                _logger.LogError($"Failed to load user {username}: {ex.Message}");
+                
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using CSV.Logging;
 using Domain;
 using Domain.Entities;
 using SharePoint.Interfaces;
@@ -10,14 +11,14 @@ namespace SharePoint
     public sealed class SharePointAdapter : SharePointAdapterBase, ISharePointAdapter
     {
         private static SharePointAdapter _instance = null;
-        
-        private SharePointAdapter()
+        private SharePointAdapter(IPimsLogger logger) : base(logger)
         {
-        }
 
-        public static ISharePointAdapter GetInstance(Uri uri, NetworkCredential credentials)
+        }
+        
+        public static ISharePointAdapter GetInstance(Uri uri, NetworkCredential credentials, IPimsLogger logger)
         {
-            if (_instance is null) _instance = new SharePointAdapter();
+            if (_instance is null) _instance = new SharePointAdapter(logger);
             SetUrlAndCredentials(uri, credentials);
             return _instance;
         }

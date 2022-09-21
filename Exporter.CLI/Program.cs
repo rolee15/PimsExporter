@@ -2,21 +2,26 @@
 using System.Security;
 using System.Threading.Tasks;
 using CSV;
+using CSV.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using PimsExporter;
 using PimsExporter.Services.InputRepositories;
 using Services.InputRepositories;
+using static Domain.Constants;
 
 namespace ExporterCLI
 {
     internal class Program
     {
+
         private static async Task Main(string[] args)
         {
             var host = CreateDefaultBuilder().Build();
-
+            var logger = host.Services.GetRequiredService<IPimsLogger>();
+          
             Console.Write("Password: ");
             var password = GetPassword();
             Console.WriteLine();
@@ -27,23 +32,32 @@ namespace ExporterCLI
             exporter.Password = password;
 
             Console.WriteLine("Starting to export root...");
+            logger.LogInfo("Starting to export root...");
             exporter.ExportRoot(from, to);
             Console.WriteLine("Done.");
+            logger.LogInfo("Done.");
 
             Console.WriteLine("Starting to export OM Items...");
+            logger.LogInfo("Starting to export OM Items...");
             exporter.ExportOmItems(from, to);
             Console.WriteLine("Done.");
+            logger.LogInfo("Done.");
 
             Console.WriteLine("Starting to export Versions...");
+            logger.LogInfo("Starting to export Versions...");
             exporter.ExportVersions(from, to);
             Console.WriteLine("Done.");
+            logger.LogInfo("Done.");
 
             Console.WriteLine("Starting to export Co-Signatures...");
+            logger.LogInfo("Starting to export Co-Signatures...");
             await exporter.ExportCoSignaturesAsync(from, to);
             Console.WriteLine("Done.");
+            logger.LogInfo("Done.");
 
             Console.WriteLine();
             Console.WriteLine("Finished.");
+            logger.LogInfo("Finished.");
             Console.ReadLine();
         }
 
@@ -72,9 +86,14 @@ namespace ExporterCLI
                     services.Configure<ExporterSettings>(ctx.Configuration.GetSection(nameof(ExporterSettings)),
                         o => o.BindNonPublicProperties = true);
                     services.Configure<CsvAdapterSettings>(ctx.Configuration.GetSection(nameof(CsvAdapterSettings)),
-                        o => o.BindNonPublicProperties = true);
+                         o => o.BindNonPublicProperties = true);
 
+                    var csvAdapterSettings = new CsvAdapterSettings();
+                    ctx.Configuration.GetSection(nameof(CsvAdapterSettings)).Bind(csvAdapterSettings);
+
+                    services.AddSingleton<CsvAdapterSettings>(csvAdapterSettings);
                     services.AddSingleton<IInputRepositoryFactory, InputRepositoryFactory>();
+                    services.AddSingleton<IPimsLogger, PimsLogger>();
                     services.AddSingleton<IOutputAdapter, CsvAdapter>();
                     services.AddSingleton<IApplication, Exporter>();
                 });
