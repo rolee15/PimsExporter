@@ -32,20 +32,21 @@ namespace CSV.Parsers
 
         protected double ParseDouble(string raw)
         {
-            return double.Parse(raw, culture);
-        } 
+            return double.Parse(raw, CultureInfo.InvariantCulture);
+        }
 
         protected double? ParseNullableDouble(string raw)
         {
+            double? result = null;
             try
             {
-                return double.Parse(raw, culture);
+                result = double.Parse(raw, CultureInfo.InvariantCulture);
             }
             catch (FormatException)
             {
             }
 
-            return null;
+            return result;
         }
 
         protected User ParseUser(string raw)
