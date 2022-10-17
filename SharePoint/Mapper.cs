@@ -245,7 +245,7 @@ namespace SharePoint
                 MeasurePriority = Convert.ToString(item[ProductFields.MEASUREPRIORITY]),
                 MeasureStatus = Convert.ToString(item[ProductFields.MEASURESTATUS]),
                 ShortCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITSHORT]),
-                LongCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITSHORT]),
+                LongCustomerSalesBenefit = Convert.ToString(item[ProductFields.CUSTOMERVALUESALESBENEFITLONG]),
                 TargetAudience = Convert.ToString(item[ProductFields.TARGETAUDIENCE]),
                 RiskAndMitigation = Convert.ToString(item[ProductFields.RISKMITIGATION])
             };

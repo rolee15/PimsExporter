@@ -16,6 +16,11 @@ namespace Domain
             "Product Unit"
         };
 
+        public static class Milestones
+        {
+            public const string RF_ANALYSIS = "Rf Analysis";
+        }
+
         public static class Root
         {
             public static class Lists
