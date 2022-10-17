@@ -1,4 +1,5 @@
 ﻿using CSV;
+using Domain;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -51,8 +52,9 @@ namespace PimsExporter
             _csvAdapter.SaveRelatedOmItems(activeRelatedOmItems, 1, 700, path, "active");
 
             var documents = _csvAdapter.ReadDocuments(path);
-            var activeDocuments = documents.Where(x => activeOmItemNumbers.Contains(x.OmItemNumber));
-            _csvAdapter.SaveDocuments(activeDocuments, 1, 700, path, "active");
+            var activeDocuments = documents.Where(x => activeOmItemNumbers.Contains(x.OmItemNumber));            
+            var filteredDocuments = activeDocuments.Where(x => !x.Name.EndsWith(".aspx"));
+            _csvAdapter.SaveDocuments(filteredDocuments, 1, 700, path, "active");
         }
 
         public void TransformVersionsAndCoSignatures(string path)
@@ -87,7 +89,8 @@ namespace PimsExporter
 
             var documents = _csvAdapter.ReadVersionDocuments(path);
             var activeDocuments = documents.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
-            _csvAdapter.SaveVersionDocuments(activeDocuments, 1, 700, path, "active");
+            var filteredDocuments = activeDocuments.Where(x => !x.Name.EndsWith(".aspx"));
+            _csvAdapter.SaveVersionDocuments(filteredDocuments, 1, 700, path, "active");
 
             var changeLogs = _csvAdapter.ReadVersionChangeLogs(path);
             var activeChangeLogs = changeLogs.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
@@ -105,20 +108,28 @@ namespace PimsExporter
         private void TransformCoSignatures(string path)
         {
             var headers = _csvAdapter.ReadCoSignatureHeaders(path);
+            
             var activeHeaders = headers.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
+            var notRfAnalysisCoSignatures = activeHeaders.Where(x => x.OlmMilestone != Constants.Milestones.RF_ANALYSIS);
+            var notRfAnalysisCoSignatureIds = notRfAnalysisCoSignatures.Select(x => new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)).ToHashSet();
             _csvAdapter.SaveCoSignatureHeaders(activeHeaders, 1, 700, path, "active");
 
             var documents = _csvAdapter.ReadCoSignatureDocuments(path);
             var activeDocuments = documents.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
-            _csvAdapter.SaveCoSignatureDocuments(activeDocuments, 1, 700, path, "active");
+            var filteredDocuments = activeDocuments.Where(x => x.CoSignatureId != 0);
+            filteredDocuments = filteredDocuments.Where(x => !x.Name.EndsWith(".aspx"));
+            filteredDocuments = filteredDocuments.Where(x => notRfAnalysisCoSignatureIds.Contains(new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)));
+            _csvAdapter.SaveCoSignatureDocuments(filteredDocuments, 1, 700, path, "active");
 
             var coSigners = _csvAdapter.ReadCoSignatureCoSigners(path);
             var activeCoSigners = coSigners.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
-            _csvAdapter.SaveCoSignatureCoSigners(activeCoSigners, 1, 700, path, "active");
+            var filteredCoSigners = activeCoSigners.Where(x => notRfAnalysisCoSignatureIds.Contains(new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)));
+            _csvAdapter.SaveCoSignatureCoSigners(filteredCoSigners, 1, 700, path, "active");
 
             var qualities = _csvAdapter.ReadCoSignatureQualities(path);
             var activeQualities = qualities.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
-            _csvAdapter.SaveCoSignatureQualities(activeQualities, 1, 700, path, "active");
+            var filteredQualities = activeQualities.Where(x => notRfAnalysisCoSignatureIds.Contains(new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)));
+            _csvAdapter.SaveCoSignatureQualities(filteredQualities, 1, 700, path, "active");
         }
     }
 }
