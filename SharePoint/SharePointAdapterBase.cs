@@ -44,6 +44,18 @@ namespace SharePoint
             }
         }
 
+        protected IEnumerable<T> GetAllDocEntities<T>(string title, Func<ListItem, T> map)
+        {
+            using (_ctx = new ClientContext(SharepointSiteUrl))
+            {
+                _ctx.Credentials = Credentials ?? throw new ArgumentNullException(nameof(Credentials));
+                var list = GetList(title);
+                var items = GetAllDocs(list);
+
+                return items.Select(x => SetEmailAndMap(x, map));
+            }
+        }
+
         protected T GetFirstEntity<T>(string title, Func<ListItem, T> map)
         {
             using (_ctx = new ClientContext(SharepointSiteUrl))
@@ -75,6 +87,16 @@ namespace SharePoint
             } while (position != null);
 
             return result;
+        }
+
+        private ListItemCollection GetAllDocs(List list)
+        {
+            var query = CamlQuery.CreateAllItemsQuery(); ;
+            var items = list.GetItems(query);
+            _ctx.Load(items);
+            _ctx.ExecuteQuery();
+
+            return items;
         }
 
         private ListItem GetFirstItem(List list)
