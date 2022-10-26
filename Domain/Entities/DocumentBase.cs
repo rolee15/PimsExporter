@@ -13,5 +13,6 @@ namespace Domain.Entities
         public string OlmPhase { get; set; }
         public DateTime? Updated { get; set; }
         public int OmItemNumber { get; set; }
+        public string Url { get; set; }
     }
 }

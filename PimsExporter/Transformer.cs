@@ -4,6 +4,7 @@ using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace PimsExporter
 {
@@ -52,8 +53,8 @@ namespace PimsExporter
             _csvAdapter.SaveRelatedOmItems(activeRelatedOmItems, 1, 700, path, "active");
 
             var documents = _csvAdapter.ReadDocuments(path);
-            var activeDocuments = documents.Where(x => activeOmItemNumbers.Contains(x.OmItemNumber));            
-            var filteredDocuments = activeDocuments.Where(x => !x.Name.EndsWith(".aspx"));
+            var activeDocuments = documents.Where(x => activeOmItemNumbers.Contains(x.OmItemNumber));
+            var filteredDocuments = (IEnumerable<OmItemDocument>)FilterAspxFiles(activeDocuments);
             _csvAdapter.SaveDocuments(filteredDocuments, 1, 700, path, "active");
         }
 
@@ -89,7 +90,7 @@ namespace PimsExporter
 
             var documents = _csvAdapter.ReadVersionDocuments(path);
             var activeDocuments = documents.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
-            var filteredDocuments = activeDocuments.Where(x => !x.Name.EndsWith(".aspx"));
+            var filteredDocuments = (IEnumerable<VersionDocument>)FilterAspxFiles(activeDocuments);
             _csvAdapter.SaveVersionDocuments(filteredDocuments, 1, 700, path, "active");
 
             var changeLogs = _csvAdapter.ReadVersionChangeLogs(path);
@@ -117,7 +118,7 @@ namespace PimsExporter
             var documents = _csvAdapter.ReadCoSignatureDocuments(path);
             var activeDocuments = documents.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
             var filteredDocuments = activeDocuments.Where(x => x.CoSignatureId != 0);
-            filteredDocuments = filteredDocuments.Where(x => !x.Name.EndsWith(".aspx"));
+            filteredDocuments = (IEnumerable<CoSignatureDocument>)FilterAspxFiles(activeDocuments);
             filteredDocuments = filteredDocuments.Where(x => notRfAnalysisCoSignatureIds.Contains(new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)));
             _csvAdapter.SaveCoSignatureDocuments(filteredDocuments, 1, 700, path, "active");
 
@@ -130,6 +131,23 @@ namespace PimsExporter
             var activeQualities = qualities.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
             var filteredQualities = activeQualities.Where(x => notRfAnalysisCoSignatureIds.Contains(new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)));
             _csvAdapter.SaveCoSignatureQualities(filteredQualities, 1, 700, path, "active");
+        }
+
+        private static IEnumerable<DocumentBase> FilterDocuments(IEnumerable<DocumentBase> documents)
+        {
+            var result = FilterAspxFiles(documents);
+            result = FilterFolders(result);
+            return result;
+        }
+
+        private static IEnumerable<DocumentBase> FilterAspxFiles(IEnumerable<DocumentBase> documents)
+        {
+            return documents.Where(x => !x.Name.EndsWith(".aspx"));
+        }
+
+        private static IEnumerable<DocumentBase> FilterFolders(IEnumerable<DocumentBase> documents)
+        {
+            return documents.Where(x => x.Name.Contains("."));
         }
     }
 }
