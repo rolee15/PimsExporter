@@ -102,7 +102,7 @@ namespace SharePoint
 
         public IEnumerable<VersionDocument> VersionDocuments()
         {
-            return GetAllEntities(
+            return GetAllDocEntities(
                 Constants.Version.Lists.VersionDocument.TITLE,
                 item => Mapper.MapVersionDocumentsToEntity(item));
         }
@@ -130,7 +130,7 @@ namespace SharePoint
 
         public IEnumerable<OmItemDocument> Documents()
         {
-            return GetAllEntities(
+            return GetAllDocEntities(
                 Constants.Product.Lists.Documents.TITLE,
                 item => Mapper.MapDocumentsToEntity(item));
         }
@@ -144,7 +144,7 @@ namespace SharePoint
 
         public IEnumerable<CoSignatureDocument> CoSignatureDocuments()
         {
-            return GetAllEntities(
+            return GetAllDocEntities(
                 Constants.Version.Lists.CoSignatureDocuments.TITLE,
                 item => Mapper.MapCoSignatureDocumentsListToEntity(item));
         }
