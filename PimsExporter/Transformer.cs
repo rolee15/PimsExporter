@@ -113,7 +113,8 @@ namespace PimsExporter
             var activeHeaders = headers.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
             var notRfAnalysisCoSignatures = activeHeaders.Where(x => x.OlmMilestone != Constants.Milestones.RF_ANALYSIS);
             var notRfAnalysisCoSignatureIds = notRfAnalysisCoSignatures.Select(x => new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)).ToHashSet();
-            _csvAdapter.SaveCoSignatureHeaders(activeHeaders, 1, 700, path, "active");
+            var activeHeadersWithoutRfAnalysis = activeHeaders.Where(x => notRfAnalysisCoSignatureIds.Contains(new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)));
+            _csvAdapter.SaveCoSignatureHeaders(activeHeadersWithoutRfAnalysis, 1, 700, path, "active");
 
             var documents = _csvAdapter.ReadCoSignatureDocuments(path);
             var activeDocuments = documents.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
