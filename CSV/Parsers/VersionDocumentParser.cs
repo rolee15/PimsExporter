@@ -17,7 +17,8 @@ namespace CSV.Parsers
                 (r, value) => r.DocumentTagging = ParseListOfStrings(value),
                 (r, value) => r.DocumentOwner = ParseUser(value),
                 (r, value) => r.OlmPhase = value,
-                (r, value) => r.Updated = ParseNullableDate(value)
+                (r, value) => r.Updated = ParseNullableDate(value),
+                (r, value) => r.Url = value
             };
         }
     }
