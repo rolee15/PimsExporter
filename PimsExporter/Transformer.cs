@@ -54,7 +54,7 @@ namespace PimsExporter
 
             var documents = _csvAdapter.ReadDocuments(path);
             var activeDocuments = documents.Where(x => activeOmItemNumbers.Contains(x.OmItemNumber));
-            var filteredDocuments = FilterDocuments(activeDocuments.Cast<DocumentBase>()).Cast<OmItemDocument>();
+            var filteredDocuments = FilterDocuments(activeDocuments).Cast<OmItemDocument>();
             _csvAdapter.SaveDocuments(filteredDocuments, 1, 700, path, "active");
         }
 
@@ -90,7 +90,7 @@ namespace PimsExporter
 
             var documents = _csvAdapter.ReadVersionDocuments(path);
             var activeDocuments = documents.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
-            var filteredDocuments = FilterDocuments(activeDocuments.Cast<DocumentBase>()).Cast<VersionDocument>();
+            var filteredDocuments = FilterDocuments(activeDocuments).Cast<VersionDocument>();
             _csvAdapter.SaveVersionDocuments(filteredDocuments, 1, 700, path, "active");
 
             var changeLogs = _csvAdapter.ReadVersionChangeLogs(path);
@@ -119,7 +119,7 @@ namespace PimsExporter
             var documents = _csvAdapter.ReadCoSignatureDocuments(path);
             var activeDocuments = documents.Where(x => activeVersionNumbers.Contains(new Tuple<int, int>(x.OmItemNumber, x.VersionNumber)));
             var filteredDocuments = activeDocuments.Where(x => x.CoSignatureId != 0);
-            filteredDocuments = FilterDocuments(activeDocuments.Cast<DocumentBase>()).Cast<CoSignatureDocument>();
+            filteredDocuments = FilterDocuments(activeDocuments).Cast<CoSignatureDocument>();
             filteredDocuments = filteredDocuments.Where(x => notRfAnalysisCoSignatureIds.Contains(new Tuple<int, int, int>(x.OmItemNumber, x.VersionNumber, x.CoSignatureId)));
             _csvAdapter.SaveCoSignatureDocuments(filteredDocuments, 1, 700, path, "active");
 

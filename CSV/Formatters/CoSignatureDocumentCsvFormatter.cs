@@ -26,7 +26,6 @@ namespace CSV.Formatters
                 new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.OlmPhase), r => r.OlmPhase),
                 new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.Updated), r => r.Updated),
                 new ColumnFormatter<CoSignatureDocument>(nameof(CoSignatureDocument.Url), r => r.Url)
-
             };
         }
     }
