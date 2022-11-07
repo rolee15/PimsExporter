@@ -94,7 +94,8 @@ namespace SharePoint
                 DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]),
                 DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]),
                 OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
-                Updated = item[ProductFields.UPDATED] as DateTime?
+                Updated = item[ProductFields.UPDATED] as DateTime?,
+                Url = MapToUrl(item[ProductFields.URL])
             };
 
             return versionDocument;
@@ -327,7 +328,8 @@ namespace SharePoint
                 DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]),
                 DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]),
                 OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
-                Updated = item[ProductFields.UPDATED] as DateTime?
+                Updated = item[ProductFields.UPDATED] as DateTime?,
+                Url = MapToUrl(item[ProductFields.URL])
             };
             return document;
         }
@@ -342,7 +344,8 @@ namespace SharePoint
                 DocumentTagging = TaxonomyHelper.MapTaxonomy(item[ProductFields.DOCUMENT_TAGGING]),
                 DocumentOwner = MapToUser(item[ProductFields.DOCUMENT_OWNER]),
                 OlmPhase = Convert.ToString(item[ProductFields.PLM_PHASE]),
-                Updated = item[ProductFields.UPDATED] as DateTime?
+                Updated = item[ProductFields.UPDATED] as DateTime?,
+                Url = MapToUrl(item[ProductFields.URL])
             };
             return document;
         }

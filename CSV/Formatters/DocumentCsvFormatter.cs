@@ -19,7 +19,6 @@ namespace CSV.Formatters
                 new ColumnFormatter<OmItemDocument>(nameof(OmItemDocument.OlmPhase), r => r.OlmPhase),
                 new ColumnFormatter<OmItemDocument>(nameof(OmItemDocument.Updated), r => r.Updated),
                 new ColumnFormatter<OmItemDocument>(nameof(OmItemDocument.Url), r => r.Url)
-
             };
         }
     }

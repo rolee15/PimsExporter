@@ -290,6 +290,7 @@ namespace Domain
                 public const string COSIGNDEPUTY = "CoSignDeputy";
                 public const string COSIGNEDBY = "CoSignedBy";
                 public const string UPDATED = "Updated";
+                public const string URL = "URL";
                 public const string LINKTYPE = "Link_x0020_Typ";
                 public const string PIMSLINK = "PimsLink";
                 public const string COSIGNSUBMITTEDDATE = "Co_x0020_Sign_x0020_Submitted_x0";

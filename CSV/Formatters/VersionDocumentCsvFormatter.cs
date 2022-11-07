@@ -20,7 +20,6 @@ namespace CSV.Formatters
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.OlmPhase), r => r.OlmPhase),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Updated), r => r.Updated),
                 new ColumnFormatter<VersionDocument>(nameof(VersionDocument.Url), r => r.Url)
-
             };
         }
     }
