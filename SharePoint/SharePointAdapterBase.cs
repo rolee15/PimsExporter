@@ -147,14 +147,22 @@ namespace SharePoint
             foreach (var fieldUserValue in userFields)
             {
                 var username = fieldUserValue.LookupValue;
-                if (_ensuredEmails.ContainsKey(username))
+                try
                 {
-                    fieldUserValue.SetEmail(_ensuredEmails[username]);
-                    continue;
+                    if (_ensuredEmails.ContainsKey(username))
+                    {
+                        fieldUserValue.SetEmail(_ensuredEmails[username]);
+                        continue;
+                    }
+
+                    QueryEmail(fieldUserValue, username);
+                    _ensuredEmails.Add(username, fieldUserValue.Email);
                 }
-                
-                QueryEmail(fieldUserValue, username);
-                _ensuredEmails.Add(username, fieldUserValue.Email);
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Username was null: {ex.Message}");
+                    _logger.LogError($"Username was null: {ex.Message}");
+                }
             }
         }
 
