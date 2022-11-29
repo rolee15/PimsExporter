@@ -51,7 +51,7 @@ namespace CSV.Parsers
 
         protected User ParseUser(string raw)
         {
-            var pattern = @"(\w+,( \w+)+)( <(.*)>)?";
+            var pattern = @"([\w-]+,( [\w-]+)+)( <(.*)>)?";
             var regex = new Regex(pattern, RegexOptions.IgnoreCase);
             var match = regex.Match(raw);
             
